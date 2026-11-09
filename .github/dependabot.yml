@@ -1,0 +1,11 @@
+version: 2
+updates:
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+  # Add one pip entry per service folder once services exist (Sprint 1), for example /services/sentinel-gateway
+  - package-ecosystem: "pip"
+    directory: "/"
+    schedule:
+      interval: "weekly"

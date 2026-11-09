@@ -1,0 +1,28 @@
+name: Task
+description: One piece of work inside a user story
+labels: ["type:task"]
+body:
+  - type: markdown
+    attributes:
+      value: Title format is "US-XX.N short description". After creating it, use "Add parent" to make it a sub-issue of its story, then set Sprint and Status on the board and assign the owner.
+  - type: input
+    id: story
+    attributes:
+      label: Parent story
+      placeholder: "US-18"
+    validations:
+      required: true
+  - type: textarea
+    id: what
+    attributes:
+      label: What needs doing
+    validations:
+      required: true
+  - type: textarea
+    id: done
+    attributes:
+      label: Done when
+      value: |
+        - [ ] Merged through a reviewed pull request with green CI
+        - [ ] Tests added or updated
+        - [ ] Pull request description says Closes #<this task number>

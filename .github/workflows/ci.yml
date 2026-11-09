@@ -1,0 +1,53 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  ci:
+    name: ci
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install check tools
+        run: |
+          python -m pip install --upgrade pip
+          pip install ruff pytest pip-audit
+          if [ -f requirements-dev.txt ]; then pip install -r requirements-dev.txt; fi
+
+      - name: Lint
+        run: ruff check .
+
+      - name: Unit tests
+        run: |
+          code=0
+          pytest -q || code=$?
+          # Exit code 5 means no tests exist yet. Allowed only until the first test lands in Sprint 0.
+          if [ "$code" -ne 0 ] && [ "$code" -ne 5 ]; then exit "$code"; fi
+
+      - name: Dependency audit
+        run: |
+          for f in $(git ls-files '*requirements*.txt'); do
+            echo "Auditing $f"
+            pip-audit -r "$f"
+          done
+
+      - name: Set up OPA
+        if: hashFiles('policies/opa/**/*.rego') != ''
+        uses: open-policy-agent/setup-opa@v2
+        with:
+          version: latest
+
+      - name: Policy tests
+        if: hashFiles('policies/opa/**/*.rego') != ''
+        run: opa test policies/opa -v

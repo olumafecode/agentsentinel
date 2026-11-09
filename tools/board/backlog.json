@@ -1,0 +1,2064 @@
+{
+  "project": {
+    "title": "AgentSentinel Scrum Board",
+    "short_description": "MSSE capstone: product backlog, sprints, user stories and tasks for AgentSentinel.",
+    "timezone": "America/Chicago",
+    "submission_due": "2027-01-24",
+    "final_cutoff": "2027-01-30"
+  },
+  "sprints": [
+    {
+      "title": "Sprint 0",
+      "name": "Foundation",
+      "start": "2026-11-09",
+      "end": "2026-11-15",
+      "days": 7,
+      "goal": "Board, repository rules, CI and the requirements baseline are in place, and milestone M1 is signed off.",
+      "planning": "2026-11-09",
+      "scrums": [
+        "2026-11-11"
+      ],
+      "refinement": "2026-11-12",
+      "review": "2026-11-15",
+      "note": "Start-up meeting and first sprint planning on Monday 9 November."
+    },
+    {
+      "title": "Sprint 1",
+      "name": "First protected call",
+      "start": "2026-11-16",
+      "end": "2026-11-29",
+      "days": 14,
+      "goal": "One ALLOW and one BLOCK flow run end to end through the gateway and are fully audited (M2).",
+      "planning": "2026-11-16",
+      "scrums": [
+        "2026-11-18",
+        "2026-11-25"
+      ],
+      "refinement": "2026-11-19",
+      "review": "2026-11-29",
+      "note": "Thanksgiving (26 and 27 November) reduces capacity."
+    },
+    {
+      "title": "Sprint 2",
+      "name": "Hybrid decision layer",
+      "start": "2026-11-30",
+      "end": "2026-12-13",
+      "days": 14,
+      "goal": "OPA policy, data-origin checks, machine learning risk scoring and policy-cited explanations work together (M3).",
+      "planning": "2026-11-30",
+      "scrums": [
+        "2026-12-02",
+        "2026-12-09"
+      ],
+      "refinement": "2026-12-03",
+      "review": "2026-12-13",
+      "note": ""
+    },
+    {
+      "title": "Sprint 3",
+      "name": "Governance and platform",
+      "start": "2026-12-14",
+      "end": "2027-01-03",
+      "days": 21,
+      "goal": "Approvals, quarantine, incident timeline, dashboard, Kubernetes profile and public deployment are working (M4).",
+      "planning": "2026-12-14",
+      "scrums": [
+        "2026-12-16",
+        "2026-12-23",
+        "2026-12-30"
+      ],
+      "refinement": "2026-12-17",
+      "review": "2027-01-03",
+      "note": "Three calendar weeks because of Christmas and New Year; plan for about two weeks of effort."
+    },
+    {
+      "title": "Sprint 4",
+      "name": "Evaluation and hardening",
+      "start": "2027-01-04",
+      "end": "2027-01-17",
+      "days": 14,
+      "goal": "Security, utility, latency and resilience are measured against the targets; feature freeze at sprint end (M5, M6).",
+      "planning": "2027-01-04",
+      "scrums": [
+        "2027-01-06",
+        "2027-01-13"
+      ],
+      "refinement": "2027-01-07",
+      "review": "2027-01-17",
+      "note": "Feature freeze on Sunday 17 January: after this only defects, documentation and evidence."
+    },
+    {
+      "title": "Sprint 5",
+      "name": "Release",
+      "start": "2027-01-18",
+      "end": "2027-01-24",
+      "days": 7,
+      "goal": "Submission package complete and submitted by Sunday 24 January (M7).",
+      "planning": "2027-01-18",
+      "scrums": [
+        "2027-01-20"
+      ],
+      "refinement": null,
+      "review": "2027-01-23",
+      "note": "Martin Luther King Jr. Day is Monday 18 January; hold planning that day or on Tuesday. Record the final video by Friday 22 January."
+    },
+    {
+      "title": "Contingency",
+      "name": "Buffer only",
+      "start": "2027-01-25",
+      "end": "2027-01-30",
+      "days": 6,
+      "goal": "No planned work. Used only if the 24 January submission slips; final cut-off 30 January.",
+      "planning": null,
+      "scrums": [],
+      "refinement": null,
+      "review": null,
+      "note": ""
+    }
+  ],
+  "milestones": [
+    {
+      "id": "M1",
+      "title": "M1 Requirements baseline accepted",
+      "due": "2026-11-15",
+      "description": "Use cases, FR, NFR, threat model and architecture aligned; board, repository and CI ready."
+    },
+    {
+      "id": "M2",
+      "title": "M2 First protected tool call",
+      "due": "2026-11-29",
+      "description": "One allow and one block flow fully audited, running in Docker Compose."
+    },
+    {
+      "id": "M3",
+      "title": "M3 Hybrid decision layer",
+      "due": "2026-12-13",
+      "description": "OPA, data provenance, machine learning risk and RAG explanation integrated."
+    },
+    {
+      "id": "M4",
+      "title": "M4 Human governance and incident operations",
+      "due": "2027-01-03",
+      "description": "Approval, quarantine, dashboard and audit reconstruction working."
+    },
+    {
+      "id": "M5",
+      "title": "M5 Cloud-native evidence",
+      "due": "2027-01-17",
+      "description": "CI/CD, public deployment, Kubernetes profile and observability demonstrated."
+    },
+    {
+      "id": "M6",
+      "title": "M6 Evaluation complete",
+      "due": "2027-01-17",
+      "description": "Benchmark and scenario results, performance and resilience measured, defects closed."
+    },
+    {
+      "id": "M7",
+      "title": "M7 Submission ready",
+      "due": "2027-01-24",
+      "description": "Repository, deployment URL, task board, design and testing document and final video submitted."
+    }
+  ],
+  "features": [
+    {
+      "id": "F-01",
+      "title": "Project foundation and SDLC baseline",
+      "description": "Everything the team needs before product code: board, repository rules, CI, requirements baseline and data schema."
+    },
+    {
+      "id": "F-02",
+      "title": "Synthetic bank and banking agent (Vera)",
+      "description": "The fictional bank, its tools and the AI agent whose actions AgentSentinel governs."
+    },
+    {
+      "id": "F-03",
+      "title": "Interception, identity and scope",
+      "description": "The gateway every protected tool call must pass through, with agent, user, session and customer binding."
+    },
+    {
+      "id": "F-04",
+      "title": "Policy, validation and data provenance",
+      "description": "Bank rules written as code in OPA, checks on action details, and tracking where sensitive values came from."
+    },
+    {
+      "id": "F-05",
+      "title": "Machine learning risk engine",
+      "description": "Labelled synthetic data and the model that scores risky actions and sequences."
+    },
+    {
+      "id": "F-06",
+      "title": "Human approval and containment",
+      "description": "Maker-checker approval for high-impact actions and quarantine for repeat offenders."
+    },
+    {
+      "id": "F-07",
+      "title": "Audit, explanation and incident evidence",
+      "description": "Hash-linked audit trail, policy-cited explanations and incident timelines."
+    },
+    {
+      "id": "F-08",
+      "title": "Dashboard and administration",
+      "description": "The screens analysts, approvers and administrators use."
+    },
+    {
+      "id": "F-09",
+      "title": "Platform: containers, CI/CD, Kubernetes and observability",
+      "description": "Docker, the CI/CD pipeline, public deployment, the Kubernetes profile, metrics, logs and traces."
+    },
+    {
+      "id": "F-10",
+      "title": "Evaluation, hardening and release",
+      "description": "AgentDojo and scenario evaluation, performance and security testing, and the submission package."
+    }
+  ],
+  "requirements": {
+    "fr": {
+      "FR-01": "Intercept every protected tool/API call before execution.",
+      "FR-02": "Authenticate/identify the agent and bind the action to user, session, task, and correlation context.",
+      "FR-03": "Enforce task/tool permissions and least-privilege scopes.",
+      "FR-04": "Validate structured action details such as amount, account identifier, target resource, and allowed value ranges.",
+      "FR-05": "Record data provenance for configured sensitive parameters and distinguish trusted user intent from untrusted retrieved content.",
+      "FR-06": "Evaluate deterministic bank policy using Open Policy Agent or an equivalent policy engine.",
+      "FR-07": "Calculate a configurable machine-learning risk/anomaly score for selected actions and short action sequences.",
+      "FR-08": "Produce one enforceable decision: ALLOW, HUMAN_REVIEW, BLOCK, or QUARANTINE.",
+      "FR-09": "Prevent blocked/quarantined actions from reaching protected bank APIs.",
+      "FR-10": "Create approval requests for configured high-impact actions and allow authorized users to approve or reject them.",
+      "FR-11": "Resume or terminate the held action according to the approval outcome without losing audit context.",
+      "FR-12": "Provide a plain-English decision explanation grounded in retrieved policy evidence and citation identifiers.",
+      "FR-13": "Write an audit event for every evaluated action, including decision inputs, policy/model versions, risk result, final outcome, and timestamps.",
+      "FR-14": "Provide an incident timeline that reconstructs the complete request-to-outcome path.",
+      "FR-15": "Provide a dashboard showing recent actions, risk scores, incidents, approvals, blocked actions, agent status, and service health.",
+      "FR-16": "Allow authorized administrators to register, enable, disable, or quarantine an agent.",
+      "FR-17": "Allow administrators to create/version policy bundles and simulate proposed policies against stored synthetic events before activation.",
+      "FR-18": "Apply rate/velocity controls for selected actions and agents.",
+      "FR-19": "Expose service health, readiness, metrics, logs, and distributed trace identifiers.",
+      "FR-20": "Support notification of critical incidents and pending approvals through the dashboard and optional demo email/webhook adapter."
+    },
+    "nfr": {
+      "NFR-01": {
+        "quality": "Security",
+        "text": "Deny by default for unrecognized high-impact actions; blocked actions must never reach the protected API."
+      },
+      "NFR-02": {
+        "quality": "Performance",
+        "text": "Target p95 governance latency <= 300 ms for the non-generative decision path under the agreed demo load; RAG explanation may execute asynchronously and target <= 3 seconds."
+      },
+      "NFR-03": {
+        "quality": "Reliability",
+        "text": "100% of clearly blocked test actions must be prevented from reaching protected demo APIs; decisions must be idempotent for repeated correlation IDs."
+      },
+      "NFR-04": {
+        "quality": "Availability",
+        "text": "Critical stateless services shall use health/readiness probes and restart/self-heal under the Kubernetes profile; public demo target availability during final validation >= 99%."
+      },
+      "NFR-05": {
+        "quality": "Scalability",
+        "text": "Demonstrate horizontal scaling for at least one stateless service and maintain acceptable latency under a defined load test."
+      },
+      "NFR-06": {
+        "quality": "Auditability",
+        "text": "Every evaluated action shall have a correlation ID and a complete audit record; target audit completeness = 100% in evaluation scenarios."
+      },
+      "NFR-07": {
+        "quality": "Explainability",
+        "text": "Target >= 90% of sampled generated explanations to cite the correct policy section(s) supporting the actual decision."
+      },
+      "NFR-08": {
+        "quality": "Privacy",
+        "text": "Use synthetic data only; no real customer personally identifiable information (PII) or financial data shall be stored or transmitted."
+      },
+      "NFR-09": {
+        "quality": "Maintainability",
+        "text": "Critical services shall have automated tests and documented module/API boundaries; target >= 80% coverage for security-critical Python modules where practical."
+      },
+      "NFR-10": {
+        "quality": "Portability",
+        "text": "All deployable services shall be containerized; the repository shall include local Docker Compose and Kubernetes deployment profiles."
+      },
+      "NFR-11": {
+        "quality": "Observability",
+        "text": "Metrics, logs, and traces shall expose latency, errors, traffic, saturation, decision counts, and security events."
+      },
+      "NFR-12": {
+        "quality": "Usability",
+        "text": "The dashboard shall present decisions and approval context in plain English and support basic keyboard navigation and readable contrast."
+      },
+      "NFR-13": {
+        "quality": "Recoverability",
+        "text": "Database backups/export and reproducible deployment scripts shall permit restoration of the demo environment within a target of 30 minutes."
+      },
+      "NFR-14": {
+        "quality": "Reproducibility",
+        "text": "A documented setup shall allow a grader to run tests and core scenarios from the repository using version-pinned dependencies and sample environment configuration."
+      }
+    },
+    "use_cases": {
+      "UC-01": "Allow safe customer lookup",
+      "UC-02": "Block prompt-injected refund",
+      "UC-03": "Hold high-value refund",
+      "UC-04": "Deny cross-customer access",
+      "UC-05": "Block bulk export",
+      "UC-06": "Detect behavioral anomaly",
+      "UC-07": "Quarantine repeated violations",
+      "UC-08": "Explain a decision",
+      "UC-09": "Reconstruct incident",
+      "UC-10": "Simulate a new policy",
+      "UC-11": "Onboard an agent",
+      "UC-12": "Monitor platform health"
+    },
+    "acceptance_tests": {
+      "AT-01": "Normal transaction lookup: ALLOW, correct data, complete audit (UC-01)",
+      "AT-02": "Cross-customer lookup: BLOCK, bank API not called (UC-04)",
+      "AT-03": "Bulk export: BLOCK by hard policy (UC-05)",
+      "AT-04": "Refund exactly at limit: outcome matches policy boundary (UC-03)",
+      "AT-05": "Refund above limit: HUMAN_REVIEW, no execution before approval (UC-03)",
+      "AT-06": "Prompt-injected destination: BLOCK or review per provenance rule (UC-02)",
+      "AT-07": "Unusual admin sequence: high risk, block or quarantine (UC-06)",
+      "AT-08": "Repeated denied calls: QUARANTINE, later calls denied (UC-07)",
+      "AT-09": "Policy explanation cites correct passage and cannot change the decision (UC-08)",
+      "AT-10": "Incident replay by correlation ID: full ordered timeline (UC-09)",
+      "AT-11": "Policy simulation: no production policy changed, diff report generated (UC-10)",
+      "AT-12": "Gateway dependency failure: fail closed, event logged",
+      "AT-13": "Load test: p95 latency measured, no data corruption (UC-12)",
+      "AT-14": "Kubernetes pod deletion: replica restored (UC-12)",
+      "AT-15": "Rolling update: rollout succeeds, rollback available (UC-12)"
+    }
+  },
+  "stories": [
+    {
+      "id": "US-12",
+      "feature": "F-01",
+      "title": "Set up the Scrum board and product backlog",
+      "as_a": "the Scrum Master",
+      "i_want": "a public Scrum board that holds the product backlog, sprints, stories and tasks with their status",
+      "so_that": "the team and the grader can see what is planned, in progress and done at any time",
+      "acceptance": [
+        "Given the setup script has run, when anyone opens the board link, then they can see the product backlog (project visibility is public).",
+        "Given a story on the board, when it is opened, then it shows its feature, sprint, priority, story points, FR, NFR and use case labels, and its tasks with completion progress.",
+        "Given the repository README, when a reader opens it, then a Scrum board link points to the board and the board appears in the repository's Projects tab."
+      ],
+      "uc": [],
+      "fr": [],
+      "nfr": [],
+      "tests": [],
+      "priority": "Must",
+      "points": 2,
+      "sprint": "Sprint 0",
+      "milestone": "M1",
+      "source": "Handbook requirement: web-based Scrum board linked from the repository",
+      "tasks": [
+        {
+          "title": "Run tools/board/setup_board.py and check that features, stories and Sprint 0 tasks were created",
+          "role": "Scrum Master"
+        },
+        {
+          "title": "Create the board views listed in docs/agile/board-guide.md",
+          "role": "Scrum Master"
+        },
+        {
+          "title": "Turn on the built-in workflows listed in docs/agile/board-guide.md",
+          "role": "Scrum Master"
+        },
+        {
+          "title": "Add the board link to the README and confirm the board shows in the repository's Projects tab",
+          "role": "Scrum Master"
+        },
+        {
+          "title": "Hold the start-up meeting and Sprint 0 planning; save notes in docs/agile/sprints/sprint-0/",
+          "role": "Whole team"
+        }
+      ]
+    },
+    {
+      "id": "US-13",
+      "feature": "F-01",
+      "title": "Create the repository with review rules and templates",
+      "as_a": "a Code Owner",
+      "i_want": "a protected main branch, CODEOWNERS, issue and pull request templates and a contribution guide",
+      "so_that": "every change is reviewed and linked to a story before it is merged",
+      "acceptance": [
+        "Given a pull request to main, when it lacks a Code Owner approval or CI is failing, then GitHub blocks the merge.",
+        "Given a new issue, when a team member opens the issue form, then they can choose the User story, Task or Bug template with its required fields.",
+        "Given the repository settings, when collaborators are checked, then the quantic-grader account has read access."
+      ],
+      "uc": [],
+      "fr": [],
+      "nfr": [
+        "NFR-09",
+        "NFR-14"
+      ],
+      "tests": [],
+      "priority": "Must",
+      "points": 3,
+      "sprint": "Sprint 0",
+      "milestone": "M1",
+      "source": "New story added for delivery",
+      "tasks": [
+        {
+          "title": "Create the repository and give the quantic-grader account read access",
+          "role": "Product Owner"
+        },
+        {
+          "title": "Commit the starter files from this kit (README, CONTRIBUTING, CODEOWNERS, templates, .gitignore)",
+          "role": "Code Owner"
+        },
+        {
+          "title": "Create the folder structure from proposal Section 16.1 with a short README in each folder",
+          "role": "Developer"
+        },
+        {
+          "title": "Add a ruleset on main: pull request required, one approval, Code Owner review, status check ci required, no force push",
+          "role": "Code Owner"
+        },
+        {
+          "title": "Turn on secret scanning, push protection and Dependabot alerts",
+          "role": "Code Owner"
+        }
+      ]
+    },
+    {
+      "id": "US-14",
+      "feature": "F-01",
+      "title": "Commit the requirements and design baseline",
+      "as_a": "the Product Owner",
+      "i_want": "the use cases, requirements, threat model, architecture and initial ADRs committed to the repository",
+      "so_that": "every story traces back to an agreed requirement and design decision",
+      "acceptance": [
+        "Given docs/requirements, when a reviewer opens it, then UC-01 to UC-12, FR-01 to FR-20 and NFR-01 to NFR-14 are listed with the same IDs as the proposal and the board labels.",
+        "Given docs/adr, when a reviewer opens it, then ADR-001 to ADR-008 exist with context, decision, consequences and status.",
+        "Given any story, when the traceability tables are checked, then its use cases, FRs, NFRs and acceptance tests can be found.",
+        "Given the Sprint 0 review, when the Product Owner accepts the baseline, then milestone M1 is recorded as signed off."
+      ],
+      "uc": [],
+      "fr": [],
+      "nfr": [],
+      "tests": [],
+      "priority": "Must",
+      "points": 3,
+      "sprint": "Sprint 0",
+      "milestone": "M1",
+      "source": "Proposal Section 6 (SDLC phases 1 to 3) and Section 13 (Sprint 0)",
+      "tasks": [
+        {
+          "title": "Write docs/requirements/requirements.md from proposal Sections 4 and 5",
+          "role": "Product Owner"
+        },
+        {
+          "title": "Write ADR-001 to ADR-008 as Markdown files in docs/adr",
+          "role": "Developer"
+        },
+        {
+          "title": "Add the threat model table and architecture diagrams to docs/architecture",
+          "role": "Developer"
+        },
+        {
+          "title": "Commit docs/agile/product-backlog.md as the traceability baseline",
+          "role": "Scrum Master"
+        },
+        {
+          "title": "Product Owner signs off M1 at the Sprint 0 review",
+          "role": "Product Owner"
+        }
+      ]
+    },
+    {
+      "id": "US-10",
+      "feature": "F-09",
+      "title": "Run automated checks on every pull request",
+      "as_a": "a developer",
+      "i_want": "every pull request linted, tested and scanned automatically",
+      "so_that": "defects and leaked secrets are stopped before they reach main",
+      "acceptance": [
+        "Given a pull request, when it is opened or updated, then the ci workflow runs lint, unit tests and policy tests and reports pass or fail.",
+        "Given a failing check, when CI finishes, then the pull request cannot be merged.",
+        "Given a dependency with a known vulnerability or a committed secret, when scanning runs, then it is reported before merge."
+      ],
+      "uc": [],
+      "fr": [],
+      "nfr": [
+        "NFR-09",
+        "NFR-14"
+      ],
+      "tests": [],
+      "priority": "Must",
+      "points": 5,
+      "sprint": "Sprint 0",
+      "milestone": "M1",
+      "source": "Proposal Appendix B, US-10",
+      "tasks": [
+        {
+          "title": "Commit .github/workflows/ci.yml (Ruff lint, pytest, opa test) from the kit and make it pass",
+          "role": "Developer"
+        },
+        {
+          "title": "Add pip-audit dependency scanning and Dependabot version updates",
+          "role": "Developer"
+        },
+        {
+          "title": "Add a first smoke test so the pipeline runs green on main",
+          "role": "Developer"
+        },
+        {
+          "title": "Make ci a required status check in the main branch ruleset",
+          "role": "Code Owner"
+        },
+        {
+          "title": "Add pre-commit hooks for formatting and lint",
+          "role": "Developer"
+        }
+      ]
+    },
+    {
+      "id": "US-15",
+      "feature": "F-02",
+      "title": "Define the synthetic data schema",
+      "as_a": "a developer",
+      "i_want": "one documented schema for synthetic customers, accounts, transactions, sessions and agent actions",
+      "so_that": "every service and test uses the same invented data and no real personal data enters the project",
+      "acceptance": [
+        "Given the schema document, when a developer reads it, then each entity in proposal Section 7.4 has its fields, types and example values.",
+        "Given the generator rules, when data is produced, then names, account numbers and emails are clearly synthetic (reserved test domains, fixed fake formats).",
+        "Given the labelling rules, when an action event is created, then its expected outcome and failure mode are recorded."
+      ],
+      "uc": [],
+      "fr": [],
+      "nfr": [
+        "NFR-08"
+      ],
+      "tests": [],
+      "priority": "Must",
+      "points": 2,
+      "sprint": "Sprint 0",
+      "milestone": "M1",
+      "source": "Proposal Section 8.3 and Section 13 (Sprint 0: synthetic data schema)",
+      "tasks": [
+        {
+          "title": "Write Pydantic models or JSON Schemas for the Section 7.4 entities",
+          "role": "Developer"
+        },
+        {
+          "title": "Write labelling rules for normal actions and the five failure modes",
+          "role": "Product Owner"
+        },
+        {
+          "title": "Document synthetic-data rules: reserved domains, fake account formats, fixed random seed",
+          "role": "Developer"
+        },
+        {
+          "title": "Review the schema against what FR-04, FR-05 and FR-07 need",
+          "role": "Code Owner"
+        }
+      ]
+    },
+    {
+      "id": "US-16",
+      "feature": "F-02",
+      "title": "Build the synthetic demo bank API",
+      "as_a": "a demo presenter",
+      "i_want": "a demo bank API with customers, accounts, transactions, refunds and admin tools filled with invented data",
+      "so_that": "Vera has realistic tools to call",
+      "acceptance": [
+        "Given the seeded database, when transactions are requested for a customer, then only that customer's synthetic transactions are returned.",
+        "Given a request without a valid gateway execution token, when it reaches a protected endpoint, then the bank API rejects it with HTTP 403.",
+        "Given the reset command, when it runs, then the demo bank returns to the same seeded state."
+      ],
+      "uc": [
+        "UC-01"
+      ],
+      "fr": [],
+      "nfr": [
+        "NFR-08",
+        "NFR-10"
+      ],
+      "tests": [],
+      "priority": "Must",
+      "points": 3,
+      "sprint": "Sprint 1",
+      "milestone": "M2",
+      "source": "New story added for delivery",
+      "tasks": [
+        {
+          "title": "FastAPI service with tools: get_customer, get_transactions, update_address, issue_refund, close_dispute, export_customers, admin tools",
+          "role": "Developer"
+        },
+        {
+          "title": "Seed generator with a fixed seed and a demo reset command",
+          "role": "Developer"
+        },
+        {
+          "title": "Unit tests for each endpoint",
+          "role": "Developer"
+        },
+        {
+          "title": "Dockerfile and health endpoint",
+          "role": "Developer"
+        }
+      ]
+    },
+    {
+      "id": "US-17",
+      "feature": "F-02",
+      "title": "Run Vera in scripted mode through the gateway only",
+      "as_a": "a demo presenter",
+      "i_want": "Vera to propose tool calls only through the AgentSentinel gateway, with a deterministic scripted mode",
+      "so_that": "every scenario can be replayed the same way and the agent never holds bank credentials",
+      "acceptance": [
+        "Given Vera's configuration, when it is inspected, then it holds the gateway URL and no bank API URL or credential.",
+        "Given a scripted fixture, when it runs twice, then Vera proposes the same tool calls in the same order.",
+        "Given a BLOCK decision, when Vera receives it, then Vera tells the user the action was refused and does not retry the same call."
+      ],
+      "uc": [
+        "UC-01"
+      ],
+      "fr": [
+        "FR-01"
+      ],
+      "nfr": [
+        "NFR-14"
+      ],
+      "tests": [],
+      "priority": "Must",
+      "points": 5,
+      "sprint": "Sprint 1",
+      "milestone": "M2",
+      "source": "New story added for delivery",
+      "tasks": [
+        {
+          "title": "Tool schemas and a gateway client for Vera",
+          "role": "Developer"
+        },
+        {
+          "title": "Scripted fixtures for UC-01 to UC-07",
+          "role": "Developer"
+        },
+        {
+          "title": "Scenario runner command (run one fixture or all)",
+          "role": "Developer"
+        },
+        {
+          "title": "Unit tests for the agent loop and refusal handling",
+          "role": "Developer"
+        }
+      ]
+    },
+    {
+      "id": "US-18",
+      "feature": "F-03",
+      "title": "Intercept every protected tool call at the gateway",
+      "as_a": "a security analyst",
+      "i_want": "every protected tool call intercepted before execution and bound to agent, user, session, task and correlation context",
+      "so_that": "nothing reaches the bank API without a decision",
+      "acceptance": [
+        "Given any protected tool call from Vera, when it is sent, then the gateway evaluates it first and returns ALLOW, HUMAN_REVIEW, BLOCK or QUARANTINE with a correlation ID.",
+        "Given an ALLOW decision, when the gateway forwards the call, then it attaches a signed single-use execution token that the bank API verifies; a replayed token is rejected.",
+        "Given an unknown tool or missing context, when the gateway evaluates it, then the decision is BLOCK (deny by default).",
+        "Given the same correlation ID twice, when the gateway evaluates it, then it returns the same decision and the action executes at most once."
+      ],
+      "uc": [
+        "UC-01"
+      ],
+      "fr": [
+        "FR-01",
+        "FR-02",
+        "FR-08",
+        "FR-09"
+      ],
+      "nfr": [
+        "NFR-01",
+        "NFR-02",
+        "NFR-03",
+        "NFR-06"
+      ],
+      "tests": [
+        "AT-01"
+      ],
+      "priority": "Must",
+      "points": 8,
+      "sprint": "Sprint 1",
+      "milestone": "M2",
+      "source": "New story added for delivery",
+      "tasks": [
+        {
+          "title": "Define ProtectedActionRequest and GovernanceDecision contracts (Pydantic) from proposal Appendix E",
+          "role": "Developer"
+        },
+        {
+          "title": "Build POST /v1/actions/evaluate with context binding from token and session claims",
+          "role": "Developer"
+        },
+        {
+          "title": "Decision orchestrator with deny by default and the Appendix E precedence order",
+          "role": "Developer"
+        },
+        {
+          "title": "Signed single-use execution token issued by the gateway and verified by the bank API",
+          "role": "Developer"
+        },
+        {
+          "title": "Idempotent decisions by correlation ID",
+          "role": "Developer"
+        },
+        {
+          "title": "Unit and contract tests, including a token replay attempt",
+          "role": "Developer"
+        }
+      ]
+    },
+    {
+      "id": "US-01",
+      "feature": "F-03",
+      "title": "Keep Vera inside the current customer's data",
+      "as_a": "a bank customer",
+      "i_want": "Vera to retrieve only my authorized information",
+      "so_that": "AI assistance does not expose another customer's data",
+      "acceptance": [
+        "Given Customer A's session, when Vera asks for Customer A's recent transactions, then the decision is ALLOW and the data is returned (AT-01).",
+        "Given Customer A's session, when Vera asks for Customer B's records, then the decision is BLOCK and the bank API receives no call (AT-02).",
+        "Given either case, when the audit log is checked, then one complete audit event exists for the correlation ID."
+      ],
+      "uc": [
+        "UC-01",
+        "UC-04"
+      ],
+      "fr": [
+        "FR-02",
+        "FR-03",
+        "FR-08",
+        "FR-09",
+        "FR-13"
+      ],
+      "nfr": [
+        "NFR-01",
+        "NFR-03",
+        "NFR-06"
+      ],
+      "tests": [
+        "AT-01",
+        "AT-02"
+      ],
+      "priority": "Must",
+      "points": 5,
+      "sprint": "Sprint 1",
+      "milestone": "M2",
+      "source": "Proposal Appendix B, US-01",
+      "tasks": [
+        {
+          "title": "Session-to-customer binding check in the gateway",
+          "role": "Developer"
+        },
+        {
+          "title": "Per-task tool allowlist (moves into OPA in US-02a)",
+          "role": "Developer"
+        },
+        {
+          "title": "End-to-end test AT-01 safe lookup",
+          "role": "Developer"
+        },
+        {
+          "title": "Integration test AT-02 with a bank API call counter that must stay at zero",
+          "role": "Developer"
+        }
+      ]
+    },
+    {
+      "id": "US-19",
+      "feature": "F-07",
+      "title": "Write a hash-linked audit event for every decision",
+      "as_a": "an auditor",
+      "i_want": "every evaluated action written as an append-only, hash-linked audit event",
+      "so_that": "the decision path can be reconstructed and tampering can be detected",
+      "acceptance": [
+        "Given any decision, when it is made, then an audit event is stored with correlation ID, actor, tool, arguments, decision, policy and model versions, timestamps, previous hash and own hash.",
+        "Given the stored chain, when one event is edited directly in the database, then the verify-chain command reports the broken link.",
+        "Given the gateway's database role, when it tries to update or delete audit rows, then the database refuses."
+      ],
+      "uc": [
+        "UC-01",
+        "UC-09"
+      ],
+      "fr": [
+        "FR-13"
+      ],
+      "nfr": [
+        "NFR-06"
+      ],
+      "tests": [
+        "AT-01"
+      ],
+      "priority": "Must",
+      "points": 5,
+      "sprint": "Sprint 1",
+      "milestone": "M2",
+      "source": "New story added for delivery",
+      "tasks": [
+        {
+          "title": "PostgreSQL schema and migrations for ToolCall and AuditEvent",
+          "role": "Developer"
+        },
+        {
+          "title": "Append-only repository with hash chaining",
+          "role": "Developer"
+        },
+        {
+          "title": "verify-chain command and a tamper test",
+          "role": "Developer"
+        },
+        {
+          "title": "Database role that can insert but not update or delete audit rows",
+          "role": "Developer"
+        },
+        {
+          "title": "Audit completeness check (reused in US-26)",
+          "role": "Developer"
+        }
+      ]
+    },
+    {
+      "id": "US-20",
+      "feature": "F-09",
+      "title": "Run the whole stack with one Docker Compose command",
+      "as_a": "a developer",
+      "i_want": "every service containerized and started with one docker compose command",
+      "so_that": "the system runs the same way on every machine and in CI",
+      "acceptance": [
+        "Given a clean machine with Docker, when docker compose up runs, then the bank API, gateway, OPA and PostgreSQL with pgvector start and pass their health checks.",
+        "Given a merge to main, when CI runs, then images are built with the commit SHA as tag and scanned with Trivy; critical findings fail the build.",
+        "Given any service, when /healthz and /readyz are called, then they report liveness and readiness."
+      ],
+      "uc": [],
+      "fr": [
+        "FR-19"
+      ],
+      "nfr": [
+        "NFR-10",
+        "NFR-14"
+      ],
+      "tests": [],
+      "priority": "Must",
+      "points": 3,
+      "sprint": "Sprint 1",
+      "milestone": "M2",
+      "source": "New story added for delivery",
+      "tasks": [
+        {
+          "title": "Dockerfiles: slim base image, non-root user, pinned versions",
+          "role": "Developer"
+        },
+        {
+          "title": "docker-compose.yml with health checks and .env.example",
+          "role": "Developer"
+        },
+        {
+          "title": "/healthz and /readyz on every service",
+          "role": "Developer"
+        },
+        {
+          "title": "CI job: build images tagged with the commit SHA, scan with Trivy, push to GitHub Container Registry on main",
+          "role": "Developer"
+        }
+      ]
+    },
+    {
+      "id": "US-02a",
+      "feature": "F-04",
+      "title": "Block unsafe tool calls with versioned OPA policy",
+      "as_a": "a security analyst",
+      "i_want": "bulk exports, wrong tools and invalid action details blocked by versioned bank policy before execution",
+      "so_that": "a well-formed but unsafe request cannot cause harm",
+      "acceptance": [
+        "Given a request to export all customers, when it is evaluated, then OPA denies it, the decision is BLOCK and the bank API is not called (AT-03).",
+        "Given a refund with a negative or out-of-range amount, or a tool not allowed for the current task, when it is evaluated, then the decision is BLOCK with a reason code.",
+        "Given any decision, when it is audited, then the policy bundle version and matched rules are recorded.",
+        "Given OPA is unreachable, when a high-impact action is evaluated, then the gateway fails closed and logs the fault (AT-12)."
+      ],
+      "uc": [
+        "UC-05"
+      ],
+      "fr": [
+        "FR-03",
+        "FR-04",
+        "FR-06",
+        "FR-08",
+        "FR-09",
+        "FR-13",
+        "FR-17"
+      ],
+      "nfr": [
+        "NFR-01",
+        "NFR-03"
+      ],
+      "tests": [
+        "AT-03",
+        "AT-12"
+      ],
+      "priority": "Must",
+      "points": 5,
+      "sprint": "Sprint 2",
+      "milestone": "M3",
+      "source": "Proposal Appendix B, US-02 (split: hard policy blocks)",
+      "tasks": [
+        {
+          "title": "Rego policies: task-to-tool permissions, bulk export deny, value ranges, refund threshold",
+          "role": "Developer"
+        },
+        {
+          "title": "OPA container and gateway client with timeout and fail-closed handling",
+          "role": "Developer"
+        },
+        {
+          "title": "Policy unit tests with opa test, including boundary values",
+          "role": "Developer"
+        },
+        {
+          "title": "Versioned policy bundles; record policy_version in decisions and audit",
+          "role": "Developer"
+        },
+        {
+          "title": "Integration test AT-03",
+          "role": "Developer"
+        }
+      ]
+    },
+    {
+      "id": "US-02b",
+      "feature": "F-04",
+      "title": "Block refunds whose details came from untrusted content",
+      "as_a": "a security analyst",
+      "i_want": "refund destinations and amounts that came from untrusted content such as emails or documents blocked or held",
+      "so_that": "a prompt injection cannot redirect money",
+      "acceptance": [
+        "Given a support email with hidden instructions and an attacker account number, when Vera proposes a refund to that account, then the decision is BLOCK (or HUMAN_REVIEW if so configured) and the bank API is not called (AT-06).",
+        "Given a refund whose account and amount match what the customer typed, when it is evaluated, then they are labelled trusted and normal rules apply.",
+        "Given any decision, when it is audited, then the data-origin label of each sensitive parameter is recorded."
+      ],
+      "uc": [
+        "UC-02"
+      ],
+      "fr": [
+        "FR-05",
+        "FR-06",
+        "FR-08",
+        "FR-09",
+        "FR-13"
+      ],
+      "nfr": [
+        "NFR-01",
+        "NFR-03",
+        "NFR-06"
+      ],
+      "tests": [
+        "AT-06"
+      ],
+      "priority": "Must",
+      "points": 8,
+      "sprint": "Sprint 2",
+      "milestone": "M3",
+      "source": "Proposal Appendix B, US-02 (split: prompt injection)",
+      "tasks": [
+        {
+          "title": "Data-origin labels on Vera's context: trusted user input versus retrieved content",
+          "role": "Developer"
+        },
+        {
+          "title": "Value-matching tracker for configured sensitive parameters",
+          "role": "Developer"
+        },
+        {
+          "title": "Rego rule for untrusted sensitive parameters",
+          "role": "Developer"
+        },
+        {
+          "title": "Poisoned email and document fixtures",
+          "role": "Developer"
+        },
+        {
+          "title": "Scenario test AT-06 with a bank API call counter",
+          "role": "Developer"
+        }
+      ]
+    },
+    {
+      "id": "US-21",
+      "feature": "F-05",
+      "title": "Generate the labelled synthetic action dataset",
+      "as_a": "an ML engineer",
+      "i_want": "2,000 to 5,000 labelled synthetic action events and short sequences, with a held-out test set frozen before tuning",
+      "so_that": "the risk model is trained and judged fairly",
+      "acceptance": [
+        "Given the generator and its fixed seed, when it runs twice, then it produces the same dataset and checksum.",
+        "Given the dataset, when it is split, then train, validation and test are 70/15/15 and the test set checksum is recorded before any tuning.",
+        "Given each failure mode in proposal Section 2.1, when the dataset is inspected, then it contains labelled examples of that mode and of normal behavior."
+      ],
+      "uc": [
+        "UC-06"
+      ],
+      "fr": [
+        "FR-07"
+      ],
+      "nfr": [
+        "NFR-08",
+        "NFR-14"
+      ],
+      "tests": [],
+      "priority": "Must",
+      "points": 5,
+      "sprint": "Sprint 2",
+      "milestone": "M3",
+      "source": "New story added for delivery",
+      "tasks": [
+        {
+          "title": "Event and sequence generator for normal behavior and the five failure modes",
+          "role": "Developer"
+        },
+        {
+          "title": "Apply the labelling rules in code and review a 50-event sample by hand",
+          "role": "Product Owner"
+        },
+        {
+          "title": "70/15/15 split with a frozen test set and checksums",
+          "role": "Developer"
+        },
+        {
+          "title": "Dataset card: version, size, class balance, known limitations",
+          "role": "Developer"
+        }
+      ]
+    },
+    {
+      "id": "US-04",
+      "feature": "F-05",
+      "title": "Score suspicious actions and sequences",
+      "as_a": "a security analyst",
+      "i_want": "suspicious action sequences scored",
+      "so_that": "unusual behavior is caught even when each single call looks valid",
+      "acceptance": [
+        "Given normal customer-service actions followed by unusual admin or export requests, when they are evaluated, then the risk is high and the decision is HUMAN_REVIEW, BLOCK or QUARANTINE per policy (AT-07).",
+        "Given a hard policy deny, when the risk score is low, then the decision stays BLOCK (the model can add caution but never remove it).",
+        "Given the validation set, when the baseline and the stronger model are compared, then precision, recall, F1 and confusion matrices are reported and the chosen model version is recorded.",
+        "Given a scored action, when it is audited, then model_version and risk_score are recorded."
+      ],
+      "uc": [
+        "UC-06"
+      ],
+      "fr": [
+        "FR-07",
+        "FR-08",
+        "FR-09",
+        "FR-13",
+        "FR-18"
+      ],
+      "nfr": [
+        "NFR-02",
+        "NFR-03",
+        "NFR-06"
+      ],
+      "tests": [
+        "AT-07"
+      ],
+      "priority": "Must",
+      "points": 8,
+      "sprint": "Sprint 2",
+      "milestone": "M3",
+      "source": "Proposal Appendix B, US-04",
+      "tasks": [
+        {
+          "title": "Feature pipeline for the six feature families in proposal Section 8.1",
+          "role": "Developer"
+        },
+        {
+          "title": "Train a Logistic Regression baseline and a Random Forest or gradient boosting comparator; check Isolation Forest",
+          "role": "Developer"
+        },
+        {
+          "title": "Risk engine service POST /score returning score, band and model_version",
+          "role": "Developer"
+        },
+        {
+          "title": "Gateway integration with precedence rules and velocity limits (FR-18)",
+          "role": "Developer"
+        },
+        {
+          "title": "Evaluation notebook on the validation set",
+          "role": "Developer"
+        }
+      ]
+    },
+    {
+      "id": "US-06a",
+      "feature": "F-07",
+      "title": "Explain blocked and held decisions with policy citations",
+      "as_a": "an auditor",
+      "i_want": "a plain-English explanation of a blocked or held decision that cites the bank policy behind it",
+      "so_that": "I can review the control without reading code",
+      "acceptance": [
+        "Given a blocked event, when the analyst opens it, then an explanation cites at least one policy section ID from the retrieved policy text (AT-09).",
+        "Given the explanation service, when it runs, then it runs after the decision and cannot change the decision.",
+        "Given a citation that is not in the retrieved set, when validation runs, then the explanation is rejected and a safe fallback message is shown.",
+        "Given the external LLM is unavailable, when an explanation is requested, then the fallback is used and the security decision is unaffected."
+      ],
+      "uc": [
+        "UC-08"
+      ],
+      "fr": [
+        "FR-12",
+        "FR-13"
+      ],
+      "nfr": [
+        "NFR-02",
+        "NFR-07"
+      ],
+      "tests": [
+        "AT-09"
+      ],
+      "priority": "Must",
+      "points": 8,
+      "sprint": "Sprint 2",
+      "milestone": "M3",
+      "source": "Proposal Appendix B, US-06 (split: explanation)",
+      "tasks": [
+        {
+          "title": "Write the four synthetic bank policy documents with section IDs",
+          "role": "Product Owner"
+        },
+        {
+          "title": "Chunk and embed the policies into pgvector",
+          "role": "Developer"
+        },
+        {
+          "title": "RAG service POST /explain with a provider-neutral LLM adapter and mock fallback",
+          "role": "Developer"
+        },
+        {
+          "title": "Validate citations against the retrieved set",
+          "role": "Developer"
+        },
+        {
+          "title": "Call the explanation service after the decision and store ExplanationEvidence",
+          "role": "Developer"
+        }
+      ]
+    },
+    {
+      "id": "US-03",
+      "feature": "F-06",
+      "title": "Hold large refunds for human approval",
+      "as_a": "a manager",
+      "i_want": "large refunds held for approval",
+      "so_that": "material financial actions remain under human control",
+      "acceptance": [
+        "Given a refund exactly at the automatic limit, when it is evaluated, then the outcome matches the policy boundary specification (AT-04).",
+        "Given a refund above the limit, when it is evaluated, then the decision is HUMAN_REVIEW and nothing executes before approval (AT-05).",
+        "Given a held refund, when the approver opens it, then they see the customer request, amount, reason, risk score and relevant policy in plain English.",
+        "Given an approval or rejection, when it is saved, then the held action resumes or ends under the same correlation ID; an unauthorized approver, or the person who raised the request, is refused."
+      ],
+      "uc": [
+        "UC-03"
+      ],
+      "fr": [
+        "FR-04",
+        "FR-08",
+        "FR-10",
+        "FR-11",
+        "FR-13"
+      ],
+      "nfr": [
+        "NFR-01",
+        "NFR-06",
+        "NFR-12"
+      ],
+      "tests": [
+        "AT-04",
+        "AT-05"
+      ],
+      "priority": "Must",
+      "points": 8,
+      "sprint": "Sprint 3",
+      "milestone": "M4",
+      "source": "Proposal Appendix B, US-03",
+      "tasks": [
+        {
+          "title": "Approval service: create, expire, approve and reject with maker-checker rules",
+          "role": "Developer"
+        },
+        {
+          "title": "Gateway HUMAN_REVIEW path that parks the action",
+          "role": "Developer"
+        },
+        {
+          "title": "Resume or end held actions under the same correlation ID",
+          "role": "Developer"
+        },
+        {
+          "title": "Approval screen with full context",
+          "role": "Developer"
+        },
+        {
+          "title": "Tests AT-04, AT-05 and the unauthorized approver case",
+          "role": "Developer"
+        }
+      ]
+    },
+    {
+      "id": "US-05",
+      "feature": "F-06",
+      "title": "Quarantine an agent after repeated violations",
+      "as_a": "a security analyst",
+      "i_want": "repeated violations to quarantine an agent",
+      "so_that": "compromised behavior is contained quickly",
+      "acceptance": [
+        "Given three or more prohibited calls inside the configured window, when the next call arrives, then the agent is QUARANTINED and every later call is denied (AT-08).",
+        "Given a quarantine, when the dashboard is open, then a critical incident and a notification appear.",
+        "Given an administrator, when they use the kill switch or release the agent, then the change is audited."
+      ],
+      "uc": [
+        "UC-07"
+      ],
+      "fr": [
+        "FR-08",
+        "FR-09",
+        "FR-16",
+        "FR-18",
+        "FR-20"
+      ],
+      "nfr": [
+        "NFR-01",
+        "NFR-03",
+        "NFR-06"
+      ],
+      "tests": [
+        "AT-08"
+      ],
+      "priority": "Must",
+      "points": 5,
+      "sprint": "Sprint 3",
+      "milestone": "M4",
+      "source": "Proposal Appendix B, US-05",
+      "tasks": [
+        {
+          "title": "Violation counter within a time window",
+          "role": "Developer"
+        },
+        {
+          "title": "Quarantine state on the agent record, enforced by the gateway",
+          "role": "Developer"
+        },
+        {
+          "title": "Kill switch and release action for administrators",
+          "role": "Developer"
+        },
+        {
+          "title": "Critical incident notification on the dashboard",
+          "role": "Developer"
+        },
+        {
+          "title": "Scenario test AT-08",
+          "role": "Developer"
+        }
+      ]
+    },
+    {
+      "id": "US-06b",
+      "feature": "F-07",
+      "title": "Reconstruct an incident by correlation ID",
+      "as_a": "an auditor",
+      "i_want": "to open an incident by correlation ID and see the ordered path from user request to outcome",
+      "so_that": "I can reconstruct what happened",
+      "acceptance": [
+        "Given a prior incident, when it is opened by correlation ID, then the timeline shows request, tool call, data origin, policy result, risk score, approval, explanation and outcome in order (AT-10).",
+        "Given the timeline, when verify-chain runs over its events, then the chain is intact.",
+        "Given each timeline step, when it is viewed, then it shows the trace ID that links it to logs and traces."
+      ],
+      "uc": [
+        "UC-09"
+      ],
+      "fr": [
+        "FR-13",
+        "FR-14",
+        "FR-15"
+      ],
+      "nfr": [
+        "NFR-06",
+        "NFR-11"
+      ],
+      "tests": [
+        "AT-10"
+      ],
+      "priority": "Must",
+      "points": 5,
+      "sprint": "Sprint 3",
+      "milestone": "M4",
+      "source": "Proposal Appendix B, US-06 (split: incident timeline)",
+      "tasks": [
+        {
+          "title": "Incident entity and creation rules",
+          "role": "Developer"
+        },
+        {
+          "title": "Timeline API ordered by correlation ID",
+          "role": "Developer"
+        },
+        {
+          "title": "Timeline screen",
+          "role": "Developer"
+        },
+        {
+          "title": "Replay test AT-10 including chain verification",
+          "role": "Developer"
+        }
+      ]
+    },
+    {
+      "id": "US-22",
+      "feature": "F-08",
+      "title": "Show decisions and agent status on a security dashboard",
+      "as_a": "a security analyst",
+      "i_want": "a dashboard of recent actions, risk scores, incidents, approvals, blocked actions, agent status and service health",
+      "so_that": "I can see what the agent is doing at a glance",
+      "acceptance": [
+        "Given new decisions, when the dashboard is open, then they appear with a plain-English reason within a few seconds.",
+        "Given a pending approval or critical incident, when the dashboard is open, then it is highlighted with a link to its detail screen.",
+        "Given a keyboard-only user, when they move through the dashboard, then every control is reachable and text meets WCAG AA contrast."
+      ],
+      "uc": [
+        "UC-06"
+      ],
+      "fr": [
+        "FR-15",
+        "FR-20"
+      ],
+      "nfr": [
+        "NFR-12"
+      ],
+      "tests": [],
+      "priority": "Must",
+      "points": 5,
+      "sprint": "Sprint 3",
+      "milestone": "M4",
+      "source": "New story added for delivery",
+      "tasks": [
+        {
+          "title": "Dashboard shell and sign-in for analyst, approver and administrator roles",
+          "role": "Developer"
+        },
+        {
+          "title": "Decision feed with reasons, risk scores and filters",
+          "role": "Developer"
+        },
+        {
+          "title": "Agent status panel and pending approvals inbox",
+          "role": "Developer"
+        },
+        {
+          "title": "Keyboard and contrast check",
+          "role": "Developer"
+        },
+        {
+          "title": "Playwright end-to-end smoke test",
+          "role": "Developer"
+        }
+      ]
+    },
+    {
+      "id": "US-23",
+      "feature": "F-09",
+      "title": "Deploy a Kubernetes profile that self-heals and blocks bypass",
+      "as_a": "a platform engineer",
+      "i_want": "a Kubernetes profile with probes, NetworkPolicy, autoscaling and rolling updates",
+      "so_that": "the system self-heals, scales and the agent cannot reach bank tools directly",
+      "acceptance": [
+        "Given the kind or k3d cluster, when a gateway or risk engine pod is deleted, then the Deployment restores it without manual action (AT-14).",
+        "Given NetworkPolicy, when the agent pod calls the bank API directly, then the connection is refused, while calls through the gateway work.",
+        "Given load on the gateway, when CPU passes the target, then the autoscaler adds replicas (2 to 5).",
+        "Given a new risk engine image, when it is rolled out, then health checks pass and rollback works (AT-15)."
+      ],
+      "uc": [
+        "UC-12"
+      ],
+      "fr": [
+        "FR-09",
+        "FR-19"
+      ],
+      "nfr": [
+        "NFR-01",
+        "NFR-04",
+        "NFR-05",
+        "NFR-10"
+      ],
+      "tests": [
+        "AT-14",
+        "AT-15"
+      ],
+      "priority": "Must",
+      "points": 8,
+      "sprint": "Sprint 3",
+      "milestone": "M5",
+      "source": "New story added for delivery",
+      "tasks": [
+        {
+          "title": "Helm chart or Kustomize: Deployments, Services, ConfigMaps, Secrets, resource limits",
+          "role": "Developer"
+        },
+        {
+          "title": "Readiness and liveness probes",
+          "role": "Developer"
+        },
+        {
+          "title": "NetworkPolicy and a bypass test",
+          "role": "Developer"
+        },
+        {
+          "title": "Horizontal Pod Autoscaler with metrics-server",
+          "role": "Developer"
+        },
+        {
+          "title": "kind or k3d setup script and kubeconform validation in CI",
+          "role": "Developer"
+        },
+        {
+          "title": "Rolling update and rollback script",
+          "role": "Developer"
+        }
+      ]
+    },
+    {
+      "id": "US-11a",
+      "feature": "F-09",
+      "title": "Deploy to a public URL from main",
+      "as_a": "a grader",
+      "i_want": "a stable public URL deployed automatically from main",
+      "so_that": "I can try the working system at any time",
+      "acceptance": [
+        "Given a merge to main with green CI, when the deploy job runs, then the public demo is updated and a smoke test checks health plus one ALLOW and one BLOCK scenario.",
+        "Given the public demo, when it is opened, then only the dashboard and intended public APIs are reachable; internal services use private networking.",
+        "Given the deployment, when it is inspected, then secrets are held in the platform's secret store and not in the repository."
+      ],
+      "uc": [],
+      "fr": [],
+      "nfr": [
+        "NFR-04",
+        "NFR-14"
+      ],
+      "tests": [],
+      "priority": "Must",
+      "points": 5,
+      "sprint": "Sprint 3",
+      "milestone": "M5",
+      "source": "Proposal Appendix B, US-11 (split: public deployment)",
+      "tasks": [
+        {
+          "title": "ADR-009: choose Railway or Render, with cost and limits",
+          "role": "Developer"
+        },
+        {
+          "title": "Deploy the services and managed PostgreSQL",
+          "role": "Developer"
+        },
+        {
+          "title": "CD job on merge to main with a post-deploy smoke test",
+          "role": "Developer"
+        },
+        {
+          "title": "Show the live URL in the README and the build SHA in the dashboard footer",
+          "role": "Developer"
+        }
+      ]
+    },
+    {
+      "id": "US-24",
+      "feature": "F-02",
+      "title": "Run Vera with a live LLM through a provider adapter",
+      "as_a": "a demo presenter",
+      "i_want": "Vera to run with a real LLM through a provider-neutral adapter",
+      "so_that": "live scenarios and AgentDojo runs use a real agent while scripted mode stays as the fallback",
+      "acceptance": [
+        "Given LLM mode, when a UC-01 request is made, then Vera plans and proposes the tool call through the gateway.",
+        "Given a recorded run, when it is inspected, then the model name, version and temperature are stored with the results.",
+        "Given the provider is down, when the demo runs, then one setting switches Vera back to scripted mode."
+      ],
+      "uc": [
+        "UC-02"
+      ],
+      "fr": [
+        "FR-01"
+      ],
+      "nfr": [
+        "NFR-14"
+      ],
+      "tests": [],
+      "priority": "Must",
+      "points": 3,
+      "sprint": "Sprint 4",
+      "milestone": "M6",
+      "source": "New story added for delivery",
+      "tasks": [
+        {
+          "title": "LLM adapter interface with one provider and a mock",
+          "role": "Developer"
+        },
+        {
+          "title": "Pinned model settings stored in run metadata",
+          "role": "Developer"
+        },
+        {
+          "title": "Spend cap and timeout settings",
+          "role": "Developer"
+        },
+        {
+          "title": "Live run of the UC-01 and UC-02 fixtures",
+          "role": "Developer"
+        }
+      ]
+    },
+    {
+      "id": "US-09",
+      "feature": "F-09",
+      "title": "Expose health, latency, error and decision metrics",
+      "as_a": "a platform engineer",
+      "i_want": "health, latency, error, traffic, saturation and decision metrics",
+      "so_that": "I can operate AgentSentinel like a production system",
+      "acceptance": [
+        "Given traffic, when the metrics dashboard is open, then it shows request rate, error rate, p95 latency, saturation and decision counts by outcome.",
+        "Given a request, when it is traced, then the trace ID and correlation ID link logs, traces and audit events.",
+        "Given a stopped dependency, when health is checked, then readiness turns false and the dashboard health tile shows it."
+      ],
+      "uc": [
+        "UC-12"
+      ],
+      "fr": [
+        "FR-15",
+        "FR-19"
+      ],
+      "nfr": [
+        "NFR-04",
+        "NFR-11"
+      ],
+      "tests": [],
+      "priority": "Must",
+      "points": 5,
+      "sprint": "Sprint 4",
+      "milestone": "M5",
+      "source": "Proposal Appendix B, US-09",
+      "tasks": [
+        {
+          "title": "OpenTelemetry tracing with correlation IDs",
+          "role": "Developer"
+        },
+        {
+          "title": "Prometheus metrics for decisions and latency",
+          "role": "Developer"
+        },
+        {
+          "title": "Grafana dashboard JSON committed to the repository",
+          "role": "Developer"
+        },
+        {
+          "title": "Structured JSON logs",
+          "role": "Developer"
+        },
+        {
+          "title": "Health tiles on the security dashboard",
+          "role": "Developer"
+        }
+      ]
+    },
+    {
+      "id": "US-25",
+      "feature": "F-10",
+      "title": "Measure protection with the AgentDojo banking suite",
+      "as_a": "the Product Owner",
+      "i_want": "AgentDojo banking-suite runs for Setups A, B and C",
+      "so_that": "we can show how much AgentSentinel lowers attack success while keeping normal tasks working",
+      "acceptance": [
+        "Given Setup A (no AgentSentinel), Setup B (deterministic checks only) and Setup C (full pipeline), when each runs on the same tasks and model, then attack success rate, benign utility and utility under attack are recorded.",
+        "Given the results, when they are published, then the run scripts, model settings and raw outputs are in the repository so the numbers can be reproduced.",
+        "Given a target that is not met, when the results are written up, then the gap is stated plainly."
+      ],
+      "uc": [
+        "UC-02"
+      ],
+      "fr": [],
+      "nfr": [
+        "NFR-01",
+        "NFR-14"
+      ],
+      "tests": [],
+      "priority": "Must",
+      "points": 8,
+      "sprint": "Sprint 4",
+      "milestone": "M6",
+      "source": "Proposal Section 8.4",
+      "tasks": [
+        {
+          "title": "Install AgentDojo and route its banking tool calls through the gateway",
+          "role": "Developer"
+        },
+        {
+          "title": "Run Setup A baseline",
+          "role": "Developer"
+        },
+        {
+          "title": "Run Setups B and C",
+          "role": "Developer"
+        },
+        {
+          "title": "Results table and charts in docs/results",
+          "role": "Developer"
+        }
+      ]
+    },
+    {
+      "id": "US-26",
+      "feature": "F-10",
+      "title": "Measure the scenario suite against the success targets",
+      "as_a": "the Product Owner",
+      "i_want": "the held-out scenario suite, model metrics, citation check, false-block rate and audit completeness measured against proposal Section 12",
+      "so_that": "the final report shows measured values, not claims",
+      "acceptance": [
+        "Given the frozen test set, when the model is evaluated once, then recall, precision, F1 and false-block rate are reported against the targets.",
+        "Given a sample of at least 30 explanations, when they are reviewed, then the share citing the correct policy is reported.",
+        "Given all acceptance scenarios, when they run, then audit completeness is reported (target 100%).",
+        "Given threshold tuning, when it happens, then it uses validation data only and the change is recorded."
+      ],
+      "uc": [],
+      "fr": [],
+      "nfr": [
+        "NFR-03",
+        "NFR-06",
+        "NFR-07"
+      ],
+      "tests": [
+        "AT-01",
+        "AT-02",
+        "AT-03",
+        "AT-05",
+        "AT-06",
+        "AT-07",
+        "AT-08",
+        "AT-09",
+        "AT-10"
+      ],
+      "priority": "Must",
+      "points": 5,
+      "sprint": "Sprint 4",
+      "milestone": "M6",
+      "source": "Proposal Sections 11 and 12",
+      "tasks": [
+        {
+          "title": "Scenario suite covering UC-01 to UC-11 with expected outcomes",
+          "role": "Developer"
+        },
+        {
+          "title": "One-time evaluation on the frozen test set",
+          "role": "Developer"
+        },
+        {
+          "title": "Explanation grounding review sheet",
+          "role": "Product Owner"
+        },
+        {
+          "title": "Audit completeness report",
+          "role": "Developer"
+        },
+        {
+          "title": "Results summary in docs/results",
+          "role": "Developer"
+        }
+      ]
+    },
+    {
+      "id": "US-27",
+      "feature": "F-10",
+      "title": "Test performance, failure and recovery",
+      "as_a": "a platform engineer",
+      "i_want": "load, failure and recovery tests",
+      "so_that": "latency, fail-closed behavior and self-healing are measured rather than assumed",
+      "acceptance": [
+        "Given the agreed demo load in Locust, when the test runs, then p95 non-generative decision latency is measured against the 300 ms target (AT-13).",
+        "Given OPA or the risk engine is stopped, when a high-impact action arrives, then it fails closed and is logged (AT-12).",
+        "Given pod deletion and a rolling update, when they run, then recovery evidence is captured (AT-14, AT-15).",
+        "Given a database export, when the demo is restored on a clean environment, then it takes under 30 minutes."
+      ],
+      "uc": [
+        "UC-12"
+      ],
+      "fr": [],
+      "nfr": [
+        "NFR-02",
+        "NFR-04",
+        "NFR-05",
+        "NFR-13"
+      ],
+      "tests": [
+        "AT-12",
+        "AT-13",
+        "AT-14",
+        "AT-15"
+      ],
+      "priority": "Must",
+      "points": 5,
+      "sprint": "Sprint 4",
+      "milestone": "M6",
+      "source": "New story added for delivery",
+      "tasks": [
+        {
+          "title": "Locust load test and p95 report",
+          "role": "Developer"
+        },
+        {
+          "title": "Dependency outage tests for fail-closed behavior",
+          "role": "Developer"
+        },
+        {
+          "title": "Recovery evidence: screenshots and logs",
+          "role": "Developer"
+        },
+        {
+          "title": "Backup, restore and a timed rebuild",
+          "role": "Developer"
+        }
+      ]
+    },
+    {
+      "id": "US-29",
+      "feature": "F-10",
+      "title": "Try to bypass the gateway and tamper with evidence",
+      "as_a": "a security analyst",
+      "i_want": "the team to attack its own controls",
+      "so_that": "bypass, replay and tamper weaknesses are found before a reviewer finds them",
+      "acceptance": [
+        "Given direct calls from the agent to the bank API (Docker Compose and Kubernetes), when they are attempted, then they fail.",
+        "Given a captured execution token, when it is replayed, then it is rejected.",
+        "Given a direct edit of an audit row, when verify-chain runs, then the tampering is reported.",
+        "Given any finding, when it is confirmed, then it is logged as a bug on the board and fixed or documented."
+      ],
+      "uc": [],
+      "fr": [
+        "FR-09"
+      ],
+      "nfr": [
+        "NFR-01"
+      ],
+      "tests": [],
+      "priority": "Must",
+      "points": 3,
+      "sprint": "Sprint 4",
+      "milestone": "M6",
+      "source": "Proposal Section 14 (security bypass risk: explicit penetration tests)",
+      "tasks": [
+        {
+          "title": "Bypass test script for Docker Compose and Kubernetes",
+          "role": "Developer"
+        },
+        {
+          "title": "Token replay and expiry tests",
+          "role": "Developer"
+        },
+        {
+          "title": "Audit tamper test",
+          "role": "Developer"
+        },
+        {
+          "title": "Log findings as bugs and fix them",
+          "role": "Developer"
+        }
+      ]
+    },
+    {
+      "id": "US-11b",
+      "feature": "F-10",
+      "title": "Package and submit the capstone",
+      "as_a": "a grader",
+      "i_want": "a reproducible repository setup, a design and testing document and a final demonstration video",
+      "so_that": "I can evaluate the working system",
+      "acceptance": [
+        "Given a clean machine, when a reader follows the README quickstart, then tests and core scenarios run with version-pinned dependencies and a sample environment file.",
+        "Given the README, when the grader opens it, then it links to the live demo, the Scrum board, the design and testing document and the video.",
+        "Given the design and testing document, when it is reviewed, then it covers architecture decisions, patterns, deployment options with cost, and every test type with measured results.",
+        "Given the video, when it plays, then it runs 15 to 20 minutes and every team member speaks on camera."
+      ],
+      "uc": [],
+      "fr": [],
+      "nfr": [
+        "NFR-14"
+      ],
+      "tests": [],
+      "priority": "Must",
+      "points": 5,
+      "sprint": "Sprint 5",
+      "milestone": "M7",
+      "source": "Proposal Appendix B, US-11 (split: submission package) and handbook submission list",
+      "tasks": [
+        {
+          "title": "Final README: links, quickstart and test commands",
+          "role": "Developer"
+        },
+        {
+          "title": "Design and testing document with measured results",
+          "role": "Whole team"
+        },
+        {
+          "title": "Final traceability: story to FR, NFR, test and evidence",
+          "role": "Scrum Master"
+        },
+        {
+          "title": "Rehearse and record the 15 to 20 minute video",
+          "role": "Whole team"
+        },
+        {
+          "title": "Board clean-up, release tag v1.0.0 and submission by 24 January",
+          "role": "Scrum Master"
+        }
+      ]
+    },
+    {
+      "id": "US-07",
+      "feature": "F-08",
+      "title": "Simulate a policy change before activation",
+      "as_a": "an administrator",
+      "i_want": "to simulate a policy change against stored synthetic events before activation",
+      "so_that": "changes do not unexpectedly block customers",
+      "acceptance": [
+        "Given a candidate policy bundle, when simulation runs on stored events, then a report lists the decisions that would change (AT-11).",
+        "Given a simulation, when it finishes, then the active policy is unchanged.",
+        "Given the administrator activates the candidate, when it goes live, then the new version is audited."
+      ],
+      "uc": [
+        "UC-10"
+      ],
+      "fr": [
+        "FR-06",
+        "FR-17"
+      ],
+      "nfr": [
+        "NFR-09",
+        "NFR-14"
+      ],
+      "tests": [
+        "AT-11"
+      ],
+      "priority": "Should",
+      "points": 5,
+      "sprint": null,
+      "milestone": null,
+      "source": "Proposal Appendix B, US-07",
+      "tasks": [
+        {
+          "title": "Store policy bundle versions",
+          "role": "Developer"
+        },
+        {
+          "title": "Replay stored events against a candidate bundle",
+          "role": "Developer"
+        },
+        {
+          "title": "Difference report",
+          "role": "Developer"
+        },
+        {
+          "title": "Activation step with audit",
+          "role": "Developer"
+        }
+      ]
+    },
+    {
+      "id": "US-08",
+      "feature": "F-08",
+      "title": "Register agents with roles, tools and thresholds",
+      "as_a": "a platform engineer",
+      "i_want": "to register agents with explicit roles, tools and thresholds",
+      "so_that": "least privilege is manageable",
+      "acceptance": [
+        "Given an administrator, when they register an agent with a role and allowed tools, then the gateway enforces those tools straight away.",
+        "Given a user who is not an administrator, when they try to change an agent, then the request is refused and audited.",
+        "Given an agent, when an administrator disables it, then all its calls are denied."
+      ],
+      "uc": [
+        "UC-11"
+      ],
+      "fr": [
+        "FR-02",
+        "FR-03",
+        "FR-16",
+        "FR-17"
+      ],
+      "nfr": [
+        "NFR-01",
+        "NFR-09",
+        "NFR-12"
+      ],
+      "tests": [],
+      "priority": "Should",
+      "points": 5,
+      "sprint": null,
+      "milestone": null,
+      "source": "Proposal Appendix B, US-08",
+      "tasks": [
+        {
+          "title": "Agent and ToolDefinition tables with an admin API",
+          "role": "Developer"
+        },
+        {
+          "title": "Registry feeds the OPA data bundle",
+          "role": "Developer"
+        },
+        {
+          "title": "Admin form on the dashboard",
+          "role": "Developer"
+        },
+        {
+          "title": "Authorization tests",
+          "role": "Developer"
+        }
+      ]
+    },
+    {
+      "id": "US-28",
+      "feature": "F-08",
+      "title": "Check usability with people outside the team",
+      "as_a": "an approver",
+      "i_want": "the dashboard to be clear and easy to use under time pressure",
+      "so_that": "I approve or reject the right actions",
+      "acceptance": [
+        "Given three people outside the team, when they complete approve, reject and incident-review tasks, then completion and points of confusion are recorded.",
+        "Given the findings, when they are reviewed, then the top issues are fixed or logged as backlog items."
+      ],
+      "uc": [],
+      "fr": [],
+      "nfr": [
+        "NFR-12"
+      ],
+      "tests": [],
+      "priority": "Should",
+      "points": 2,
+      "sprint": null,
+      "milestone": null,
+      "source": "Proposal Section 11.1 (usability testing)",
+      "tasks": [
+        {
+          "title": "Write three usability tasks and a short checklist",
+          "role": "Product Owner"
+        },
+        {
+          "title": "Run the sessions and record notes",
+          "role": "Product Owner"
+        },
+        {
+          "title": "Fix or log the top issues",
+          "role": "Developer"
+        }
+      ]
+    },
+    {
+      "id": "US-30",
+      "feature": "F-08",
+      "title": "Send critical alerts to email or a webhook",
+      "as_a": "a security analyst",
+      "i_want": "critical incidents and pending approvals sent to a demo email address or webhook",
+      "so_that": "I notice them when the dashboard is closed",
+      "acceptance": [
+        "Given a quarantine or a pending approval, when it happens, then a webhook message with the correlation ID is sent.",
+        "Given the adapter is switched off, when an incident happens, then the dashboard notification still appears."
+      ],
+      "uc": [
+        "UC-07"
+      ],
+      "fr": [
+        "FR-20"
+      ],
+      "nfr": [],
+      "tests": [],
+      "priority": "Could",
+      "points": 2,
+      "sprint": null,
+      "milestone": null,
+      "source": "Proposal FR-20 (optional demo email/webhook adapter)",
+      "tasks": [
+        {
+          "title": "Notification adapter interface",
+          "role": "Developer"
+        },
+        {
+          "title": "Webhook implementation and test",
+          "role": "Developer"
+        }
+      ]
+    },
+    {
+      "id": "US-31",
+      "feature": null,
+      "title": "Enterprise single sign-on (SSO)",
+      "as_a": null,
+      "i_want": null,
+      "so_that": null,
+      "acceptance": [],
+      "uc": [],
+      "fr": [],
+      "nfr": [],
+      "tests": [],
+      "priority": "Won't",
+      "points": 0,
+      "sprint": null,
+      "milestone": null,
+      "source": "Enterprise SSO is outside the capstone release (proposal Section 5.3).",
+      "tasks": []
+    },
+    {
+      "id": "US-32",
+      "feature": null,
+      "title": "Real bank connectors and real money movement",
+      "as_a": null,
+      "i_want": null,
+      "so_that": null,
+      "acceptance": [],
+      "uc": [],
+      "fr": [],
+      "nfr": [],
+      "tests": [],
+      "priority": "Won't",
+      "points": 0,
+      "sprint": null,
+      "milestone": null,
+      "source": "No real bank connectivity, data or payments (proposal Section 3 scope).",
+      "tasks": []
+    },
+    {
+      "id": "US-33",
+      "feature": null,
+      "title": "Advanced multi-agent control",
+      "as_a": null,
+      "i_want": null,
+      "so_that": null,
+      "acceptance": [],
+      "uc": [],
+      "fr": [],
+      "nfr": [],
+      "tests": [],
+      "priority": "Won't",
+      "points": 0,
+      "sprint": null,
+      "milestone": null,
+      "source": "Multi-agent control is outside the capstone release (proposal Section 5.3).",
+      "tasks": []
+    },
+    {
+      "id": "US-34",
+      "feature": null,
+      "title": "Real-time regulatory reporting",
+      "as_a": null,
+      "i_want": null,
+      "so_that": null,
+      "acceptance": [],
+      "uc": [],
+      "fr": [],
+      "nfr": [],
+      "tests": [],
+      "priority": "Won't",
+      "points": 0,
+      "sprint": null,
+      "milestone": null,
+      "source": "Real-time regulatory reporting is outside the capstone release (proposal Section 5.3).",
+      "tasks": []
+    }
+  ]
+}

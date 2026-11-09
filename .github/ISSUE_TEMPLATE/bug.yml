@@ -1,0 +1,39 @@
+name: Bug
+description: Something does not behave as the requirement or acceptance criterion says
+labels: ["type:bug"]
+body:
+  - type: input
+    id: related
+    attributes:
+      label: Related story or requirement
+      placeholder: "US-02b, FR-05"
+  - type: dropdown
+    id: severity
+    attributes:
+      label: Severity
+      options:
+        - "Critical: security control bypassed or data exposed (may enter the current sprint)"
+        - "High: core scenario fails"
+        - "Medium: wrong behavior with a workaround"
+        - "Low: cosmetic"
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      placeholder: Use synthetic data only. Include the correlation ID if there is one.
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected result
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual result
+    validations:
+      required: true

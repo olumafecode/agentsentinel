@@ -1,0 +1,936 @@
+{
+  "labels": {
+    "type:feature": "LA_kwDOVngxV88AAAADB02bzQ",
+    "type:story": "LA_kwDOVngxV88AAAADB02cUA",
+    "type:task": "LA_kwDOVngxV88AAAADB02c8g",
+    "type:bug": "LA_kwDOVngxV88AAAADB02dcw",
+    "type:ceremony": "LA_kwDOVngxV88AAAADB02d6w",
+    "FR-01": "LA_kwDOVngxV88AAAADB02elw",
+    "FR-02": "LA_kwDOVngxV88AAAADB02fEw",
+    "FR-03": "LA_kwDOVngxV88AAAADB02flA",
+    "FR-04": "LA_kwDOVngxV88AAAADB02gDg",
+    "FR-05": "LA_kwDOVngxV88AAAADB02gcw",
+    "FR-06": "LA_kwDOVngxV88AAAADB02hVQ",
+    "FR-07": "LA_kwDOVngxV88AAAADB02iJw",
+    "FR-08": "LA_kwDOVngxV88AAAADB02ixA",
+    "FR-09": "LA_kwDOVngxV88AAAADB02jiw",
+    "FR-10": "LA_kwDOVngxV88AAAADB02kRA",
+    "FR-11": "LA_kwDOVngxV88AAAADB02k9Q",
+    "FR-12": "LA_kwDOVngxV88AAAADB02liQ",
+    "FR-13": "LA_kwDOVngxV88AAAADB02mKA",
+    "FR-14": "LA_kwDOVngxV88AAAADB02mkA",
+    "FR-15": "LA_kwDOVngxV88AAAADB02nHQ",
+    "FR-16": "LA_kwDOVngxV88AAAADB02nmQ",
+    "FR-17": "LA_kwDOVngxV88AAAADB02oIw",
+    "FR-18": "LA_kwDOVngxV88AAAADB02o2g",
+    "FR-19": "LA_kwDOVngxV88AAAADB02pkA",
+    "FR-20": "LA_kwDOVngxV88AAAADB02qIg",
+    "NFR-01": "LA_kwDOVngxV88AAAADB02rAA",
+    "NFR-02": "LA_kwDOVngxV88AAAADB02rig",
+    "NFR-03": "LA_kwDOVngxV88AAAADB02sCA",
+    "NFR-04": "LA_kwDOVngxV88AAAADB02stw",
+    "NFR-05": "LA_kwDOVngxV88AAAADB02tHA",
+    "NFR-06": "LA_kwDOVngxV88AAAADB02tnA",
+    "NFR-07": "LA_kwDOVngxV88AAAADB02uEQ",
+    "NFR-08": "LA_kwDOVngxV88AAAADB02utw",
+    "NFR-09": "LA_kwDOVngxV88AAAADB02vaA",
+    "NFR-10": "LA_kwDOVngxV88AAAADB02vvQ",
+    "NFR-11": "LA_kwDOVngxV88AAAADB02wWw",
+    "NFR-12": "LA_kwDOVngxV88AAAADB02w1w",
+    "NFR-13": "LA_kwDOVngxV88AAAADB02xbg",
+    "NFR-14": "LA_kwDOVngxV88AAAADB02yCw",
+    "UC-01": "LA_kwDOVngxV88AAAADB02yzQ",
+    "UC-02": "LA_kwDOVngxV88AAAADB02zig",
+    "UC-03": "LA_kwDOVngxV88AAAADB02z-g",
+    "UC-04": "LA_kwDOVngxV88AAAADB020Zg",
+    "UC-05": "LA_kwDOVngxV88AAAADB021PA",
+    "UC-06": "LA_kwDOVngxV88AAAADB0219w",
+    "UC-07": "LA_kwDOVngxV88AAAADB022kw",
+    "UC-08": "LA_kwDOVngxV88AAAADB023QQ",
+    "UC-09": "LA_kwDOVngxV88AAAADB023pw",
+    "UC-10": "LA_kwDOVngxV88AAAADB024HA",
+    "UC-11": "LA_kwDOVngxV88AAAADB0241A",
+    "UC-12": "LA_kwDOVngxV88AAAADB025Zw"
+  },
+  "milestones": {
+    "M1": "MI_kwDOVngxV84BJxfC",
+    "M2": "MI_kwDOVngxV84BJxfE",
+    "M3": "MI_kwDOVngxV84BJxfF",
+    "M4": "MI_kwDOVngxV84BJxfG",
+    "M5": "MI_kwDOVngxV84BJxfI",
+    "M6": "MI_kwDOVngxV84BJxfJ",
+    "M7": "MI_kwDOVngxV84BJxfK"
+  },
+  "issues": {
+    "feature:F-01": {
+      "id": "I_kwDOVngxV88AAAABdhrZhw",
+      "number": 1,
+      "url": "https://github.com/olumafecode/agentsentinel/issues/1",
+      "set": {
+        "status": "Backlog"
+      },
+      "item": "PVTI_lAHODk8qFc4BqwvGzhHCdqo"
+    },
+    "feature:F-02": {
+      "id": "I_kwDOVngxV88AAAABdhrd7w",
+      "number": 2,
+      "url": "https://github.com/olumafecode/agentsentinel/issues/2",
+      "set": {
+        "status": "Backlog"
+      },
+      "item": "PVTI_lAHODk8qFc4BqwvGzhHCduY"
+    },
+    "feature:F-03": {
+      "id": "I_kwDOVngxV88AAAABdhrhow",
+      "number": 3,
+      "url": "https://github.com/olumafecode/agentsentinel/issues/3",
+      "set": {
+        "status": "Backlog"
+      },
+      "item": "PVTI_lAHODk8qFc4BqwvGzhHCdwY"
+    },
+    "feature:F-04": {
+      "id": "I_kwDOVngxV88AAAABdhrlJg",
+      "number": 4,
+      "url": "https://github.com/olumafecode/agentsentinel/issues/4",
+      "set": {
+        "status": "Backlog"
+      },
+      "item": "PVTI_lAHODk8qFc4BqwvGzhHCdzE"
+    },
+    "feature:F-05": {
+      "id": "I_kwDOVngxV88AAAABdhropA",
+      "number": 5,
+      "url": "https://github.com/olumafecode/agentsentinel/issues/5",
+      "set": {
+        "status": "Backlog"
+      },
+      "item": "PVTI_lAHODk8qFc4BqwvGzhHCd2k"
+    },
+    "feature:F-06": {
+      "id": "I_kwDOVngxV88AAAABdhrsfA",
+      "number": 6,
+      "url": "https://github.com/olumafecode/agentsentinel/issues/6",
+      "set": {
+        "status": "Backlog"
+      },
+      "item": "PVTI_lAHODk8qFc4BqwvGzhHCd7U"
+    },
+    "feature:F-07": {
+      "id": "I_kwDOVngxV88AAAABdhrwpA",
+      "number": 7,
+      "url": "https://github.com/olumafecode/agentsentinel/issues/7",
+      "set": {
+        "status": "Backlog"
+      },
+      "item": "PVTI_lAHODk8qFc4BqwvGzhHCd_Y"
+    },
+    "feature:F-08": {
+      "id": "I_kwDOVngxV88AAAABdhr0CQ",
+      "number": 8,
+      "url": "https://github.com/olumafecode/agentsentinel/issues/8",
+      "set": {
+        "status": "Backlog"
+      },
+      "item": "PVTI_lAHODk8qFc4BqwvGzhHCeCA"
+    },
+    "feature:F-09": {
+      "id": "I_kwDOVngxV88AAAABdhr3gA",
+      "number": 9,
+      "url": "https://github.com/olumafecode/agentsentinel/issues/9",
+      "set": {
+        "status": "Backlog"
+      },
+      "item": "PVTI_lAHODk8qFc4BqwvGzhHCeGI"
+    },
+    "feature:F-10": {
+      "id": "I_kwDOVngxV88AAAABdhr7EQ",
+      "number": 10,
+      "url": "https://github.com/olumafecode/agentsentinel/issues/10",
+      "set": {
+        "status": "Backlog"
+      },
+      "item": "PVTI_lAHODk8qFc4BqwvGzhHCeJw"
+    },
+    "ceremony:Sprint 0": {
+      "id": "I_kwDOVngxV88AAAABdhr-aA",
+      "number": 11,
+      "url": "https://github.com/olumafecode/agentsentinel/issues/11",
+      "set": {
+        "status": "Ready",
+        "sprint": "Sprint 0"
+      },
+      "item": "PVTI_lAHODk8qFc4BqwvGzhHCeMo"
+    },
+    "ceremony:Sprint 1": {
+      "id": "I_kwDOVngxV88AAAABdhsCZg",
+      "number": 12,
+      "url": "https://github.com/olumafecode/agentsentinel/issues/12",
+      "set": {
+        "status": "Backlog",
+        "sprint": "Sprint 1"
+      },
+      "item": "PVTI_lAHODk8qFc4BqwvGzhHCeP0"
+    },
+    "ceremony:Sprint 2": {
+      "id": "I_kwDOVngxV88AAAABdhsGOQ",
+      "number": 13,
+      "url": "https://github.com/olumafecode/agentsentinel/issues/13",
+      "set": {
+        "status": "Backlog",
+        "sprint": "Sprint 2"
+      },
+      "item": "PVTI_lAHODk8qFc4BqwvGzhHCeUM"
+    },
+    "ceremony:Sprint 3": {
+      "id": "I_kwDOVngxV88AAAABdhsKXg",
+      "number": 14,
+      "url": "https://github.com/olumafecode/agentsentinel/issues/14",
+      "set": {
+        "status": "Backlog",
+        "sprint": "Sprint 3"
+      },
+      "item": "PVTI_lAHODk8qFc4BqwvGzhHCeXQ"
+    },
+    "ceremony:Sprint 4": {
+      "id": "I_kwDOVngxV88AAAABdhsOAw",
+      "number": 15,
+      "url": "https://github.com/olumafecode/agentsentinel/issues/15",
+      "set": {
+        "status": "Backlog",
+        "sprint": "Sprint 4"
+      },
+      "item": "PVTI_lAHODk8qFc4BqwvGzhHCebA"
+    },
+    "ceremony:Sprint 5": {
+      "id": "I_kwDOVngxV88AAAABdhsSPg",
+      "number": 16,
+      "url": "https://github.com/olumafecode/agentsentinel/issues/16",
+      "set": {
+        "status": "Backlog",
+        "sprint": "Sprint 5"
+      },
+      "item": "PVTI_lAHODk8qFc4BqwvGzhHCedY"
+    },
+    "story:US-12": {
+      "id": "I_kwDOVngxV88AAAABdhsWgQ",
+      "number": 17,
+      "url": "https://github.com/olumafecode/agentsentinel/issues/17",
+      "set": {
+        "status": "Ready",
+        "priority": "Must",
+        "points": 2,
+        "sprint": "Sprint 0"
+      },
+      "item": "PVTI_lAHODk8qFc4BqwvGzhHCegw"
+    },
+    "story:US-13": {
+      "id": "I_kwDOVngxV88AAAABdhsa8A",
+      "number": 18,
+      "url": "https://github.com/olumafecode/agentsentinel/issues/18",
+      "set": {
+        "status": "Ready",
+        "priority": "Must",
+        "points": 3,
+        "sprint": "Sprint 0"
+      },
+      "item": "PVTI_lAHODk8qFc4BqwvGzhHCeko"
+    },
+    "story:US-14": {
+      "id": "I_kwDOVngxV88AAAABdhsftA",
+      "number": 19,
+      "url": "https://github.com/olumafecode/agentsentinel/issues/19",
+      "set": {
+        "status": "Ready",
+        "priority": "Must",
+        "points": 3,
+        "sprint": "Sprint 0"
+      },
+      "item": "PVTI_lAHODk8qFc4BqwvGzhHCeos"
+    },
+    "story:US-10": {
+      "id": "I_kwDOVngxV88AAAABdhskFA",
+      "number": 20,
+      "url": "https://github.com/olumafecode/agentsentinel/issues/20",
+      "set": {
+        "status": "Ready",
+        "priority": "Must",
+        "points": 5,
+        "sprint": "Sprint 0"
+      },
+      "item": "PVTI_lAHODk8qFc4BqwvGzhHCetg"
+    },
+    "story:US-15": {
+      "id": "I_kwDOVngxV88AAAABdhspGg",
+      "number": 21,
+      "url": "https://github.com/olumafecode/agentsentinel/issues/21",
+      "set": {
+        "status": "Ready",
+        "priority": "Must",
+        "points": 2,
+        "sprint": "Sprint 0"
+      },
+      "item": "PVTI_lAHODk8qFc4BqwvGzhHCexE"
+    },
+    "story:US-16": {
+      "id": "I_kwDOVngxV88AAAABdh9JoA",
+      "number": 22,
+      "url": "https://github.com/olumafecode/agentsentinel/issues/22",
+      "set": {
+        "status": "Backlog",
+        "priority": "Must",
+        "points": 3,
+        "sprint": "Sprint 1"
+      },
+      "item": "PVTI_lAHODk8qFc4BqwvGzhHCuPE"
+    },
+    "story:US-17": {
+      "id": "I_kwDOVngxV88AAAABdh9Otw",
+      "number": 23,
+      "url": "https://github.com/olumafecode/agentsentinel/issues/23",
+      "set": {
+        "status": "Backlog",
+        "priority": "Must",
+        "points": 5,
+        "sprint": "Sprint 1"
+      },
+      "item": "PVTI_lAHODk8qFc4BqwvGzhHCuTo"
+    },
+    "story:US-18": {
+      "id": "I_kwDOVngxV88AAAABdh9Tdw",
+      "number": 24,
+      "url": "https://github.com/olumafecode/agentsentinel/issues/24",
+      "set": {
+        "status": "Backlog",
+        "priority": "Must",
+        "points": 8,
+        "sprint": "Sprint 1"
+      },
+      "item": "PVTI_lAHODk8qFc4BqwvGzhHCuXg"
+    },
+    "story:US-01": {
+      "id": "I_kwDOVngxV88AAAABdh9Ynw",
+      "number": 25,
+      "url": "https://github.com/olumafecode/agentsentinel/issues/25",
+      "set": {
+        "status": "Backlog",
+        "priority": "Must",
+        "points": 5,
+        "sprint": "Sprint 1"
+      },
+      "item": "PVTI_lAHODk8qFc4BqwvGzhHCub0"
+    },
+    "story:US-19": {
+      "id": "I_kwDOVngxV88AAAABdh9eCQ",
+      "number": 26,
+      "url": "https://github.com/olumafecode/agentsentinel/issues/26",
+      "set": {
+        "status": "Backlog",
+        "priority": "Must",
+        "points": 5,
+        "sprint": "Sprint 1"
+      },
+      "item": "PVTI_lAHODk8qFc4BqwvGzhHCugw"
+    },
+    "story:US-20": {
+      "id": "I_kwDOVngxV88AAAABdh9iiw",
+      "number": 27,
+      "url": "https://github.com/olumafecode/agentsentinel/issues/27",
+      "set": {
+        "status": "Backlog",
+        "priority": "Must",
+        "points": 3,
+        "sprint": "Sprint 1"
+      },
+      "item": "PVTI_lAHODk8qFc4BqwvGzhHCulU"
+    },
+    "story:US-02a": {
+      "id": "I_kwDOVngxV88AAAABdh9ntQ",
+      "number": 28,
+      "url": "https://github.com/olumafecode/agentsentinel/issues/28",
+      "set": {
+        "status": "Backlog",
+        "priority": "Must",
+        "points": 5,
+        "sprint": "Sprint 2"
+      },
+      "item": "PVTI_lAHODk8qFc4BqwvGzhHCupY"
+    },
+    "story:US-02b": {
+      "id": "I_kwDOVngxV88AAAABdh9sjw",
+      "number": 29,
+      "url": "https://github.com/olumafecode/agentsentinel/issues/29",
+      "set": {
+        "status": "Backlog",
+        "priority": "Must",
+        "points": 8,
+        "sprint": "Sprint 2"
+      },
+      "item": "PVTI_lAHODk8qFc4BqwvGzhHCuuc"
+    },
+    "story:US-21": {
+      "id": "I_kwDOVngxV88AAAABdh9x2g",
+      "number": 30,
+      "url": "https://github.com/olumafecode/agentsentinel/issues/30",
+      "set": {
+        "status": "Backlog",
+        "priority": "Must",
+        "points": 5,
+        "sprint": "Sprint 2"
+      },
+      "item": "PVTI_lAHODk8qFc4BqwvGzhHCuzk"
+    },
+    "story:US-04": {
+      "id": "I_kwDOVngxV88AAAABdh93nQ",
+      "number": 31,
+      "url": "https://github.com/olumafecode/agentsentinel/issues/31",
+      "set": {
+        "status": "Backlog",
+        "priority": "Must",
+        "points": 8,
+        "sprint": "Sprint 2"
+      },
+      "item": "PVTI_lAHODk8qFc4BqwvGzhHCu40"
+    },
+    "story:US-06a": {
+      "id": "I_kwDOVngxV88AAAABdh989w",
+      "number": 32,
+      "url": "https://github.com/olumafecode/agentsentinel/issues/32",
+      "set": {
+        "status": "Backlog",
+        "priority": "Must",
+        "points": 8,
+        "sprint": "Sprint 2"
+      },
+      "item": "PVTI_lAHODk8qFc4BqwvGzhHCu88"
+    },
+    "story:US-03": {
+      "id": "I_kwDOVngxV88AAAABdh-CCQ",
+      "number": 33,
+      "url": "https://github.com/olumafecode/agentsentinel/issues/33",
+      "set": {
+        "status": "Backlog",
+        "priority": "Must",
+        "points": 8,
+        "sprint": "Sprint 3"
+      },
+      "item": "PVTI_lAHODk8qFc4BqwvGzhHCvDA"
+    },
+    "story:US-05": {
+      "id": "I_kwDOVngxV88AAAABdh-G4A",
+      "number": 34,
+      "url": "https://github.com/olumafecode/agentsentinel/issues/34",
+      "set": {
+        "status": "Backlog",
+        "priority": "Must",
+        "points": 5,
+        "sprint": "Sprint 3"
+      },
+      "item": "PVTI_lAHODk8qFc4BqwvGzhHCvIg"
+    },
+    "story:US-06b": {
+      "id": "I_kwDOVngxV88AAAABdh-MZA",
+      "number": 35,
+      "url": "https://github.com/olumafecode/agentsentinel/issues/35",
+      "set": {
+        "status": "Backlog",
+        "priority": "Must",
+        "points": 5,
+        "sprint": "Sprint 3"
+      },
+      "item": "PVTI_lAHODk8qFc4BqwvGzhHCvOU"
+    },
+    "story:US-22": {
+      "id": "I_kwDOVngxV88AAAABdh-R6A",
+      "number": 36,
+      "url": "https://github.com/olumafecode/agentsentinel/issues/36",
+      "set": {
+        "status": "Backlog",
+        "priority": "Must",
+        "points": 5,
+        "sprint": "Sprint 3"
+      },
+      "item": "PVTI_lAHODk8qFc4BqwvGzhHCvTk"
+    },
+    "story:US-23": {
+      "id": "I_kwDOVngxV88AAAABdh-W5w",
+      "number": 37,
+      "url": "https://github.com/olumafecode/agentsentinel/issues/37",
+      "set": {
+        "status": "Backlog",
+        "priority": "Must",
+        "points": 8,
+        "sprint": "Sprint 3"
+      },
+      "item": "PVTI_lAHODk8qFc4BqwvGzhHCvXs"
+    },
+    "story:US-11a": {
+      "id": "I_kwDOVngxV88AAAABdh-bZA",
+      "number": 38,
+      "url": "https://github.com/olumafecode/agentsentinel/issues/38",
+      "set": {
+        "status": "Backlog",
+        "priority": "Must",
+        "points": 5,
+        "sprint": "Sprint 3"
+      },
+      "item": "PVTI_lAHODk8qFc4BqwvGzhHCvb0"
+    },
+    "story:US-24": {
+      "id": "I_kwDOVngxV88AAAABdh-geg",
+      "number": 39,
+      "url": "https://github.com/olumafecode/agentsentinel/issues/39",
+      "set": {
+        "status": "Backlog",
+        "priority": "Must",
+        "points": 3,
+        "sprint": "Sprint 4"
+      },
+      "item": "PVTI_lAHODk8qFc4BqwvGzhHCvgQ"
+    },
+    "story:US-09": {
+      "id": "I_kwDOVngxV88AAAABdh-l4A",
+      "number": 40,
+      "url": "https://github.com/olumafecode/agentsentinel/issues/40",
+      "set": {
+        "status": "Backlog",
+        "priority": "Must",
+        "points": 5,
+        "sprint": "Sprint 4"
+      },
+      "item": "PVTI_lAHODk8qFc4BqwvGzhHCvkc"
+    },
+    "story:US-25": {
+      "id": "I_kwDOVngxV88AAAABdh-qyg",
+      "number": 41,
+      "url": "https://github.com/olumafecode/agentsentinel/issues/41",
+      "set": {
+        "status": "Backlog",
+        "priority": "Must",
+        "points": 8,
+        "sprint": "Sprint 4"
+      },
+      "item": "PVTI_lAHODk8qFc4BqwvGzhHCvoA"
+    },
+    "story:US-26": {
+      "id": "I_kwDOVngxV88AAAABdh-vqA",
+      "number": 42,
+      "url": "https://github.com/olumafecode/agentsentinel/issues/42",
+      "set": {
+        "status": "Backlog",
+        "priority": "Must",
+        "points": 5,
+        "sprint": "Sprint 4"
+      },
+      "item": "PVTI_lAHODk8qFc4BqwvGzhHCvs4"
+    },
+    "story:US-27": {
+      "id": "I_kwDOVngxV88AAAABdh-07Q",
+      "number": 43,
+      "url": "https://github.com/olumafecode/agentsentinel/issues/43",
+      "set": {
+        "status": "Backlog",
+        "priority": "Must",
+        "points": 5,
+        "sprint": "Sprint 4"
+      },
+      "item": "PVTI_lAHODk8qFc4BqwvGzhHCvxU"
+    },
+    "story:US-29": {
+      "id": "I_kwDOVngxV88AAAABdh-6HQ",
+      "number": 44,
+      "url": "https://github.com/olumafecode/agentsentinel/issues/44",
+      "set": {
+        "status": "Backlog",
+        "priority": "Must",
+        "points": 3,
+        "sprint": "Sprint 4"
+      },
+      "item": "PVTI_lAHODk8qFc4BqwvGzhHCv2E"
+    },
+    "story:US-11b": {
+      "id": "I_kwDOVngxV88AAAABdh_AMQ",
+      "number": 45,
+      "url": "https://github.com/olumafecode/agentsentinel/issues/45",
+      "set": {
+        "status": "Backlog",
+        "priority": "Must",
+        "points": 5,
+        "sprint": "Sprint 5"
+      },
+      "item": "PVTI_lAHODk8qFc4BqwvGzhHCv7I"
+    },
+    "story:US-07": {
+      "id": "I_kwDOVngxV88AAAABdh_ELA",
+      "number": 46,
+      "url": "https://github.com/olumafecode/agentsentinel/issues/46",
+      "set": {
+        "status": "Backlog",
+        "priority": "Should",
+        "points": 5
+      },
+      "item": "PVTI_lAHODk8qFc4BqwvGzhHCv-8"
+    },
+    "story:US-08": {
+      "id": "I_kwDOVngxV88AAAABdh_IJg",
+      "number": 47,
+      "url": "https://github.com/olumafecode/agentsentinel/issues/47",
+      "set": {
+        "status": "Backlog",
+        "priority": "Should",
+        "points": 5
+      },
+      "item": "PVTI_lAHODk8qFc4BqwvGzhHCwD4"
+    },
+    "story:US-28": {
+      "id": "I_kwDOVngxV88AAAABdh_MSw",
+      "number": 48,
+      "url": "https://github.com/olumafecode/agentsentinel/issues/48",
+      "set": {
+        "status": "Backlog",
+        "priority": "Should",
+        "points": 2
+      },
+      "item": "PVTI_lAHODk8qFc4BqwvGzhHCwHo"
+    },
+    "story:US-30": {
+      "id": "I_kwDOVngxV88AAAABdh_QSA",
+      "number": 49,
+      "url": "https://github.com/olumafecode/agentsentinel/issues/49",
+      "set": {
+        "status": "Backlog",
+        "priority": "Could",
+        "points": 2
+      },
+      "item": "PVTI_lAHODk8qFc4BqwvGzhHCwLA"
+    },
+    "story:US-31": {
+      "id": "I_kwDOVngxV88AAAABdh_UvQ",
+      "number": 50,
+      "url": "https://github.com/olumafecode/agentsentinel/issues/50",
+      "set": {
+        "status": "Backlog",
+        "priority": "Won't"
+      },
+      "item": "PVTI_lAHODk8qFc4BqwvGzhHCwPo"
+    },
+    "story:US-32": {
+      "id": "I_kwDOVngxV88AAAABdh_Y2g",
+      "number": 51,
+      "url": "https://github.com/olumafecode/agentsentinel/issues/51",
+      "set": {
+        "status": "Backlog",
+        "priority": "Won't"
+      },
+      "item": "PVTI_lAHODk8qFc4BqwvGzhHCwTI"
+    },
+    "story:US-33": {
+      "id": "I_kwDOVngxV88AAAABdh_c3A",
+      "number": 52,
+      "url": "https://github.com/olumafecode/agentsentinel/issues/52",
+      "set": {
+        "status": "Backlog",
+        "priority": "Won't"
+      },
+      "item": "PVTI_lAHODk8qFc4BqwvGzhHCwXk"
+    },
+    "story:US-34": {
+      "id": "I_kwDOVngxV88AAAABdh_hAw",
+      "number": 53,
+      "url": "https://github.com/olumafecode/agentsentinel/issues/53",
+      "set": {
+        "status": "Backlog",
+        "priority": "Won't"
+      },
+      "item": "PVTI_lAHODk8qFc4BqwvGzhHCwao"
+    },
+    "task:US-12.1": {
+      "id": "I_kwDOVngxV88AAAABdh_lGw",
+      "number": 54,
+      "url": "https://github.com/olumafecode/agentsentinel/issues/54",
+      "set": {
+        "status": "Ready",
+        "sprint": "Sprint 0"
+      },
+      "item": "PVTI_lAHODk8qFc4BqwvGzhHCweY"
+    },
+    "task:US-12.2": {
+      "id": "I_kwDOVngxV88AAAABdh_pgA",
+      "number": 55,
+      "url": "https://github.com/olumafecode/agentsentinel/issues/55",
+      "set": {
+        "status": "Ready",
+        "sprint": "Sprint 0"
+      },
+      "item": "PVTI_lAHODk8qFc4BqwvGzhHCwiw"
+    },
+    "task:US-12.3": {
+      "id": "I_kwDOVngxV88AAAABdh_t7Q",
+      "number": 56,
+      "url": "https://github.com/olumafecode/agentsentinel/issues/56",
+      "set": {
+        "status": "Ready",
+        "sprint": "Sprint 0"
+      },
+      "item": "PVTI_lAHODk8qFc4BqwvGzhHCwoA"
+    },
+    "task:US-12.4": {
+      "id": "I_kwDOVngxV88AAAABdh_yjw",
+      "number": 57,
+      "url": "https://github.com/olumafecode/agentsentinel/issues/57",
+      "set": {
+        "status": "Ready",
+        "sprint": "Sprint 0"
+      },
+      "item": "PVTI_lAHODk8qFc4BqwvGzhHCwsE"
+    },
+    "task:US-12.5": {
+      "id": "I_kwDOVngxV88AAAABdh_3fQ",
+      "number": 58,
+      "url": "https://github.com/olumafecode/agentsentinel/issues/58",
+      "set": {
+        "status": "Ready",
+        "sprint": "Sprint 0"
+      },
+      "item": "PVTI_lAHODk8qFc4BqwvGzhHCwwA"
+    },
+    "task:US-13.1": {
+      "id": "I_kwDOVngxV88AAAABdh_8xA",
+      "number": 59,
+      "url": "https://github.com/olumafecode/agentsentinel/issues/59",
+      "set": {
+        "status": "Ready",
+        "sprint": "Sprint 0"
+      },
+      "item": "PVTI_lAHODk8qFc4BqwvGzhHCw0I"
+    },
+    "task:US-13.2": {
+      "id": "I_kwDOVngxV88AAAABdiABLw",
+      "number": 60,
+      "url": "https://github.com/olumafecode/agentsentinel/issues/60",
+      "set": {
+        "status": "Ready",
+        "sprint": "Sprint 0"
+      },
+      "item": "PVTI_lAHODk8qFc4BqwvGzhHCw4g"
+    },
+    "task:US-13.3": {
+      "id": "I_kwDOVngxV88AAAABdiAE8Q",
+      "number": 61,
+      "url": "https://github.com/olumafecode/agentsentinel/issues/61",
+      "set": {
+        "status": "Ready",
+        "sprint": "Sprint 0"
+      },
+      "item": "PVTI_lAHODk8qFc4BqwvGzhHCw8Y"
+    },
+    "task:US-13.4": {
+      "id": "I_kwDOVngxV88AAAABdiAJSQ",
+      "number": 62,
+      "url": "https://github.com/olumafecode/agentsentinel/issues/62",
+      "set": {
+        "status": "Ready",
+        "sprint": "Sprint 0"
+      },
+      "item": "PVTI_lAHODk8qFc4BqwvGzhHCxB4"
+    },
+    "task:US-13.5": {
+      "id": "I_kwDOVngxV88AAAABdiANjQ",
+      "number": 63,
+      "url": "https://github.com/olumafecode/agentsentinel/issues/63",
+      "set": {
+        "status": "Ready",
+        "sprint": "Sprint 0"
+      },
+      "item": "PVTI_lAHODk8qFc4BqwvGzhHCxG4"
+    },
+    "task:US-14.1": {
+      "id": "I_kwDOVngxV88AAAABdiAREg",
+      "number": 64,
+      "url": "https://github.com/olumafecode/agentsentinel/issues/64",
+      "set": {
+        "status": "Ready",
+        "sprint": "Sprint 0"
+      },
+      "item": "PVTI_lAHODk8qFc4BqwvGzhHCxLY"
+    },
+    "task:US-14.2": {
+      "id": "I_kwDOVngxV88AAAABdiAVGQ",
+      "number": 65,
+      "url": "https://github.com/olumafecode/agentsentinel/issues/65",
+      "set": {
+        "status": "Ready",
+        "sprint": "Sprint 0"
+      },
+      "item": "PVTI_lAHODk8qFc4BqwvGzhHCxPk"
+    },
+    "task:US-14.3": {
+      "id": "I_kwDOVngxV88AAAABdiAZKg",
+      "number": 66,
+      "url": "https://github.com/olumafecode/agentsentinel/issues/66",
+      "set": {
+        "status": "Ready",
+        "sprint": "Sprint 0"
+      },
+      "item": "PVTI_lAHODk8qFc4BqwvGzhHCxTs"
+    },
+    "task:US-14.4": {
+      "id": "I_kwDOVngxV88AAAABdiAc_Q",
+      "number": 67,
+      "url": "https://github.com/olumafecode/agentsentinel/issues/67",
+      "set": {
+        "status": "Ready",
+        "sprint": "Sprint 0"
+      },
+      "item": "PVTI_lAHODk8qFc4BqwvGzhHCxX0"
+    },
+    "task:US-14.5": {
+      "id": "I_kwDOVngxV88AAAABdiAg5Q",
+      "number": 68,
+      "url": "https://github.com/olumafecode/agentsentinel/issues/68",
+      "set": {
+        "status": "Ready",
+        "sprint": "Sprint 0"
+      },
+      "item": "PVTI_lAHODk8qFc4BqwvGzhHCxbo"
+    },
+    "task:US-10.1": {
+      "id": "I_kwDOVngxV88AAAABdiAlGA",
+      "number": 69,
+      "url": "https://github.com/olumafecode/agentsentinel/issues/69",
+      "set": {
+        "status": "Ready",
+        "sprint": "Sprint 0"
+      },
+      "item": "PVTI_lAHODk8qFc4BqwvGzhHCxeQ"
+    },
+    "task:US-10.2": {
+      "id": "I_kwDOVngxV88AAAABdiApXg",
+      "number": 70,
+      "url": "https://github.com/olumafecode/agentsentinel/issues/70",
+      "set": {
+        "status": "Ready",
+        "sprint": "Sprint 0"
+      },
+      "item": "PVTI_lAHODk8qFc4BqwvGzhHCxig"
+    },
+    "task:US-10.3": {
+      "id": "I_kwDOVngxV88AAAABdiAtQA",
+      "number": 71,
+      "url": "https://github.com/olumafecode/agentsentinel/issues/71",
+      "set": {
+        "status": "Ready",
+        "sprint": "Sprint 0"
+      },
+      "item": "PVTI_lAHODk8qFc4BqwvGzhHCxms"
+    },
+    "task:US-10.4": {
+      "id": "I_kwDOVngxV88AAAABdiAxRg",
+      "number": 72,
+      "url": "https://github.com/olumafecode/agentsentinel/issues/72",
+      "set": {
+        "status": "Ready",
+        "sprint": "Sprint 0"
+      },
+      "item": "PVTI_lAHODk8qFc4BqwvGzhHCxp8"
+    },
+    "task:US-10.5": {
+      "id": "I_kwDOVngxV88AAAABdiA1QA",
+      "number": 73,
+      "url": "https://github.com/olumafecode/agentsentinel/issues/73",
+      "set": {
+        "status": "Ready",
+        "sprint": "Sprint 0"
+      },
+      "item": "PVTI_lAHODk8qFc4BqwvGzhHCxuI"
+    },
+    "task:US-15.1": {
+      "id": "I_kwDOVngxV88AAAABdiA5fw",
+      "number": 74,
+      "url": "https://github.com/olumafecode/agentsentinel/issues/74",
+      "set": {
+        "status": "Ready",
+        "sprint": "Sprint 0"
+      },
+      "item": "PVTI_lAHODk8qFc4BqwvGzhHCxxs"
+    },
+    "task:US-15.2": {
+      "id": "I_kwDOVngxV88AAAABdiA9kA",
+      "number": 75,
+      "url": "https://github.com/olumafecode/agentsentinel/issues/75",
+      "set": {
+        "status": "Ready",
+        "sprint": "Sprint 0"
+      },
+      "item": "PVTI_lAHODk8qFc4BqwvGzhHCx08"
+    },
+    "task:US-15.3": {
+      "id": "I_kwDOVngxV88AAAABdiBCSQ",
+      "number": 76,
+      "url": "https://github.com/olumafecode/agentsentinel/issues/76",
+      "set": {
+        "status": "Ready",
+        "sprint": "Sprint 0"
+      },
+      "item": "PVTI_lAHODk8qFc4BqwvGzhHCx4A"
+    },
+    "task:US-15.4": {
+      "id": "I_kwDOVngxV88AAAABdiBGlQ",
+      "number": 77,
+      "url": "https://github.com/olumafecode/agentsentinel/issues/77",
+      "set": {
+        "status": "Ready",
+        "sprint": "Sprint 0"
+      },
+      "item": "PVTI_lAHODk8qFc4BqwvGzhHCx7s"
+    }
+  },
+  "repo": {
+    "id": "R_kgDOVngxVw",
+    "url": "https://github.com/olumafecode/agentsentinel",
+    "owner_id": "U_kgDODk8qFQ",
+    "owner_type": "User"
+  },
+  "project": {
+    "id": "PVT_kwHODk8qFc4BqwvG",
+    "number": 1,
+    "url": "https://github.com/users/olumafecode/projects/1"
+  },
+  "project_configured": true,
+  "fields": {
+    "status": {
+      "id": "PVTSSF_lAHODk8qFc4BqwvGzhpGXsA",
+      "options": {
+        "Backlog": "cfa40054",
+        "Ready": "e423fde8",
+        "In progress": "95c9f0d3",
+        "In review": "fc08d3f7",
+        "Done": "46613652"
+      }
+    },
+    "priority": {
+      "id": "PVTSSF_lAHODk8qFc4BqwvGzhpGXuA",
+      "options": {
+        "Must": "fa8ca59c",
+        "Should": "4e7b8325",
+        "Could": "98df25fc",
+        "Won't": "178ecac2"
+      }
+    },
+    "points": {
+      "id": "PVTF_lAHODk8qFc4BqwvGzhpGXwU"
+    },
+    "sprint": {
+      "id": "PVTIF_lAHODk8qFc4BqwvGzhpGXxU",
+      "iterations": {
+        "Sprint 0": "fb9139c2",
+        "Sprint 1": "4091c97e",
+        "Sprint 2": "74dc8400",
+        "Sprint 3": "e084af7d",
+        "Sprint 4": "627f0244",
+        "Sprint 5": "8e18d1d4",
+        "Contingency": "8af56cee"
+      }
+    }
+  }
+}
