@@ -31,7 +31,7 @@ What each status means:
 - **Ready:** planned into the current sprint and meets the Definition of Ready.
 - **In progress:** someone is working on it. Limit: two items in progress per person.
 - **In review:** a pull request is open (tasks) or the story is waiting for Product Owner acceptance (stories).
-- **Done:** meets the Definition of Done. Tasks reach Done when their pull request merges. Stories reach Done only when the Product Owner closes them after checking every acceptance criterion.
+- **Done:** meets the Definition of Done. Tasks reach Done when their pull request merges. Stories reach Done only when the Product Owner moves them there after checking every acceptance criterion; the Auto-close issue workflow then closes the issue.
 
 ## Views to create (one time, about 10 minutes)
 
@@ -50,7 +50,7 @@ Rename the default "View 1" to **Product backlog** rather than leaving an extra 
 
 ## Charts (Insights)
 
-Click the chart icon on the board, then **New chart**:
+Click **Insights** at the top right of the board, then **New chart**:
 
 1. **Sprint burn-up:** historical chart, filter `sprint:@current -label:"type:feature" -label:"type:ceremony"`. Shows work completed over the sprint.
 2. **Points by status:** current chart, bar layout, filter `sprint:@current label:"type:story"`, X-axis Status, Y-axis Sum of Story points.
@@ -59,30 +59,34 @@ Take a screenshot of both charts at each sprint review and put it in the review 
 
 ## Workflows
 
-Open the board menu (top right), then **Workflows**:
+Click **Workflows** at the top right of the board, next to **Insights**. For each workflow, click it, click **Edit**, choose the value, then **Save and turn on workflow**:
 
 | Workflow | Setting | Why |
 |---|---|---|
 | Item closed | On, set Status to Done (on by default) | Merged pull requests close tasks |
 | Pull request merged | On, set Status to Done (on by default) | Same as above for linked pull requests |
 | Item reopened | On, set Status to In progress | Reopened work shows as active |
-| Auto-add to project | On, filter `is:issue` | New tasks and bugs created in the repository appear on the board. GitHub Free allows one auto-add workflow |
-| Auto-add sub-issues to project | Leave on if your board lists it | New tasks created under a story appear on the board by themselves |
-| Pull request linked to issue | Leave on if your board lists it, set Status to In progress | A task moves to In progress when its pull request is opened |
-The setup script replaces the Status options with Backlog, Ready, In progress, In review and Done. Open each workflow that sets a Status, choose the value again from the new list and click **Save and turn on workflow**; otherwise it may still point at an old option.
+| Auto-add to project | On, repository agentsentinel, filter `is:issue` | New tasks and bugs created in the repository appear on the board. GitHub Free allows one auto-add workflow |
+| Auto-add sub-issues to project | On (on by default) | New tasks created under a story appear on the board by themselves |
+| Pull request linked to issue | On, set Status to In review | A task moves to In review when a pull request that closes it is opened, matching the status definitions above |
+| Auto-close issue | On, when Status is set to Done | Keeps the closed state and the Done column in step. Only the Product Owner moves stories to Done |
+| Code changes requested | Leave off | Applies to pull requests on the board; this board holds issues only |
+| Code review approved | Leave off | Same as above |
 | Item added to project | Leave off | The setup script sets Status itself; this workflow can overwrite it |
 | Auto-archive items | Leave off | Keep every finished item visible for the grader |
 
-Items added by the auto-add workflow arrive with no Status and no Sprint. Triage them at the next weekly scrum.
+The setup script replaced the Status options with Backlog, Ready, In progress, In review and Done. Every workflow that sets or checks a Status must have its value chosen again from the new list; otherwise it may still point at an old option (a red warning icon shows when it does).
+
+Items added by either auto-add workflow arrive with no Status and no Sprint. Triage them at the next weekly scrum.
 
 ## Everyday flow for a task
 
 1. On **Sprint board**, take a task in Ready, assign yourself and move it to In progress.
 2. Create a branch from the task (issue page, **Development**, **Create a branch**) or by hand: `feature/US-18-4-signed-token`.
 3. Commit with the story ID in the message: `feat(gateway): sign execution tokens (US-18.4)`.
-4. Open a pull request. In the description write `Closes #<task number>` and `Part of #<story number>`, and fill in the template. Move the task to In review.
+4. Open a pull request. In the description write `Closes #<task number>` and `Part of #<story number>`, and fill in the template. The task moves to In review by itself.
 5. CI must pass and a Code Owner must approve. Merge. The task closes and moves to Done.
-6. When all of a story's tasks are done, move the story to In review. The Product Owner checks each acceptance criterion, ticks the boxes and closes the story.
+6. When all of a story's tasks are done, move the story to In review. The Product Owner checks each acceptance criterion, ticks the boxes and moves the story to Done, which closes it.
 
 Do not write `Closes #<story>` in a pull request; stories close only on Product Owner acceptance.
 
@@ -92,9 +96,9 @@ Do not write `Closes #<story>` in a pull request; stories close only on Product 
 2. Product Owner states the sprint goal and walks the top of **Product backlog**.
 3. The team confirms each candidate meets the Definition of Ready, re-estimates if needed and stops at capacity.
 4. Move any story you are deferring or pulling in by changing its Sprint field.
-5. From the repository root, run:
+5. From the repository root, run (on Windows use `py` in place of `python`):
    ```
-   python tools/board/setup_board.py --repo OWNER/REPO plan-sprint "Sprint 1"
+   python tools/board/setup_board.py --repo olumafecode/agentsentinel plan-sprint "Sprint 1"
    ```
    Add `--stories US-07,US-08` to plan a different set from the one in `backlog.json`. The command marks the stories Ready and creates their suggested tasks as sub-issues.
 6. On **Sprint backlog**, edit, split or add tasks, and assign every task to a person.
