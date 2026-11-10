@@ -118,4 +118,9 @@ Do not write `Closes #<story>` in a pull request; stories close only on Product 
 
 ## Who can see the board
 
-The project is public, so anyone with the link can open it. Items from a private repository are only visible to people who can access that repository, which includes the quantic-grader account once it is a collaborator. If you make the repository public, everyone sees everything.
+The repository and the board are both public. Anyone with the board link can see every feature, story, task and its status without signing in, including the quantic-grader account and faculty reviewers. Only people with write access to the repository can change the board.
+
+Because the repository is public:
+
+- Never commit secrets, API keys, `.env` files or real personal data. Keep secret scanning and push protection turned on (repository **Settings**, in the security section, called **Advanced Security** or **Code security** depending on your view).
+- Anyone with a GitHub account can open an issue, and the auto-add workflow puts it on the board. Triage such issues at the weekly scrum and close any that are not project work.
