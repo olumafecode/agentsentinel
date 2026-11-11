@@ -1,0 +1,191 @@
+{
+  "Customer": {
+    "customer_id": "CUS-000123",
+    "full_name": "Avery Stone",
+    "email": "avery.stone123@example.com",
+    "phone": "+1-555-0142",
+    "created_at": "2025-06-02T09:30:00Z"
+  },
+  "Account": {
+    "account_id": "ACC-00000123",
+    "customer_id": "CUS-000123",
+    "account_type": "checking",
+    "currency": "USD",
+    "balance": "2480.55",
+    "status": "open",
+    "opened_at": "2025-06-02T09:35:00Z"
+  },
+  "Transaction": {
+    "transaction_id": "TXN-0000004567",
+    "account_id": "ACC-00000123",
+    "transaction_type": "purchase",
+    "amount": "750.00",
+    "currency": "USD",
+    "description": "Online order 88213 (invented merchant)",
+    "related_transaction_id": null,
+    "created_at": "2026-03-10T18:44:09Z"
+  },
+  "Agent": {
+    "agent_id": "AGT-001",
+    "name": "Vera",
+    "role": "customer_service",
+    "allowed_tools": [
+      "get_customer",
+      "get_transactions",
+      "update_address",
+      "issue_refund",
+      "close_dispute"
+    ],
+    "status": "active",
+    "review_threshold": 0.6,
+    "block_threshold": 0.85,
+    "created_at": "2026-01-05T08:00:00Z"
+  },
+  "ToolDefinition": {
+    "tool_name": "issue_refund",
+    "category": "financial",
+    "description": "Refund a posted transaction to the customer's own account",
+    "high_impact": true,
+    "sensitive_parameters": [
+      "account_id",
+      "amount"
+    ],
+    "allowed_task_types": [
+      "refund_request",
+      "dispute"
+    ]
+  },
+  "UserSession": {
+    "session_id": "SES-00000042",
+    "customer_id": "CUS-000123",
+    "agent_id": "AGT-001",
+    "channel": "web_chat",
+    "task_type": "refund_request",
+    "started_at": "2026-03-14T15:00:00Z",
+    "expires_at": "2026-03-14T15:30:00Z"
+  },
+  "ToolCall": {
+    "correlation_id": "3f2b8c1e-5a7d-4e9b-9c1a-2d4f6a8b0c1e",
+    "session_id": "SES-00000042",
+    "agent_id": "AGT-001",
+    "customer_scope": "CUS-000123",
+    "task_type": "refund_request",
+    "tool_name": "issue_refund",
+    "arguments": {
+      "account_id": "ACC-00000123",
+      "amount": "750.00",
+      "original_transaction_id": "TXN-0000004567",
+      "reason": "Duplicate charge"
+    },
+    "provenance_labels": {
+      "account_id": "trusted_user_input",
+      "amount": "trusted_user_input",
+      "original_transaction_id": "system",
+      "reason": "trusted_user_input"
+    },
+    "requested_at": "2026-03-14T15:02:11Z"
+  },
+  "PolicyVersion": {
+    "policy_version": "1.0.0",
+    "bundle_checksum": "c3e5fe22ac145ae4f12d741bd04a0e3818c93df2c7d51e1874599ad5e29e3c02",
+    "description": "First bundle: tool permissions, bulk export deny, refund limits",
+    "is_active": true,
+    "activated_at": "2026-01-05T08:00:00Z"
+  },
+  "RiskAssessment": {
+    "correlation_id": "3f2b8c1e-5a7d-4e9b-9c1a-2d4f6a8b0c1e",
+    "model_version": "0.1.0",
+    "feature_schema_version": "1.0.0",
+    "risk_score": 0.31,
+    "risk_band": "low",
+    "top_features": [
+      "threshold_proximity",
+      "tool_category"
+    ],
+    "assessed_at": "2026-03-14T15:02:11Z"
+  },
+  "ApprovalRequest": {
+    "approval_id": "APR-000007",
+    "correlation_id": "3f2b8c1e-5a7d-4e9b-9c1a-2d4f6a8b0c1e",
+    "requested_by": "AGT-001",
+    "reason": "Refund of 750.00 USD is above the automatic limit of 500.00 USD",
+    "status": "approved",
+    "approver_id": "USR-0003",
+    "created_at": "2026-03-14T15:02:12Z",
+    "expires_at": "2026-03-14T16:02:12Z",
+    "decided_at": "2026-03-14T15:09:40Z"
+  },
+  "AuditEvent": {
+    "event_id": "EVT-000001",
+    "correlation_id": "3f2b8c1e-5a7d-4e9b-9c1a-2d4f6a8b0c1e",
+    "event_type": "decision_made",
+    "actor": "sentinel-gateway",
+    "decision": "HUMAN_REVIEW",
+    "policy_version": "1.0.0",
+    "model_version": "0.1.0",
+    "payload": {
+      "matched_rules": [
+        "refund.above_auto_limit"
+      ],
+      "risk_score": 0.31,
+      "reason_codes": [
+        "REFUND_OVER_LIMIT"
+      ]
+    },
+    "created_at": "2026-03-14T15:02:11Z",
+    "previous_event_hash": "0000000000000000000000000000000000000000000000000000000000000000",
+    "event_hash": "eacd8116e61fd65fd94710b468a422db3750f63e1a4c5df3c37beceaa5b9a985"
+  },
+  "Incident": {
+    "incident_id": "INC-000002",
+    "agent_id": "AGT-001",
+    "correlation_ids": [
+      "7a1c9e42-0b3d-4f6a-8e2c-5d7f9b1a3c5e"
+    ],
+    "severity": "high",
+    "status": "open",
+    "summary": "Refund destination came from an untrusted email; action blocked",
+    "opened_at": "2026-03-15T11:20:05Z",
+    "closed_at": null
+  },
+  "ExplanationEvidence": {
+    "correlation_id": "3f2b8c1e-5a7d-4e9b-9c1a-2d4f6a8b0c1e",
+    "plain_english_reason": "The refund was held because it is above the amount Vera may refund without a manager's approval.",
+    "evidence_ids": [
+      "RAP-3.2"
+    ],
+    "provider_model_version": "mock-1.0",
+    "generated_at": "2026-03-14T15:02:14Z"
+  },
+  "LabelledActionEvent": {
+    "event_id": "EVT-000001",
+    "sequence_id": "SEQ-000001",
+    "position": 2,
+    "tool_call": {
+      "correlation_id": "3f2b8c1e-5a7d-4e9b-9c1a-2d4f6a8b0c1e",
+      "session_id": "SES-00000042",
+      "agent_id": "AGT-001",
+      "customer_scope": "CUS-000123",
+      "task_type": "refund_request",
+      "tool_name": "issue_refund",
+      "arguments": {
+        "account_id": "ACC-00000123",
+        "amount": "750.00",
+        "original_transaction_id": "TXN-0000004567",
+        "reason": "Duplicate charge"
+      },
+      "provenance_labels": {
+        "account_id": "trusted_user_input",
+        "amount": "trusted_user_input",
+        "original_transaction_id": "system",
+        "reason": "trusted_user_input"
+      },
+      "requested_at": "2026-03-14T15:02:11Z"
+    },
+    "expected_outcome": "HUMAN_REVIEW",
+    "failure_mode": "none",
+    "use_case": "UC-03",
+    "rule": "R6",
+    "split": "train"
+  }
+}
