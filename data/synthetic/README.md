@@ -185,7 +185,7 @@ A held action waiting for, or decided by, a human approver.
 | `approval_id` | `APR-` and 6 digits | Approval request identifier | `APR-000007` |
 | `correlation_id` | UUID version 4 | Held action | `3f2b8c1e-5a7d-4e9b-9c1a-2d4f6a8b0c1e` |
 | `requested_by` | `AGT-` and 3 digits | Agent whose action is held | `AGT-001` |
-| `reason` | text, up to 300 characters | Why the action needs a person | `Refund of 750.00 USD is above the automatic limit of 500.00 USD` |
+| `reason` | text, up to 300 characters | Why the action needs a person | `Refund of 750.00 USD is above the automatic limit of 200.00 USD` |
 | `status` | one of `pending`, `approved`, `rejected`, `expired` | pending, approved, rejected or expired | `approved` |
 | `approver_id` | `USR-` and 4 digits, or empty | Staff member who decided | `USR-0003` |
 | `created_at` | date and time with time zone (UTC) | When the request was raised (UTC) | `2026-03-14T15:02:12Z` |

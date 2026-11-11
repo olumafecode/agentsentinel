@@ -45,14 +45,17 @@ The threat list is the one in proposal Section 9.1. STRIDE categories are added 
 
 ## 4. Link to recognized agentic risks
 
-The proposal draws its threat catalog from the OWASP Top 10 for Agentic Applications. The mapping below is the team's reading; confirm the identifiers against the published list before quoting them in the final report.
+The proposal draws its threat catalog from the OWASP Top 10 for Agentic Applications for 2026, published on 9 December 2025 (https://genai.owasp.org/resource/owasp-top-10-for-agentic-applications/). OWASP numbers its ten risks ASI01 to ASI10. The identifiers and names below are OWASP's. Which of our threats corresponds to which entry is the team's own judgment.
 
-| Threat | OWASP agentic risk |
-|---|---|
-| T-01 | ASI01 Agent Goal Hijack |
-| T-02 | ASI02 Tool Misuse |
-| T-03 | ASI03 Identity and Privilege Abuse |
-| T-05 | ASI08 Cascading Failures, ASI10 Rogue Agents |
+| Threat | OWASP agentic risk | Why it corresponds |
+|---|---|---|
+| T-01 Agent goal hijack or prompt injection | ASI01 Agent Goal Hijack | Hidden instructions in content redirect what the agent is trying to do |
+| T-02 Tool misuse | ASI02 Tool Misuse and Exploitation | The agent uses a legitimate tool in the wrong way or with unsafe values |
+| T-03 Identity or privilege abuse | ASI03 Identity and Privilege Abuse | The agent acts outside the customer and session it is bound to |
+| T-05 Runaway or repeated actions | ASI08 Cascading Failures, ASI10 Rogue Agents | One fault repeats across many actions, or the agent keeps acting outside its intended behavior |
+| T-08 Hallucinated explanation | ASI09 Human-Agent Trust Exploitation | A confident but wrong explanation could lead an approver to trust a decision they should question |
+
+The other four OWASP entries are outside this release: ASI04 Agentic Supply Chain Vulnerabilities, ASI05 Unexpected Code Execution, ASI06 Memory and Context Poisoning and ASI07 Insecure Inter-Agent Communication concern plug-ins, code execution, long-term agent memory and multi-agent systems, none of which Vera has. T-04, T-06, T-07, T-09 and T-10 are classic security threats with no single matching entry in the agentic list.
 
 Governance is informed by the NIST AI Risk Management Framework and its Generative AI Profile. These sources guide engineering decisions; the capstone does not claim certification or regulatory compliance.
 

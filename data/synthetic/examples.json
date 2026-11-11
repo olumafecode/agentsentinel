@@ -108,7 +108,7 @@
     "approval_id": "APR-000007",
     "correlation_id": "3f2b8c1e-5a7d-4e9b-9c1a-2d4f6a8b0c1e",
     "requested_by": "AGT-001",
-    "reason": "Refund of 750.00 USD is above the automatic limit of 500.00 USD",
+    "reason": "Refund of 750.00 USD is above the automatic limit of 200.00 USD",
     "status": "approved",
     "approver_id": "USR-0003",
     "created_at": "2026-03-14T15:02:12Z",
