@@ -1,0 +1,4 @@
+# Tools every developer and the CI pipeline use. Versions are pinned for reproducible runs (NFR-14).
+pydantic==2.14.3
+pytest==9.2.0
+ruff==0.16.9
