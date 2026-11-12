@@ -821,4 +821,3 @@ Every functional and non-functional requirement is delivered by at least one Mus
 | AT-13 | Load test: p95 latency measured, no data corruption (UC-12) | US-27 |
 | AT-14 | Kubernetes pod deletion: replica restored (UC-12) | US-23, US-27 |
 | AT-15 | Rolling update: rollout succeeds, rollback available (UC-12) | US-23, US-27 |
-
