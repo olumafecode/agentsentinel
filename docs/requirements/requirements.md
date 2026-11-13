@@ -373,4 +373,3 @@ New requests go to the product backlog and are prioritized by the Product Owner.
 | Date | Change | Reason | Approved by |
 |---|---|---|---|
 | 2026-11-10 | Baseline created from the approved proposal | Sprint 0, story US-14 | Pending sign-off |
-

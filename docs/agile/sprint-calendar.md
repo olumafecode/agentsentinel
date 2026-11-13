@@ -102,4 +102,3 @@ The setup script creates these iterations. If GitHub refuses (older API), create
 | Sprint 4 | 2027-01-04 | 14 days |
 | Sprint 5 | 2027-01-18 | 7 days |
 | Contingency | 2027-01-25 | 6 days |
-

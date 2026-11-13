@@ -274,4 +274,3 @@ customer = Customer.model_validate({"customer_id": "CUS-000123", "full_name": "A
 ```
 
 A record that breaks a rule, such as an email at a real domain, raises a validation error. Run the schema tests with `python -m pytest tests/test_synthetic_schema.py` (on Windows, `py -m pytest ...`).
-

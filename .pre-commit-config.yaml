@@ -1,0 +1,21 @@
+# Checks that run on your own machine before every commit (task US-10.5).
+# One-time setup:   py -m pip install -r requirements-dev.txt   then   py -m pre_commit install
+# Run on demand:    py -m pre_commit run --all-files
+exclude: ^tools/board/\.board-state-.*\.json$
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v6.0.0
+    hooks:
+      - id: trailing-whitespace
+        args: [--markdown-linebreak-ext=md]
+      - id: end-of-file-fixer
+      - id: check-yaml
+      - id: check-json
+      - id: check-toml
+      - id: check-merge-conflict
+      - id: check-added-large-files
+      - id: detect-private-key
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.16.9
+    hooks:
+      - id: ruff-check

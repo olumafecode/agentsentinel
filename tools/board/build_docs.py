@@ -142,7 +142,7 @@ for code, text in REQ["acceptance_tests"].items():
     w(f"| {code} | {text} | {', '.join(s['id'] for s in STORIES if code in s['tests'])} |")
 w("")
 (KIT / "docs/agile").mkdir(parents=True, exist_ok=True)
-(KIT / "docs/agile/product-backlog.md").write_text("\n".join(L) + "\n", encoding="utf-8")
+(KIT / "docs/agile/product-backlog.md").write_text("\n".join(L).rstrip("\n") + "\n", encoding="utf-8")
 
 # ------------------------------------------------------------------ sprint calendar
 C = []
@@ -222,5 +222,5 @@ c("|---|---|---|")
 for sp in SPRINTS:
     c(f"| {sp['title']} | {sp['start']} | {sp['days']} days |")
 c("")
-(KIT / "docs/agile/sprint-calendar.md").write_text("\n".join(C) + "\n", encoding="utf-8")
+(KIT / "docs/agile/sprint-calendar.md").write_text("\n".join(C).rstrip("\n") + "\n", encoding="utf-8")
 print("written", len(L), "and", len(C), "lines")
