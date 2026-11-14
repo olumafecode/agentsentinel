@@ -1,7 +1,7 @@
 # Sprint 0 schema review (US-15.4)
 
-**Reviewer (Code Owner):**  
-**Date of review:**  
+**Reviewer (Code Owner): Olusanya Mafe**  
+**Date of review:11/13/2026**  
 **Reviewed at commit:** (paste the short commit ID from `git log --oneline -1`)  
 
 ## What was reviewed
@@ -26,12 +26,12 @@
 
 | Check | Where to look | Result | Notes |
 |---|---|---|---|
-| Amounts have two decimals and transactions must be positive | `Money` type; `Transaction.amount` | | |
-| Balances cannot be negative | `Account.balance` | | |
-| Customer, account and transaction identifiers have one fixed format each | `CustomerId`, `AccountId`, `TransactionId` at the top of `models.py` | | |
-| The target of an action is explicit | `ToolCall.customer_scope`, `ToolCall.arguments` | | |
-| A refund names the transaction it refunds | `Transaction.refund_points_to_a_purchase` | | |
-| Allowed ranges (200.00 USD automatic limit, 5,000.00 USD hard cap) are defined in one place | `labelling-rules.md`, "Settings the rules use" | | |
+| Amounts have two decimals and transactions must be positive | `Money` type; `Transaction.amount` | Pass | Field(max_digits=12, decimal_places=2) on line 41 |
+| Balances cannot be negative | `Account.balance` | Pass | Money = Field(ge=0, description="Current balance") on line 172 |
+| Customer, account and transaction identifiers have one fixed format each | `CustomerId`, `AccountId`, `TransactionId` at the top of `models.py` | Pass | line 23, 24, 25 |
+| The target of an action is explicit | `ToolCall.customer_scope`, `ToolCall.arguments` | Pass | line 245 and 248 |
+| A refund names the transaction it refunds | `Transaction.refund_points_to_a_purchase` | Pass | line 190 |
+| Allowed ranges (200.00 USD automatic limit, 5,000.00 USD hard cap) are defined in one place | `labelling-rules.md`, "Settings the rules use" | Pass | 200usd, 5000usd well set |
 
 Known follow-up to judge: `ToolCall.arguments` accepts any structured values. The exact arguments each tool takes are defined with the tools in US-16 and checked by the gateway in US-18, and the ranges are enforced by OPA in US-02a. Decide whether that split is acceptable for Sprint 0.
 
@@ -39,11 +39,11 @@ Known follow-up to judge: `ToolCall.arguments` accepts any structured values. Th
 
 | Check | Where to look | Result | Notes |
 |---|---|---|---|
-| Every argument can carry an origin label | `ToolCall.provenance_labels` | | |
-| The three origins separate customer intent from retrieved content | `Provenance` enumeration | | |
-| A label cannot point at an argument that does not exist | `ToolCall.labels_refer_to_arguments` | | |
-| Each tool declares which of its parameters are sensitive | `ToolDefinition.sensitive_parameters` | | |
-| Attacker accounts in test scenarios are easy to recognize | Rule 10 in `README.md` | | |
+| Every argument can carry an origin label | `ToolCall.provenance_labels` | Pass | line 249 |
+| The three origins separate customer intent from retrieved content | `Provenance` enumeration | Pass | line 61 |
+| A label cannot point at an argument that does not exist | `ToolCall.labels_refer_to_arguments` | Pass | line 255 |
+| Each tool declares which of its parameters are sensitive | `ToolDefinition.sensitive_parameters` | Pass | line 214 |
+| Attacker accounts in test scenarios are easy to recognize | Rule 10 in `README.md` | Pass | Rule 10, range ACC-99000000 to ACC-99999999 |
 
 Known follow-up to judge: the schema does not force every sensitive parameter to have a label, because that needs the tool definition and the tool call together. The gateway will treat a missing label on a sensitive parameter as untrusted (US-02b). Decide whether to accept this or ask for a schema check.
 
@@ -51,31 +51,31 @@ Known follow-up to judge: the schema does not force every sensitive parameter to
 
 | Check | Where to look | Result | Notes |
 |---|---|---|---|
-| Every dataset row has an expected outcome, a failure mode and the rule that set them | `LabelledActionEvent` | | |
-| Actions are grouped into ordered sequences | `sequence_id`, `position` | | |
-| The train, validation and test split is recorded on each row | `split` | | |
-| A blocked or quarantined row must name a failure mode | `LabelledActionEvent.normal_actions_are_allowed` | | |
-| The model's output can be stored with its versions | `RiskAssessment` | | |
+| Every dataset row has an expected outcome, a failure mode and the rule that set them | `LabelledActionEvent` | Pass | line 345 to 348 |
+| Actions are grouped into ordered sequences | `sequence_id`, `position` | Pass | line 340 to 343 |
+| The train, validation and test split is recorded on each row | `split` | Pass | line 146 and 349 |
+| A blocked or quarantined row must name a failure mode | `LabelledActionEvent.normal_actions_are_allowed` | Pass | line 352 |
+| The model's output can be stored with its versions | `RiskAssessment` | Pass | line 271 to 276 |
 
 The six feature families in proposal Section 8.1 must be derivable from the schema:
 
 | Feature family | Fields that supply it | Result |
 |---|---|---|
-| Identity and context | `Agent.role`, `ToolCall.task_type`, `ToolCall.customer_scope` against `UserSession.customer_id`, `ToolDefinition.category` | |
-| Action | `ToolCall.tool_name`, `ToolCall.arguments` (amount), `ToolDefinition.high_impact`, `ToolDefinition.category` (export means bulk) | |
-| History | Earlier rows of the same `sequence_id`, ordered by `position` and `requested_at` | |
-| Provenance | `ToolCall.provenance_labels` | |
-| Policy context | `LabelledActionEvent.rule`, amount against the limits, `expected_outcome` of `HUMAN_REVIEW` | |
-| Operational | `ToolCall.requested_at` (time of day), repeats within a sequence | |
+| Identity and context | `Agent.role`, `ToolCall.task_type`, `ToolCall.customer_scope` against `UserSession.customer_id`, `ToolDefinition.category` | Pass |
+| Action | `ToolCall.tool_name`, `ToolCall.arguments` (amount), `ToolDefinition.high_impact`, `ToolDefinition.category` (export means bulk) | Pass |
+| History | Earlier rows of the same `sequence_id`, ordered by `position` and `requested_at` | Pass |
+| Provenance | `ToolCall.provenance_labels` | Pass |
+| Policy context | `LabelledActionEvent.rule`, amount against the limits, `expected_outcome` of `HUMAN_REVIEW` | Pass |
+| Operational | `ToolCall.requested_at` (time of day), repeats within a sequence | Pass |
 
 ### NFR-08: synthetic data only
 
 | Check | Where to look | Result | Notes |
 |---|---|---|---|
-| A real email domain is rejected | Run the tests; see `test_rule_violations_are_rejected` | | |
-| A phone number outside the fictional range is rejected | Same test | | |
-| Unknown fields such as a government ID are rejected | `Entity` base class (`extra="forbid"`) | | |
-| The examples contain nothing that looks real | `examples.json` | | |
+| A real email domain is rejected | Run the tests; see `test_rule_violations_are_rejected` | Pass | |
+| A phone number outside the fictional range is rejected | Same test | Pass | specified phone no, line 40 |
+| Unknown fields such as a government ID are rejected | `Entity` base class (`extra="forbid"`) | Pass | Model.py line 155 |
+| The examples contain nothing that looks real | `examples.json` | Pass | Okay |
 
 ## Findings
 
@@ -86,7 +86,8 @@ The six feature families in proposal Section 8.1 must be derivable from the sche
 ## Decision
 
 - [ ] Approved
-- [ ] Approved with follow-ups (listed below and added to the board)
+- [X] Approved with follow-ups (listed below and added to the board)
 - [ ] Changes needed before approval
 
 Follow-ups added to the board:
+Covered by existing stories US-16, US-18, US-02a and US-02b.
