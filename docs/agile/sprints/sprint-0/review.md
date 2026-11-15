@@ -2,7 +2,7 @@
 
 **Date:**  15 November 2026
 **Attendees:**  Olusanya Mafe / Siyabonga Jali
-**Demo recording (for the Product Owner):** link  
+**Demo recording (for the Product Owner):** [link](https://drive.google.com/file/d/1sW8fiPDjaBRhgLzo_zunUWby6lbMpibt/view?usp=sharing)  
 
 ## Sprint goal
 
@@ -28,7 +28,7 @@ Record your screen for about five minutes and walk through:
 | US-13 Create the repository with review rules and templates | 3 | Accepted | https://github.com/olumafecode/agentsentinel/tree/main/.github/workflows |
 | US-14 Commit the requirements and design baseline | 3 | Accepted | https://github.com/olumafecode/agentsentinel/actions/runs/42945853832 |
 | US-10 Run automated checks on every pull request | 5 | Accepted | https://github.com/olumafecode/agentsentinel/actions/runs/42864153384 |
-| US-15 Define the synthetic data schema | 2 | Accepted | https://github.com/olumafecode/agentsentinel/actions/runs/42948570893 |
+| US-15 Define the synthetic data schema | 2 | Accepted | https://github.com/olumafecode/agentsentinel/blob/main/data/synthetic/README.md |
 
 **Velocity:** _15_ points accepted out of 15 planned.
 
