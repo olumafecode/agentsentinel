@@ -1,14 +1,14 @@
 # Sprint 0 review
 
-**Date:**  
-**Attendees:**  
+**Date:**  15 November 2026
+**Attendees:**  Olusanya Mafe / Siyabonga Jali
 **Demo recording (for the Product Owner):** link  
 
 ## Sprint goal
 
 Board, repository rules, CI and the requirements baseline are in place, and milestone M1 is signed off.
 
-Met? Yes / Partly / No, because:
+Met? Yes / Partly / No, because: Yes. All Baseline for the Sprint gaol has been completed
 
 ## What the demo shows
 
@@ -24,22 +24,22 @@ Record your screen for about five minutes and walk through:
 
 | Story | Points | Accepted by Product Owner? | Evidence (pull request, CI run, time in the recording) |
 |---|---|---|---|
-| US-12 Set up the Scrum board and product backlog | 2 | | |
-| US-13 Create the repository with review rules and templates | 3 | | |
-| US-14 Commit the requirements and design baseline | 3 | | |
-| US-10 Run automated checks on every pull request | 5 | | |
-| US-15 Define the synthetic data schema | 2 | | |
+| US-12 Set up the Scrum board and product backlog | 2 | Accepted | https://github.com/users/olumafecode/projects/1 |
+| US-13 Create the repository with review rules and templates | 3 | Accepted | https://github.com/olumafecode/agentsentinel/tree/main/.github/workflows |
+| US-14 Commit the requirements and design baseline | 3 | Accepted | https://github.com/olumafecode/agentsentinel/actions/runs/42945853832 |
+| US-10 Run automated checks on every pull request | 5 | Accepted | https://github.com/olumafecode/agentsentinel/actions/runs/42864153384 |
+| US-15 Define the synthetic data schema | 2 | Accepted | https://github.com/olumafecode/agentsentinel/actions/runs/42948570893 |
 
-**Velocity:** __ points accepted out of 15 planned.
+**Velocity:** _15_ points accepted out of 15 planned.
 
 ## Milestone M1: requirements baseline accepted
 
-- [ ] Product Owner has read `docs/requirements/requirements.md`, the ADRs, the architecture and the threat model
-- [ ] Sign-off recorded in `docs/requirements/requirements.md` (the "Signed off" row and the change control table)
-- [ ] Milestone M1 closed on GitHub
+- [ X ] Product Owner has read `docs/requirements/requirements.md`, the ADRs, the architecture and the threat model
+- [ X ] Sign-off recorded in `docs/requirements/requirements.md` (the "Signed off" row and the change control table)
+- [ X ] Milestone M1 closed on GitHub
 
-Signed off by:  
-Date:  
+Signed off by:  Siyabonga Jali
+Date:  15 November 2026
 
 ## Board evidence
 

@@ -15,10 +15,10 @@ AgentSentinel sits between an AI banking agent and the bank's tools. Every actio
 
 | Role | Name | GitHub |
 |---|---|---|
-| Product Owner | | |
-| Scrum Master | | |
-| Code Owner(s) | | |
-| Developers | | |
+| Product Owner | Siyabonga Jali | Siyabonga169 |
+| Scrum Master | Olusanya Mafe | Olumafecode |
+| Code Owner(s) | Olusanya Mafe | Olumafecode |
+| Developers | Olusanya Mafe / Siyabonga Jali | Olumafecode / Siyabonga169 |
 
 ## How we work
 

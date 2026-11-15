@@ -8,26 +8,26 @@ The handbook expects the Product Owner and Scrum Master to write code as well as
 
 | Role | Person | GitHub username | Responsibilities |
 |---|---|---|---|
-| Product Owner | | | Owns the backlog order and sprint goals, writes and accepts stories, closes stories after checking acceptance criteria |
-| Scrum Master | | | Runs the events, keeps the board accurate, removes blockers, runs `plan-sprint` |
-| Code Owner(s) | | | Review and approve pull requests; listed in `.github/CODEOWNERS` |
-| Developers | | | Everyone, including the two roles above |
+| Product Owner | Siyabonga Jali | siyabonga169 | Owns the backlog order and sprint goals, writes and accepts stories, closes stories after checking acceptance criteria |
+| Scrum Master | Olusanya Mafe | olumafecode | Runs the events, keeps the board accurate, removes blockers, runs `plan-sprint` |
+| Code Owner(s) | Olusanya Mafe | olumafecode | Review and approve pull requests; listed in `.github/CODEOWNERS` |
+| Developers | Olusanya Mafe / Siyabonga Jali | olumafecode / siyabonga169 | Everyone, including the two roles above |
 
 ## Meetings
 
 | Event | When | Length | Notes saved in |
 |---|---|---|---|
-| Sprint planning | First Monday of each sprint, __:__ | up to 2 hours | `docs/agile/sprints/sprint-N/planning.md` |
-| Weekly scrum | Wednesdays, __:__ | 30 minutes | `docs/agile/sprints/sprint-N/scrums.md` |
-| Backlog refinement | Thursday of the first sprint week, __:__ | 45 minutes | Story issues on the board |
-| Sprint review with recorded demo | Last day of each sprint, __:__ | 45 minutes | `docs/agile/sprints/sprint-N/review.md` |
+| Sprint planning | First Monday of each sprint, _10_:_00_ | up to 2 hours | `docs/agile/sprints/sprint-N/planning.md` |
+| Weekly scrum | Wednesdays, _11_:_00_ | 30 minutes | `docs/agile/sprints/sprint-N/scrums.md` |
+| Backlog refinement | Thursday of the first sprint week, _11_:_00_ | 45 minutes | Story issues on the board |
+| Sprint review with recorded demo | Last day of each sprint, _11_:_00_ | 45 minutes | `docs/agile/sprints/sprint-N/review.md` |
 | Retrospective | Straight after the review | 30 minutes | `docs/agile/sprints/sprint-N/retro.md` |
 
 Times are US Central unless the team agrees otherwise. Meetings run to time; anything unresolved becomes a board item with an owner.
 
 ## How we communicate
 
-- Day-to-day chat: ______ (for example Slack, Teams or WhatsApp). Decisions made in chat are copied onto the relevant issue.
+- Day-to-day chat: Whatsapp/Googlemeet (for example Slack, Teams or WhatsApp). Decisions made in chat are copied onto the relevant issue.
 - The board is the record of work. If it is not on the board, it is not planned.
 - Reply to a review request within one working day.
 - Say early when a task will slip; move it on the board and mention it at the next scrum.
