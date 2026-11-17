@@ -24,7 +24,7 @@ Record your screen for about five minutes and walk through:
 
 | Story | Points | Accepted by Product Owner? | Evidence (pull request, CI run, time in the recording) |
 |---|---|---|---|
-| US-12 Set up the Scrum board and product backlog | 2 | Accepted | https://github.com/users/olumafecode/projects/1 |
+| US-12 Set up the Scrum board and product backlog | 2 | Accepted | https://github.com/users/olumafecode/projects/1 | ![Product backlog](image.png)
 | US-13 Create the repository with review rules and templates | 3 | Accepted | https://github.com/olumafecode/agentsentinel/tree/main/.github/workflows |
 | US-14 Commit the requirements and design baseline | 3 | Accepted | https://github.com/olumafecode/agentsentinel/actions/runs/42945853832 |
 | US-10 Run automated checks on every pull request | 5 | Accepted | https://github.com/olumafecode/agentsentinel/actions/runs/42864153384 |
@@ -44,10 +44,16 @@ Date:  15 November 2026
 ## Board evidence
 
 - Burn-up chart screenshot:
+Burn-up of all Sprint 0 stories and tasks, 8 to 15 November:
+![Sprint0 burn-up](sprint-0-burnup.png)
 - Points-by-status chart screenshot:
-
+![Sprint0 story points by status](sprint-0-points-by-status.png)
+- Sprint 0 board at sprint end:
+![Sprint0 board at sprint end](sprint-0-board-done.png)
+- Milestone M1 closed
+![Milestone M1 at 100 percent ](sprint-0-m1-milestone.png)
 ## Backlog changes agreed
 
-- Stories returned to the backlog or moved to Sprint 1:
-- New stories or bugs added:
-- Priority changes:
+- Stories returned to the backlog or moved to Sprint 1: None. All five stories were accepted.
+- New stories or bugs added: The schema review follow-ups are covered by existing stories US-16, US-18, US-02a and US-02b.
+- Priority changes: None

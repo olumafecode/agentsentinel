@@ -1,12 +1,12 @@
 # AgentSentinel requirements baseline
 
-This is the agreed requirements baseline for the capstone (story US-14, milestone M1). It restates Sections 2 to 5 and Appendices C and D of the approved proposal in one place, with the same identifiers the Scrum board uses as labels. If this document and the proposal ever disagree, raise it with the Product Owner and record the decision under Change control.
+This is the agreed requirements baseline for the capstone (story US-14, milestone M1). If this document disagree any documentation ab-initio, please raise it with the Product Owner and record the decision under Change control.
 
 | | |
 |---|---|
 | Version | 1.0 (Sprint 0 baseline) |
 | Owner | Product Owner |
-| Signed off | Sprint 0 review, 15 November 2026 (pending) |
+| Signed off | Sprint 0 review, 15 November 2026 (Siyabonga Jali, Product Owner) |
 | Related | [Product backlog and traceability](../agile/product-backlog.md), [Architecture](../architecture/architecture.md), [Threat model](../architecture/threat-model.md), [ADRs](../adr/README.md) |
 
 ## 1. Purpose and aim
