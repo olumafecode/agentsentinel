@@ -1,7 +1,7 @@
 # Audit trail tools image (US-19, US-20): runs migrate, verify-chain and completeness.
 # Build from the repository root:
 #   docker build -f services/audit-service/Dockerfile -t agentsentinel/audit-service .
-FROM python:3.12-slim
+FROM python:3.15-slim
 
 ENV PYTHONDONTWRITEBYTECODE=1 \
     PYTHONUNBUFFERED=1 \
