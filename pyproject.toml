@@ -5,5 +5,12 @@ description = "Runtime governance for AI agents in banking (MSSE capstone)"
 requires-python = ">=3.12"
 
 [tool.pytest.ini_options]
-testpaths = ["tests"]
-pythonpath = ["."]
+# Every package keeps its tests next to its code; these globs find them all.
+testpaths = ["tests", "libs/*/tests", "apps/*/tests", "services/*/tests"]
+# Add each new package's src folder here so its tests and the cross-package tests can import it.
+pythonpath = [".", "libs/sentinel-contracts/src", "apps/demo-bank-api/src"]
+addopts = ["--import-mode=importlib"]
+
+[tool.ruff]
+# Where each package's code lives, so Ruff groups first-party imports correctly.
+src = [".", "libs/*/src", "apps/*/src", "services/*/src"]

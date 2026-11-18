@@ -10,9 +10,9 @@ The Policy Enforcement Point. Every protected tool call passes through here and 
 
 ## What belongs here
 
-- The evaluate endpoint and request and decision contracts
+- The evaluate endpoint, using the request and decision contracts from `libs/sentinel-contracts`
 - Identity and scope checks, provenance tracking, decision orchestration
-- Execution token signing
+- Issuing execution tokens with `sentinel_contracts.execution_token` (ADR-010)
 
 ## Rules for this folder
 

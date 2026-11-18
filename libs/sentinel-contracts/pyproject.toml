@@ -1,0 +1,13 @@
+[build-system]
+requires = ["setuptools>=75"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "sentinel-contracts"
+version = "0.1.0"
+description = "Request, decision and execution token contracts shared by AgentSentinel services"
+requires-python = ">=3.12"
+dependencies = ["pydantic>=2.10,<3"]
+
+[tool.setuptools.packages.find]
+where = ["src"]
