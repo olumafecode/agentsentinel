@@ -1,8 +1,9 @@
-"""Request and decision contracts between Vera and the Sentinel Gateway (US-18.1).
+"""Request, decision and outcome contracts between Vera and the Sentinel Gateway.
 
 Field names and formats follow proposal Appendix E and the ToolCall entity in
 data/synthetic/models.py, so a stored ToolCall and a live ProtectedActionRequest
-have the same shape.
+have the same shape (US-18.1). ActionOutcome is what the gateway's evaluate endpoint
+returns: the decision and, for an allowed action, what the bank did (US-18.2).
 """
 
 from enum import StrEnum
@@ -70,12 +71,14 @@ class ReasonCode(StrEnum):
     TOOL_NOT_ALLOWED = "TOOL_NOT_ALLOWED"
     OUTSIDE_CUSTOMER_SCOPE = "OUTSIDE_CUSTOMER_SCOPE"
     INVALID_ARGUMENTS = "INVALID_ARGUMENTS"
+    STALE_REQUEST = "STALE_REQUEST"
     POLICY_DENY = "POLICY_DENY"
     UNTRUSTED_ORIGIN = "UNTRUSTED_ORIGIN"
     REFUND_OVER_LIMIT = "REFUND_OVER_LIMIT"
     HIGH_RISK = "HIGH_RISK"
     REPEATED_VIOLATIONS = "REPEATED_VIOLATIONS"
     AGENT_QUARANTINED = "AGENT_QUARANTINED"
+    AGENT_DISABLED = "AGENT_DISABLED"
     DEPENDENCY_UNAVAILABLE = "DEPENDENCY_UNAVAILABLE"
     APPROVED_BY_HUMAN = "APPROVED_BY_HUMAN"
     REJECTED_BY_HUMAN = "REJECTED_BY_HUMAN"
@@ -85,9 +88,13 @@ Summary = Annotated[str, StringConstraints(min_length=3, max_length=300)]
 
 
 class Contract(BaseModel):
-    """Base for every contract: unknown fields are rejected and values cannot change."""
+    """Base for every contract.
 
-    model_config = ConfigDict(extra="forbid", frozen=True)
+    Unknown fields are rejected, values cannot change, and numbers must be finite,
+    because JSON has no NaN or infinity and every contract travels as JSON.
+    """
+
+    model_config = ConfigDict(extra="forbid", frozen=True, allow_inf_nan=False)
 
 
 class ProtectedActionRequest(Contract):
@@ -178,3 +185,67 @@ class GovernanceDecision(Contract):
     def permits_execution(self) -> bool:
         """True when the action may go ahead now."""
         return self.decision is Decision.ALLOW
+
+
+class ExecutionStatus(StrEnum):
+    """What happened when the gateway forwarded an allowed action to the bank."""
+
+    SUCCEEDED = "succeeded"
+    """The bank ran the tool."""
+    REJECTED = "rejected"
+    """The bank refused the call, for example because the account was closed."""
+    FAILED = "failed"
+    """The bank did not answer or reported an internal error; the tool may have run."""
+
+
+class ExecutionError(Contract):
+    """Why an allowed action did not succeed at the bank."""
+
+    code: Annotated[str, StringConstraints(min_length=1, max_length=64)]
+    message: Annotated[str, StringConstraints(min_length=1, max_length=300)]
+
+
+class ExecutionResult(Contract):
+    """The bank's answer to an allowed action, as the gateway received it."""
+
+    status: ExecutionStatus
+    tool_name: ToolName
+    http_status: int | None = Field(
+        default=None,
+        ge=100,
+        le=599,
+        description="HTTP status from the bank; empty when the bank did not answer",
+    )
+    result: JsonValue = Field(
+        default=None, description="What the tool returned, when it succeeded"
+    )
+    error: ExecutionError | None = Field(
+        default=None, description="Why it did not succeed"
+    )
+    completed_at: AwareDatetime
+
+    @model_validator(mode="after")
+    def _error_matches_status(self) -> Self:
+        succeeded = self.status is ExecutionStatus.SUCCEEDED
+        if succeeded and self.error is not None:
+            raise ValueError("a successful execution must not carry an error")
+        if not succeeded and self.error is None:
+            raise ValueError("an execution that did not succeed must carry an error")
+        return self
+
+
+class ActionOutcome(Contract):
+    """The gateway's full answer to one ProtectedActionRequest.
+
+    ``execution`` is present exactly when the decision is ALLOW, because only an
+    allowed action is forwarded to the bank.
+    """
+
+    decision: GovernanceDecision
+    execution: ExecutionResult | None = None
+
+    @model_validator(mode="after")
+    def _execution_only_when_allowed(self) -> Self:
+        if self.decision.permits_execution != (self.execution is not None):
+            raise ValueError("an outcome carries an execution result only for ALLOW")
+        return self

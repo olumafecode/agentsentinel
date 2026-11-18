@@ -15,6 +15,7 @@ An architecture decision record (ADR) captures one significant design decision: 
 | ADR-009 | Public hosting platform: Railway or Render | Planned for Sprint 3 (US-11a) |
 | [ADR-010](ADR-010-shared-contracts-and-execution-tokens.md) | Shared contracts and HMAC-signed single-use execution tokens | Accepted |
 | [ADR-011](ADR-011-demo-bank-in-memory.md) | The demo bank keeps its data in memory | Accepted |
+| [ADR-012](ADR-012-gateway-decision-pipeline.md) | Gateway decision pipeline, caller identity and idempotent outcomes | Accepted |
 
 ## When to write a new ADR
 

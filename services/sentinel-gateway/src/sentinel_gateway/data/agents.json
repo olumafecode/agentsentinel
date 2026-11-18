@@ -1,0 +1,15 @@
+{
+  "description": "Agents the gateway accepts actions from, in the shape of the Agent entity in data/synthetic/models.py. An agent also needs a key in AGENT_KEYS before it can call the gateway. allowed_tools is used by the tool allowlist (US-01.2); the thresholds by the risk engine (US-04).",
+  "agents": [
+    {
+      "agent_id": "AGT-001",
+      "name": "Vera",
+      "role": "customer_service",
+      "allowed_tools": ["get_customer", "get_transactions", "update_address", "issue_refund", "close_dispute"],
+      "status": "active",
+      "review_threshold": 0.6,
+      "block_threshold": 0.85,
+      "created_at": "2026-01-05T08:00:00Z"
+    }
+  ]
+}

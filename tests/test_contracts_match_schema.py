@@ -7,7 +7,7 @@ from typing import get_args
 import pytest
 
 from data.synthetic import models
-from sentinel_contracts import actions, identifiers
+from sentinel_contracts import SessionClaims, actions, audit, identifiers
 
 EXAMPLES = json.loads(
     (
@@ -22,6 +22,7 @@ EXAMPLES = json.loads(
         (actions.Decision, models.Decision),
         (actions.Provenance, models.Provenance),
         (actions.TaskType, models.TaskType),
+        (audit.AuditEventType, models.AuditEventType),
     ],
 )
 def test_enumerations_have_the_same_values(contract_enum, schema_enum):
@@ -58,3 +59,37 @@ def test_reason_codes_in_examples_are_known():
     assert set(EXAMPLES["AuditEvent"]["payload"]["reason_codes"]) <= {
         r.value for r in actions.ReasonCode
     }
+
+
+def test_an_audit_record_is_an_audit_event_without_its_chain_fields():
+    chain_fields = {"event_id", "previous_event_hash", "event_hash"}
+    assert set(audit.AuditRecord.model_fields) == (
+        set(models.AuditEvent.model_fields) - chain_fields
+    )
+    stored = models.AuditEvent.model_validate(EXAMPLES["AuditEvent"])
+    record = audit.AuditRecord.model_validate(
+        stored.model_dump(mode="json", exclude=chain_fields)
+    )
+    assert record.model_dump(mode="json") == stored.model_dump(
+        mode="json", exclude=chain_fields
+    )
+
+
+def test_session_claims_carry_the_user_session_fields():
+    session = models.UserSession.model_validate(EXAMPLES["UserSession"])
+    claims = SessionClaims(
+        session_id=session.session_id,
+        customer_id=session.customer_id,
+        agent_id=session.agent_id,
+        task_type=session.task_type.value,
+        channel=session.channel,
+        issuer="veridane-identity",
+        audience="sentinel-gateway",
+        issued_at=int(session.started_at.timestamp()),
+        expires_at=int(session.expires_at.timestamp()),
+    )
+    shared = {"session_id", "customer_id", "agent_id", "task_type", "channel"}
+    assert shared <= set(models.UserSession.model_fields)
+    assert claims.model_dump(mode="json", include=shared) == session.model_dump(
+        mode="json", include=shared
+    )

@@ -1,13 +1,18 @@
-"""Contracts shared by Vera, the Sentinel Gateway and the protected tools (US-18.1, ADR-010)."""
+"""Contracts shared by Vera, the Sentinel Gateway and the protected tools (ADR-010, ADR-012)."""
 
 from sentinel_contracts.actions import (
+    ActionOutcome,
     Decision,
+    ExecutionError,
+    ExecutionResult,
+    ExecutionStatus,
     GovernanceDecision,
     ProtectedActionRequest,
     Provenance,
     ReasonCode,
     TaskType,
 )
+from sentinel_contracts.audit import AuditEventType, AuditRecord
 from sentinel_contracts.execution_token import (
     TOKEN_HEADER,
     ReplayGuard,
@@ -18,20 +23,36 @@ from sentinel_contracts.execution_token import (
     load_key,
     verify_token,
 )
+from sentinel_contracts.session_token import (
+    SESSION_HEADER,
+    SessionClaims,
+    issue_session_token,
+    verify_session_token,
+)
 
 __all__ = [
+    "SESSION_HEADER",
     "TOKEN_HEADER",
+    "ActionOutcome",
+    "AuditEventType",
+    "AuditRecord",
     "Decision",
+    "ExecutionError",
+    "ExecutionResult",
+    "ExecutionStatus",
     "GovernanceDecision",
     "ProtectedActionRequest",
     "Provenance",
     "ReasonCode",
     "ReplayGuard",
+    "SessionClaims",
     "TaskType",
     "TokenClaims",
     "TokenError",
     "arguments_digest",
+    "issue_session_token",
     "issue_token",
     "load_key",
+    "verify_session_token",
     "verify_token",
 ]

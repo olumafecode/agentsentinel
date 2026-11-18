@@ -8,7 +8,12 @@ requires-python = ">=3.12"
 # Every package keeps its tests next to its code; these globs find them all.
 testpaths = ["tests", "libs/*/tests", "apps/*/tests", "services/*/tests"]
 # Add each new package's src folder here so its tests and the cross-package tests can import it.
-pythonpath = [".", "libs/sentinel-contracts/src", "apps/demo-bank-api/src"]
+pythonpath = [
+    ".",
+    "libs/sentinel-contracts/src",
+    "apps/demo-bank-api/src",
+    "services/sentinel-gateway/src",
+]
 addopts = ["--import-mode=importlib"]
 
 [tool.ruff]

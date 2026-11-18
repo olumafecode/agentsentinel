@@ -1,0 +1,6 @@
+# Runtime dependencies of the Sentinel Gateway, pinned for reproducible builds (NFR-14).
+# The Dockerfile installs exactly these; requirements-dev.txt includes this file for tests.
+fastapi==0.163.2
+httpx2==2.16.2
+pydantic==2.14.3
+uvicorn==0.54.0
