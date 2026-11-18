@@ -1,0 +1,17 @@
+# Keeps every image built from the repository root small and free of secrets.
+.git
+.github
+.venv
+venv
+docs
+**/tests
+**/__pycache__
+**/*.pyc
+**/.pytest_cache
+**/.ruff_cache
+**/*.egg-info
+**/build
+.env
+.env.*
+**/.env
+**/.env.*

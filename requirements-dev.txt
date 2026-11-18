@@ -1,5 +1,7 @@
 # Tools every developer and the CI pipeline use. Versions are pinned for reproducible runs (NFR-14).
+# Each service's runtime dependencies are included from its own requirements.txt.
+-r apps/demo-bank-api/requirements.txt
+httpx2==2.16.2
 pre-commit==4.7.0
-pydantic==2.14.3
 pytest==9.2.0
 ruff==0.16.9
