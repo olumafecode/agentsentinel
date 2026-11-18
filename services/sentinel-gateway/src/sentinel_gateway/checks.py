@@ -11,7 +11,10 @@ CONTAINMENT       Whether the agent must be contained (US-05 quarantine).
 MANDATORY_REVIEW  Actions that always need a person (US-03 large refunds).
 RISK              The machine learning risk signal (US-04), advisory only (ADR-003).
 
-To add a rule, subclass Check, set its name and stage, and add it to default_checks.
+This module holds the building blocks and the CONTEXT checks. Each later story adds
+its rules in a module of its own (scope.py for US-01), and pipeline.py lists the
+checks the gateway runs. To add a rule, subclass Check, set its name and stage, and
+add it to default_checks in pipeline.py.
 """
 
 from abc import ABC, abstractmethod
@@ -249,13 +252,3 @@ class KnownToolCheck(Check):
                 summary=f"There is no known tool called {context.request.tool_name}.",
             )
         return NO_OBJECTION
-
-
-def default_checks() -> list[Check]:
-    """The checks the gateway runs, in the order they appear within each stage."""
-    return [
-        ContextBindingCheck(),
-        AgentStatusCheck(),
-        RequestFreshnessCheck(),
-        KnownToolCheck(),
-    ]

@@ -10,8 +10,10 @@ from demo_bank_api.config import Settings as BankSettings
 from demo_bank_api.main import create_app as create_bank
 from demo_bank_api.store import BankStore
 from sentinel_contracts import SESSION_HEADER, issue_session_token, load_key
+from sentinel_contracts.ownership import OWNERSHIP_PATH
 from sentinel_gateway.audit import InMemoryAuditSink
 from sentinel_gateway.auth import AgentKeyring
+from sentinel_gateway.bank import BankClient, BankOwnershipLookup
 from sentinel_gateway.config import Settings
 from sentinel_gateway.main import create_app
 from sentinel_gateway.registry import AgentProfile, AgentRegistry, AgentStatus
@@ -91,14 +93,33 @@ def bank_store():
 
 @pytest.fixture
 def bank(bank_store, clock):
-    """The demo bank, reached in process. ``bank.calls`` counts every request it gets."""
+    """The demo bank, reached in process.
+
+    ``bank.calls`` records every tool call it receives and ``bank.lookups`` every
+    ownership lookup, so a test can prove that a blocked action never reached a tool.
+    """
     app = create_bank(
         BankSettings(execution_token_key=EXECUTION_KEY), store=bank_store, clock=clock
     )
     client = TestClient(app)
     client.calls = []
-    client.event_hooks = {"request": [client.calls.append], "response": []}
+    client.lookups = []
+
+    def record(request):
+        is_lookup = request.url.path == OWNERSHIP_PATH
+        (client.lookups if is_lookup else client.calls).append(request)
+
+    client.event_hooks = {"request": [record], "response": []}
     return client
+
+
+@pytest.fixture
+def ownership(settings, bank, clock):
+    """The ownership lookup the standard checks use, against the in-process bank."""
+    client = BankClient(settings.bank_url, client=bank, clock=clock)
+    return BankOwnershipLookup(
+        client, key=EXECUTION_KEY, audience=settings.bank_audience, clock=clock
+    )
 
 
 @pytest.fixture
@@ -141,20 +162,28 @@ def gateway(make_gateway):
     return make_gateway()
 
 
-class UnreachableBank:
-    """A bank connection that always fails, so an allowed call's token stays unused."""
+class ToolCallsFail:
+    """Passes ownership lookups to the bank, but every tool call fails to connect.
 
-    def post(self, *args, **kwargs):
-        raise ConnectionError("bank unreachable")
+    An allowed action's token is then never used, so tests can try it themselves.
+    """
+
+    def __init__(self, bank):
+        self._bank = bank
+
+    def post(self, url, **kwargs):
+        if OWNERSHIP_PATH not in str(url):
+            raise ConnectionError("bank unreachable")
+        return self._bank.post(url, **kwargs)
 
     def close(self):
         pass
 
 
 @pytest.fixture
-def offline_gateway(make_gateway):
-    """A gateway that decides normally but cannot reach the bank."""
-    return make_gateway(bank_client=UnreachableBank())
+def unforwarded_gateway(make_gateway, bank):
+    """A gateway that decides normally but whose tool calls never reach the bank."""
+    return make_gateway(bank_client=ToolCallsFail(bank))
 
 
 @pytest.fixture

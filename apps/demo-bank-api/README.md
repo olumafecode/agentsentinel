@@ -5,7 +5,7 @@ The fictional bank whose tools Vera asks to use. It holds synthetic customers, a
 | | |
 |---|---|
 | First built in | Sprint 1 |
-| Stories | US-16 (tasks US-16.1 to US-16.4) |
+| Stories | US-16 (tasks US-16.1 to US-16.4), US-01.1 (ownership lookup) |
 | Requirements | NFR-08, NFR-10 |
 | Decision records | [ADR-001](../../docs/adr/ADR-001-independent-gateway.md), [ADR-010](../../docs/adr/ADR-010-shared-contracts-and-execution-tokens.md), [ADR-011](../../docs/adr/ADR-011-demo-bank-in-memory.md) |
 
@@ -17,6 +17,7 @@ The fictional bank whose tools Vera asks to use. It holds synthetic customers, a
 | `GET /readyz` | No | Readiness: data loaded, with record counts |
 | `GET /v1/tools` | No | Lists every tool, its category, whether it is high impact, its sensitive parameters and its argument schema |
 | `POST /v1/tools/{tool_name}` | Yes | Runs one tool; the JSON body is the tool's arguments |
+| `POST /v1/internal/owners` | Yes, for `resolve_owners` | Gateway only. Says which customer owns each account, transaction or dispute in `{"identifiers": [...]}`; unknown records map to `null`. Not in the tool list |
 | `POST /admin/reset` | Admin key | Returns the bank to its seeded state; disabled unless `DEMO_ADMIN_KEY` is set |
 | `GET /docs` | No | Interactive API documentation |
 

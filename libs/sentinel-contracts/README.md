@@ -7,7 +7,7 @@ The messages that pass between Vera, the Sentinel Gateway, the protected tools a
 | First built in | Sprint 1 |
 | Stories | US-18 (US-18.1 contracts, US-18.2 outcome and session token, US-18.4 tokens), used by US-16 and US-19 |
 | Requirements | FR-01, FR-02, FR-05, FR-08, FR-09, FR-13; NFR-01, NFR-03, NFR-06 |
-| Decision records | [ADR-010](../../docs/adr/ADR-010-shared-contracts-and-execution-tokens.md), [ADR-012](../../docs/adr/ADR-012-gateway-decision-pipeline.md) |
+| Decision records | [ADR-010](../../docs/adr/ADR-010-shared-contracts-and-execution-tokens.md), [ADR-012](../../docs/adr/ADR-012-gateway-decision-pipeline.md), [ADR-013](../../docs/adr/ADR-013-ownership-lookup.md) |
 
 ## What is in it
 
@@ -16,6 +16,7 @@ The messages that pass between Vera, the Sentinel Gateway, the protected tools a
 | `sentinel_contracts.actions` | `ProtectedActionRequest` (what the agent proposes), `GovernanceDecision` (what the gateway decides), `ActionOutcome` and `ExecutionResult` (what the evaluate endpoint returns), and the `Decision`, `ReasonCode`, `Provenance`, `TaskType` and `ExecutionStatus` values |
 | `sentinel_contracts.audit` | `AuditRecord`, one step in the life of an action before the audit service adds it to the hash chain, and `AuditEventType` |
 | `sentinel_contracts.execution_token` | `issue_token` (gateway), `verify_token` and `ReplayGuard` (protected tools), `TOKEN_HEADER` |
+| `sentinel_contracts.ownership` | `OwnershipQuery` and `OwnershipAnswer`, the gateway's lookup of who owns a bank record (ADR-013) |
 | `sentinel_contracts.session_token` | `issue_session_token` (identity service), `verify_session_token` and `SessionClaims` (gateway), `SESSION_HEADER` |
 | `sentinel_contracts.signing` | The signing code both tokens share |
 | `sentinel_contracts.identifiers` | The identifier formats, such as `CUS-000123` and the correlation ID |

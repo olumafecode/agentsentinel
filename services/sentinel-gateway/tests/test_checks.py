@@ -19,8 +19,6 @@ from sentinel_gateway.checks import (
     ContextBindingCheck,
     KnownToolCheck,
     RequestFreshnessCheck,
-    Stage,
-    default_checks,
 )
 from sentinel_gateway.registry import AgentRegistry, AgentStatus, ToolRegistry
 
@@ -66,18 +64,6 @@ def context(
         session_error=session_error,
         received_at=RECEIVED,
     )
-
-
-def test_every_default_check_is_a_context_check_with_a_unique_name():
-    checks = default_checks()
-
-    assert [check.name for check in checks] == [
-        "context_binding",
-        "agent_status",
-        "request_freshness",
-        "known_tool",
-    ]
-    assert {check.stage for check in checks} == {Stage.CONTEXT}
 
 
 @pytest.mark.parametrize(

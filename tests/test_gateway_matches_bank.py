@@ -1,6 +1,7 @@
 """The gateway's registries agree with the demo bank's catalogue and the synthetic schema."""
 
 import json
+import re
 from pathlib import Path
 
 import pytest
@@ -13,6 +14,7 @@ from sentinel_gateway.registry import (
     ToolCategory,
     ToolRegistry,
 )
+from sentinel_gateway.scope import RECORD_PATTERNS
 
 GATEWAY_TOOLS = ToolRegistry.load()
 GATEWAY_AGENTS = AgentRegistry.load()
@@ -70,3 +72,17 @@ def test_vera_matches_the_example_agent():
 )
 def test_registry_values_match_the_schema(gateway_enum, schema_enum):
     assert {m.value for m in gateway_enum} == {m.value for m in schema_enum}
+
+
+@pytest.mark.parametrize("tool_name", sorted(TOOLS))
+def test_every_record_id_a_tool_takes_is_checked_for_customer_scope(tool_name):
+    """A new kind of record ID (a card number, say) must be added to the scope check."""
+    properties = (
+        TOOLS[tool_name].arguments_model.model_json_schema().get("properties", {})
+    )
+    id_patterns = {
+        spec["pattern"]
+        for spec in properties.values()
+        if re.match(r"^\^[A-Z]{3}-", spec.get("pattern", ""))
+    }
+    assert id_patterns <= {pattern.pattern for pattern in RECORD_PATTERNS.values()}

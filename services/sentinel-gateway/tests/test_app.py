@@ -3,9 +3,10 @@
 import pytest
 
 from sentinel_contracts import Decision, ReasonCode
-from sentinel_gateway.checks import Check, Stage, default_checks, objection
+from sentinel_gateway.checks import Check, Stage, objection
 from sentinel_gateway.config import ConfigError
 from sentinel_gateway.main import create_app
+from sentinel_gateway.pipeline import default_checks
 from sentinel_gateway.registry import AgentRegistry
 
 
@@ -46,6 +47,8 @@ def test_liveness_and_readiness(gateway):
             "agent_status",
             "request_freshness",
             "known_tool",
+            "tool_allowlist",
+            "customer_scope",
         ],
     }
 
@@ -88,9 +91,11 @@ def test_a_key_for_an_unregistered_agent_stops_the_gateway(settings, bank):
 
 
 def test_a_held_action_is_blocked_while_there_is_no_approval_service(
-    make_gateway, evaluate, refund, refund_session, bank, audit
+    make_gateway, evaluate, refund, refund_session, bank, audit, ownership
 ):
-    gateway = make_gateway(checks=[*default_checks(), LargeRefundRule()])
+    gateway = make_gateway(
+        checks=[*default_checks(ownership=ownership), LargeRefundRule()]
+    )
     body = refund()
 
     decision = evaluate(body, session=refund_session, client=gateway).json()["decision"]
@@ -105,11 +110,12 @@ def test_a_held_action_is_blocked_while_there_is_no_approval_service(
 
 
 def test_a_held_action_opens_an_approval_and_does_not_run(
-    make_gateway, evaluate, refund, refund_session, bank, audit
+    make_gateway, evaluate, refund, refund_session, bank, audit, ownership
 ):
     approvals = Approvals()
     gateway = make_gateway(
-        checks=[*default_checks(), LargeRefundRule()], approvals=approvals
+        checks=[*default_checks(ownership=ownership), LargeRefundRule()],
+        approvals=approvals,
     )
     body = refund()
 
@@ -130,10 +136,11 @@ def test_a_held_action_opens_an_approval_and_does_not_run(
 
 @pytest.mark.parametrize("failure", [ConnectionError("down"), "not-an-approval-id"])
 def test_a_failing_approval_service_blocks_the_held_action(
-    make_gateway, evaluate, refund, refund_session, bank, failure
+    make_gateway, evaluate, refund, refund_session, bank, ownership, failure
 ):
     gateway = make_gateway(
-        checks=[*default_checks(), LargeRefundRule()], approvals=Approvals(failure)
+        checks=[*default_checks(ownership=ownership), LargeRefundRule()],
+        approvals=Approvals(failure),
     )
 
     decision = evaluate(refund(), session=refund_session, client=gateway).json()[
@@ -167,6 +174,8 @@ def test_every_evaluated_action_leaves_a_complete_audit_trail(evaluate, action, 
         "agent_status",
         "request_freshness",
         "known_tool",
+        "tool_allowlist",
+        "customer_scope",
     ]
     assert executed.payload == {
         "tool_name": "get_transactions",

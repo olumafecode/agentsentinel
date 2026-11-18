@@ -8,11 +8,15 @@ from decimal import Decimal
 from enum import StrEnum
 from typing import Annotated, Literal
 
-from pydantic import AwareDatetime, BaseModel, ConfigDict, Field, StringConstraints
+from pydantic import AwareDatetime, BaseModel, ConfigDict, Field
 
-from sentinel_contracts.identifiers import AccountId, CustomerId, TransactionId
+from sentinel_contracts.identifiers import (
+    AccountId,
+    CustomerId,
+    DisputeId,
+    TransactionId,
+)
 
-DisputeId = Annotated[str, StringConstraints(pattern=r"^DSP-\d{6}$")]
 Money = Annotated[Decimal, Field(max_digits=12, decimal_places=2)]
 
 

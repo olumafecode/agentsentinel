@@ -5,15 +5,15 @@ The Policy Enforcement Point. Every protected action Vera proposes comes here fi
 | | |
 |---|---|
 | First built in | Sprint 1, extended in Sprints 2 and 3 |
-| Stories | US-18 (tasks US-18.2 to US-18.6); later US-01, US-02a, US-02b, US-03, US-04, US-05 |
-| Requirements | FR-01, FR-02, FR-08, FR-09, FR-13; NFR-01, NFR-02, NFR-03, NFR-06 |
-| Decision records | [ADR-001](../../docs/adr/ADR-001-independent-gateway.md), [ADR-003](../../docs/adr/ADR-003-ml-risk-advisory.md), [ADR-010](../../docs/adr/ADR-010-shared-contracts-and-execution-tokens.md), [ADR-012](../../docs/adr/ADR-012-gateway-decision-pipeline.md) |
+| Stories | US-18 (tasks US-18.2 to US-18.6), US-01 (US-01.1 to US-01.4); later US-02a, US-02b, US-03, US-04, US-05 |
+| Requirements | FR-01, FR-02, FR-03, FR-08, FR-09, FR-13; NFR-01, NFR-02, NFR-03, NFR-06 |
+| Decision records | [ADR-001](../../docs/adr/ADR-001-independent-gateway.md), [ADR-003](../../docs/adr/ADR-003-ml-risk-advisory.md), [ADR-010](../../docs/adr/ADR-010-shared-contracts-and-execution-tokens.md), [ADR-012](../../docs/adr/ADR-012-gateway-decision-pipeline.md), [ADR-013](../../docs/adr/ADR-013-ownership-lookup.md) |
 
 ## What happens to one action
 
 1. The agent's API key identifies the agent. A missing or wrong key gets HTTP 401.
 2. The session token is verified. The agent ID, session, customer and task in the request must match it and the key.
-3. The checks run in stage order and the orchestrator combines their findings.
+3. The checks run in stage order and the orchestrator combines their findings. If the action names an account, transaction or dispute, the customer scope check asks the bank who owns it.
 4. `action_received` and `decision_made` are written to the audit trail. If that fails, nothing runs (HTTP 503).
 5. For ALLOW, the gateway signs an execution token for exactly this call and calls the bank.
 6. `action_executed`, `approval_requested` or `action_stopped` is written, and the outcome is kept under the correlation ID.
@@ -76,14 +76,24 @@ Send the identical request again, for example after a timeout, and you get the s
 | `agent_status` | CONTEXT | QUARANTINE `AGENT_QUARANTINED`; BLOCK `AGENT_DISABLED`; BLOCK `IDENTITY_MISMATCH` for an unregistered agent |
 | `request_freshness` | CONTEXT | BLOCK `STALE_REQUEST` when `requested_at` is over 5 minutes old or over 30 seconds ahead |
 | `known_tool` | CONTEXT | BLOCK `UNKNOWN_TOOL` for a tool missing from `data/tools.json` |
+| `tool_allowlist` | HARD_RULE | BLOCK `TOOL_NOT_ALLOWED` when the tool is not in the agent's `allowed_tools`, or the session's task is not in the tool's `allowed_task_types` |
+| `customer_scope` | HARD_RULE | BLOCK `OUTSIDE_CUSTOMER_SCOPE` when any customer, account, transaction or dispute ID in the arguments belongs to another customer or does not exist |
 
 A request that fails validation is blocked with `MISSING_CONTEXT`, `UNKNOWN_TOOL` or `INVALID_ARGUMENTS`. A check that raises an error blocks with `DEPENDENCY_UNAVAILABLE`. When checks disagree, QUARANTINE beats BLOCK, which beats HUMAN_REVIEW (ADR-012).
 
-US-01 adds the customer scope and tool allowlist checks. Until then, any registered tool is allowed within a valid session.
+## Customer scope
+
+Every argument value that is a customer, account, transaction or dispute ID is checked, whatever the argument is called and however deeply it is nested. Customer IDs are compared with the session's customer. For the other records the gateway asks the bank's internal lookup, `POST /v1/internal/owners`, with its own single-use token (ADR-013). Vera cannot call that lookup, because it cannot sign a token.
+
+- A lookup by customer ID never calls the bank, so AT-02 proves the bank receives nothing.
+- A record the bank does not know is out of scope.
+- If the lookup fails, the action is blocked with `DEPENDENCY_UNAVAILABLE`.
+- If an earlier check has already blocked the action, the bank is not asked at all.
+- The decision's summary names the records but never the customer who owns them. The audit record keeps both.
 
 ## Adding a check
 
-Subclass `Check` in `checks.py`, give it a name and a stage, and add it to `default_checks()`:
+Subclass `Check` in a module for its story (`scope.py` holds the US-01 rules), give it a name and a stage, and add it to `default_checks()` in `pipeline.py`:
 
 ```python
 class BulkExportCheck(Check):
@@ -100,7 +110,7 @@ class BulkExportCheck(Check):
         return NO_OBJECTION
 ```
 
-Nothing else changes: the orchestrator places it by stage, applies the precedence order and records it in the audit trail.
+A check that needs a client, as `CustomerScopeCheck` needs the ownership lookup, takes it in its constructor, and `default_checks()` passes it in. Nothing else changes: the orchestrator places the check by stage, applies the precedence order and records its result in the audit trail.
 
 ## Agents and tools
 
@@ -170,4 +180,6 @@ The image runs as a non-root user (UID 10001) and reports its health from `/heal
 
 ## Tests
 
-From the repository root: `py -m pytest services/sentinel-gateway -q`. The tests run the real demo bank in the same process, so they cover the whole path from decision to bank, including a replayed token, a token reused for another call, retries of the same refund, and two identical refunds arriving at once.
+From the repository root: `py -m pytest services/sentinel-gateway -q`. The tests run the real demo bank in the same process, so they cover the whole path from decision to bank, including a replayed token, a token reused for another call, retries of the same refund, two identical refunds arriving at once, and a refund sent to another customer's account.
+
+The acceptance tests AT-01 and AT-02 are in `tests/acceptance` at the repository root: `py -m pytest tests/acceptance -q`.

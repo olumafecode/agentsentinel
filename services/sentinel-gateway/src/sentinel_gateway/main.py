@@ -24,11 +24,12 @@ from sentinel_contracts import SESSION_HEADER, ActionOutcome, ProtectedActionReq
 from sentinel_gateway import __version__
 from sentinel_gateway.audit import AuditSink, AuditUnavailable, JsonLinesAuditSink
 from sentinel_gateway.auth import AgentKeyring, bearer_credentials
-from sentinel_gateway.bank import BankClient
-from sentinel_gateway.checks import Check, default_checks
+from sentinel_gateway.bank import BankClient, BankOwnershipLookup
+from sentinel_gateway.checks import Check
 from sentinel_gateway.config import ConfigError, Settings
 from sentinel_gateway.decisions import CorrelationConflict, DecisionStore
 from sentinel_gateway.orchestrator import Orchestrator
+from sentinel_gateway.pipeline import default_checks
 from sentinel_gateway.registry import AgentRegistry, ToolRegistry
 from sentinel_gateway.service import ApprovalRequester, Gateway
 
@@ -67,7 +68,10 @@ def create_app(
     approvals: ApprovalRequester | None = None,
     clock: Callable[[], float] = time.time,
 ) -> FastAPI:
-    """Build the gateway. Reads settings from the environment when none are given."""
+    """Build the gateway. Reads settings from the environment when none are given.
+
+    ``checks`` replaces the standard checks from pipeline.default_checks, for tests.
+    """
     settings = settings or Settings.from_env()
     agents = AgentRegistry.load() if agents is None else agents
     tools = ToolRegistry.load() if tools is None else tools
@@ -77,13 +81,21 @@ def create_app(
             f"AGENT_KEYS has keys for agents that are not registered: {sorted(unregistered)}"
         )
 
-    orchestrator = Orchestrator(default_checks() if checks is None else checks)
     bank = BankClient(
         settings.bank_url,
         timeout_seconds=settings.bank_timeout_seconds,
         client=bank_client,
         clock=clock,
     )
+    if checks is None:
+        ownership = BankOwnershipLookup(
+            bank,
+            key=settings.execution_token_key,
+            audience=settings.bank_audience,
+            clock=clock,
+        )
+        checks = default_checks(ownership=ownership)
+    orchestrator = Orchestrator(checks)
     gateway = Gateway(
         settings=settings,
         agents=agents,
