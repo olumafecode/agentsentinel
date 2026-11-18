@@ -9,6 +9,7 @@ updates:
     directories:
       - "/"
       - "/apps/demo-bank-api"
+      - "/services/sentinel-gateway"
     schedule:
       interval: "weekly"
     ignore:

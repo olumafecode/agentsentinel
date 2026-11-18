@@ -11,11 +11,8 @@ signature is base64url HMAC-SHA256 over ``v1.<payload>`` with a key shared by th
 gateway and the bank and never given to the agent.
 """
 
-import base64
-import binascii
 import hashlib
 import hmac
-import json
 import threading
 import time
 import uuid
@@ -23,24 +20,39 @@ from collections.abc import Callable, Mapping
 from dataclasses import asdict, dataclass, fields
 from typing import Any
 
+from sentinel_contracts.signing import (
+    CLOCK_SKEW_SECONDS,
+    MIN_KEY_BYTES,
+    TokenError,
+    canonical_json,
+    decode_signed,
+    encode_signed,
+    load_key,
+)
+
+__all__ = [
+    "CLOCK_SKEW_SECONDS",
+    "DEFAULT_TTL_SECONDS",
+    "ISSUER",
+    "MAX_TTL_SECONDS",
+    "MIN_KEY_BYTES",
+    "TOKEN_HEADER",
+    "TOKEN_VERSION",
+    "ReplayGuard",
+    "TokenClaims",
+    "TokenError",
+    "arguments_digest",
+    "canonical_json",
+    "issue_token",
+    "load_key",
+    "verify_token",
+]
+
 TOKEN_HEADER = "X-Execution-Token"
 TOKEN_VERSION = "v1"
 ISSUER = "sentinel-gateway"
 DEFAULT_TTL_SECONDS = 60
 MAX_TTL_SECONDS = 300
-MIN_KEY_BYTES = 32
-CLOCK_SKEW_SECONDS = 5
-
-
-class TokenError(Exception):
-    """A token could not be issued or did not verify.
-
-    ``code`` is a short machine-readable reason that is safe to return to a caller.
-    """
-
-    def __init__(self, code: str, message: str) -> None:
-        super().__init__(message)
-        self.code = code
 
 
 @dataclass(frozen=True, slots=True)
@@ -63,28 +75,6 @@ _CLAIM_TYPES = {
 }
 
 
-def load_key(secret: str) -> bytes:
-    """Turn the shared secret from configuration into a signing key."""
-    key = secret.encode("utf-8")
-    if len(key) < MIN_KEY_BYTES:
-        raise TokenError(
-            "key_too_short",
-            f"the signing key must be at least {MIN_KEY_BYTES} bytes long",
-        )
-    return key
-
-
-def canonical_json(value: Any) -> bytes:
-    """Serialize JSON values the same way on every service, so hashes match."""
-    return json.dumps(
-        value,
-        sort_keys=True,
-        separators=(",", ":"),
-        ensure_ascii=False,
-        allow_nan=False,
-    ).encode("utf-8")
-
-
 def arguments_digest(arguments: Mapping[str, Any]) -> str:
     """SHA-256 of the tool arguments in canonical JSON form."""
     return hashlib.sha256(canonical_json(dict(arguments))).hexdigest()
@@ -102,7 +92,6 @@ def issue_token(
     now: float | None = None,
 ) -> str:
     """Create a token that allows exactly one call of ``tool_name`` with ``arguments``."""
-    _check_key(key)
     if not 1 <= ttl_seconds <= MAX_TTL_SECONDS:
         raise ValueError(f"ttl_seconds must be between 1 and {MAX_TTL_SECONDS}")
     issued_at = int(time.time() if now is None else now)
@@ -117,8 +106,7 @@ def issue_token(
         issued_at=issued_at,
         expires_at=issued_at + ttl_seconds,
     )
-    signing_input = f"{TOKEN_VERSION}.{_b64encode(canonical_json(asdict(claims)))}"
-    return f"{signing_input}.{_b64encode(_sign(key, signing_input))}"
+    return encode_signed(TOKEN_VERSION, asdict(claims), key)
 
 
 def verify_token(
@@ -136,21 +124,9 @@ def verify_token(
     meant for another service or tool, or issued for different arguments. It does
     not check reuse; pass the claims to a ReplayGuard for that.
     """
-    _check_key(key)
-    parts = token.split(".")
-    if len(parts) != 3:
-        raise TokenError("token_malformed", "the token is not in the expected format")
-    version, payload, signature = parts
-    if version != TOKEN_VERSION:
-        raise TokenError(
-            "token_version_unsupported", "the token version is not supported"
-        )
-    if not hmac.compare_digest(
-        _sign(key, f"{version}.{payload}"), _b64decode(signature)
-    ):
-        raise TokenError("token_signature_invalid", "the token signature is not valid")
-
-    claims = _parse_claims(payload)
+    claims = _parse_claims(
+        decode_signed(token, version=TOKEN_VERSION, key=key, prefix="token")
+    )
     current = int(time.time() if now is None else now)
     if claims.issuer != ISSUER:
         raise TokenError(
@@ -206,37 +182,8 @@ class ReplayGuard:
             return len(self._used)
 
 
-def _check_key(key: bytes) -> None:
-    if len(key) < MIN_KEY_BYTES:
-        raise TokenError(
-            "key_too_short",
-            f"the signing key must be at least {MIN_KEY_BYTES} bytes long",
-        )
-
-
-def _sign(key: bytes, signing_input: str) -> bytes:
-    return hmac.new(key, signing_input.encode("ascii"), hashlib.sha256).digest()
-
-
-def _b64encode(raw: bytes) -> str:
-    return base64.urlsafe_b64encode(raw).rstrip(b"=").decode("ascii")
-
-
-def _b64decode(text: str) -> bytes:
-    try:
-        return base64.urlsafe_b64decode(text + "=" * (-len(text) % 4))
-    except (binascii.Error, ValueError) as exc:
-        raise TokenError(
-            "token_malformed", "the token is not in the expected format"
-        ) from exc
-
-
-def _parse_claims(payload: str) -> TokenClaims:
-    try:
-        data = json.loads(_b64decode(payload))
-    except (UnicodeDecodeError, json.JSONDecodeError) as exc:
-        raise TokenError("token_malformed", "the token claims cannot be read") from exc
-    if not isinstance(data, dict) or set(data) != set(_CLAIM_TYPES):
+def _parse_claims(data: dict[str, Any]) -> TokenClaims:
+    if set(data) != set(_CLAIM_TYPES):
         raise TokenError("token_malformed", "the token claims are incomplete")
     for name, expected in _CLAIM_TYPES.items():
         value = data[name]

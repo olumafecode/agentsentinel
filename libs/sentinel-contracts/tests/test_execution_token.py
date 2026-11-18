@@ -104,6 +104,7 @@ def test_clock_skew_of_a_few_seconds_is_tolerated():
         ("v2.e30.e30", "token_version_unsupported"),
         ("v1.e30.!!!*", "token_signature_invalid"),
         ("v1.e30.é", "token_malformed"),
+        ("v1.é.abc", "token_malformed"),
     ],
 )
 def test_malformed_token_is_rejected(token, code):

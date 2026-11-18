@@ -75,6 +75,8 @@ def test_request_survives_a_json_round_trip():
         {"provenance_labels": {"amount": "from_email"}},
         {"requested_at": "2026-03-14T15:02:11"},
         {"role": "admin"},
+        {"arguments": {"amount": float("nan")}, "provenance_labels": {}},
+        {"arguments": {"amounts": [1.0, float("inf")]}, "provenance_labels": {}},
     ],
 )
 def test_invalid_request_is_rejected(changes):
