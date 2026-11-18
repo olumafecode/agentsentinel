@@ -31,6 +31,8 @@ jobs:
             dockerfile: services/audit-service/Dockerfile
           - name: banking-agent
             dockerfile: apps/banking-agent/Dockerfile
+          - name: opa
+            dockerfile: policies/opa/Dockerfile
     steps:
       - uses: actions/checkout@v4
 
