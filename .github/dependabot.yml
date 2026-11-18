@@ -4,9 +4,11 @@ updates:
     directory: "/"
     schedule:
       interval: "weekly"
-  # Add one pip entry per service folder once services exist (Sprint 1), for example /services/sentinel-gateway
+  # Add every folder that has its own requirements.txt to this list.
   - package-ecosystem: "pip"
-    directory: "/"
+    directories:
+      - "/"
+      - "/apps/demo-bank-api"
     schedule:
       interval: "weekly"
     ignore:
