@@ -1,7 +1,7 @@
 # Vera image (US-17): runs the scripted scenarios against the gateway.
 # Build from the repository root:
 #   docker build -f apps/banking-agent/Dockerfile -t agentsentinel/banking-agent .
-FROM python:3.12-slim
+FROM python:3.15-slim
 
 ENV PYTHONDONTWRITEBYTECODE=1 \
     PYTHONUNBUFFERED=1 \
