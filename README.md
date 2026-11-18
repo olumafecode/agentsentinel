@@ -33,6 +33,7 @@ Scrum, with Sprint 0 (one week), four delivery sprints and a release week betwee
 
 ```
 apps/              dashboard, banking agent (Vera), demo bank API
+libs/              shared code used by more than one service (sentinel-contracts)
 services/          sentinel gateway, risk engine, RAG service, approval service, audit service
 policies/opa/      bank rules as code, with tests
 data/              synthetic data and policy documents

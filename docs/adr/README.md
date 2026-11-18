@@ -1,6 +1,6 @@
 # Architecture decision records
 
-An architecture decision record (ADR) captures one significant design decision: the situation, the choice, the options turned down and what the choice costs. The eight below come from Appendix F of the approved proposal and were recorded in Sprint 0 (story US-14).
+An architecture decision record (ADR) captures one significant design decision: the situation, the choice, the options turned down and what the choice costs. ADR-001 to ADR-008 come from Appendix F of the approved proposal and were recorded in Sprint 0 (story US-14). Later ones are recorded when a sprint makes a new decision.
 
 | ADR | Decision | Status |
 |---|---|---|
@@ -13,6 +13,8 @@ An architecture decision record (ADR) captures one significant design decision: 
 | [ADR-007](ADR-007-external-llm-adapter.md) | External LLM through a provider-neutral adapter | Accepted |
 | [ADR-008](ADR-008-synthetic-data-only.md) | Synthetic banking data only | Accepted |
 | ADR-009 | Public hosting platform: Railway or Render | Planned for Sprint 3 (US-11a) |
+| [ADR-010](ADR-010-shared-contracts-and-execution-tokens.md) | Shared contracts and HMAC-signed single-use execution tokens | Accepted |
+| [ADR-011](ADR-011-demo-bank-in-memory.md) | The demo bank keeps its data in memory | Accepted |
 
 ## When to write a new ADR
 
