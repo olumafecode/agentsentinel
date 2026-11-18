@@ -1,7 +1,7 @@
 # Start-up meeting and Sprint 0 planning
 
-**Date:** Monday 15 November 2026  
-**Attendees:**  
+**Date:** Sunday 15 November 2026  
+**Attendees: Olusanya Mafe / Siyabonga Jali**  
 
 This agenda follows the handbook's list for the first meeting. Fill in each section during the meeting and commit this file.
 
@@ -22,8 +22,8 @@ Walk through the approved proposal and the product backlog in `docs/agile/produc
 |---|---|
 | Scrum board | GitHub Projects (linked from the README) |
 | Source control and CI/CD | GitHub and GitHub Actions |
-| Chat | |
-| Meetings and recordings | |
+| Chat | Whatsapp|
+| Meetings and recordings |https://drive.google.com/file/d/1hvLV3Rvo5o9QKCbVspzuobnKfNEE2aPx/view?usp=sharing |
 | Language and frameworks | Python, FastAPI, OPA, PostgreSQL with pgvector, React or server-rendered UI |
 | Containers and orchestration | Docker Compose, Kubernetes (kind or k3d) |
 | Public hosting | Railway or Render (decided in ADR-009) |

@@ -6,7 +6,7 @@ This is the agreed requirements baseline for the capstone (story US-14, mileston
 |---|---|
 | Version | 1.0 (Sprint 0 baseline) |
 | Owner | Product Owner |
-| Signed off | Sprint 0 review, 15 November 2026 (Siyabonga Jali, Product Owner) |
+| Signed off | Sprint 0 review, 15 November 2026 (Siyabonga Jali, Product Owner, 15 November 2026) |
 | Related | [Product backlog and traceability](../agile/product-backlog.md), [Architecture](../architecture/architecture.md), [Threat model](../architecture/threat-model.md), [ADRs](../adr/README.md) |
 
 ## 1. Purpose and aim
