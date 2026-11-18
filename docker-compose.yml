@@ -53,10 +53,14 @@ services:
         condition: service_healthy
     restart: "no"
 
+  # Built from policies/opa/Dockerfile, which adds the wget the health check needs.
+  # The folder is also mounted, so edited policies take effect after a restart.
   opa:
     <<: *hardened
-    image: openpolicyagent/opa:1.22.4-debug
-    command: ["run", "--server", "--addr=0.0.0.0:8181", "--log-level=error", "/policies"]
+    build:
+      context: .
+      dockerfile: policies/opa/Dockerfile
+    image: agentsentinel/opa:local
     volumes:
       - ./policies/opa:/policies:ro
     ports:

@@ -13,6 +13,17 @@ The bank's deterministic rules, written in Rego for Open Policy Agent: tool perm
 - `.rego` policy files and their `_test.rego` unit tests
 - Policy data such as the refund limits confirmed in `data/synthetic/labelling-rules.md`
 
+## Running OPA
+
+`Dockerfile` in this folder builds the OPA image: OPA's statically linked binary on the official busybox image, with the policies copied in. Docker Compose builds and starts it (US-20) and checks its health at `/health`. The official OPA images cannot run that check themselves: they have no `wget`.
+
+```
+docker build -f policies/opa/Dockerfile -t agentsentinel/opa .
+docker run --rm -p 8181:8181 agentsentinel/opa
+```
+
+Test files (`*_test.rego`) are not loaded by the server.
+
 ## Rules for this folder
 
 - Every rule has a unit test, including boundary values. Run them with `opa test policies/opa -v`.

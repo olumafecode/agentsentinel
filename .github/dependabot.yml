@@ -17,15 +17,27 @@ updates:
     ignore:
       # Ruff stays at 0.16.9, the version in .pre-commit-config.yaml and ci.yml
       - dependency-name: "ruff"
-  # Base images in the Dockerfiles, and the PostgreSQL and OPA images in docker-compose.yml
+      # Only the minimum setuptools version needed to build each package; raise it in
+      # every pyproject.toml together if a package ever needs a newer one.
+      - dependency-name: "setuptools"
+  # Base images in the Dockerfiles. Python stays on 3.12, the version CI tests;
+  # moving to a newer Python is a decision for its own pull request.
   - package-ecosystem: "docker"
     directories:
       - "/apps/banking-agent"
       - "/apps/demo-bank-api"
+      - "/policies/opa"
       - "/services/audit-service"
       - "/services/sentinel-gateway"
     schedule:
       interval: "weekly"
+    ignore:
+      - dependency-name: "python"
+        update-types: ["version-update:semver-major", "version-update:semver-minor"]
+      # BusyBox 1.38 is its development line (Docker tags it "unstable"); stay on 1.37.
+      - dependency-name: "busybox"
+        update-types: ["version-update:semver-major", "version-update:semver-minor"]
+  # The PostgreSQL image in docker-compose.yml
   - package-ecosystem: "docker-compose"
     directory: "/"
     schedule:
