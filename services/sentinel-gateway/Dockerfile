@@ -1,6 +1,6 @@
 # Sentinel Gateway image (US-18). Build from the repository root:
 #   docker build -f services/sentinel-gateway/Dockerfile -t agentsentinel/sentinel-gateway .
-FROM python:3.12-slim
+FROM python:3.15-slim
 
 ENV PYTHONDONTWRITEBYTECODE=1 \
     PYTHONUNBUFFERED=1 \
