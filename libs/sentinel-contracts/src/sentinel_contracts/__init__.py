@@ -23,6 +23,7 @@ from sentinel_contracts.execution_token import (
     load_key,
     verify_token,
 )
+from sentinel_contracts.ownership import OwnershipAnswer, OwnershipQuery
 from sentinel_contracts.session_token import (
     SESSION_HEADER,
     SessionClaims,
@@ -41,6 +42,8 @@ __all__ = [
     "ExecutionResult",
     "ExecutionStatus",
     "GovernanceDecision",
+    "OwnershipAnswer",
+    "OwnershipQuery",
     "ProtectedActionRequest",
     "Provenance",
     "ReasonCode",

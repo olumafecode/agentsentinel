@@ -73,7 +73,7 @@ def test_a_token_cannot_be_reused_for_a_different_call(
     evaluate,
     refund,
     refund_session,
-    offline_gateway,
+    unforwarded_gateway,
     bank,
     refunds_for,
     tool_name,
@@ -81,9 +81,9 @@ def test_a_token_cannot_be_reused_for_a_different_call(
     code,
 ):
     body = refund()
-    decision = evaluate(body, session=refund_session, client=offline_gateway).json()[
-        "decision"
-    ]
+    decision = evaluate(
+        body, session=refund_session, client=unforwarded_gateway
+    ).json()["decision"]
 
     response = bank.post(
         f"/v1/tools/{tool_name}",
@@ -97,12 +97,12 @@ def test_a_token_cannot_be_reused_for_a_different_call(
 
 
 def test_an_expired_token_is_rejected(
-    evaluate, refund, refund_session, offline_gateway, bank, clock
+    evaluate, refund, refund_session, unforwarded_gateway, bank, clock
 ):
     body = refund()
-    decision = evaluate(body, session=refund_session, client=offline_gateway).json()[
-        "decision"
-    ]
+    decision = evaluate(
+        body, session=refund_session, client=unforwarded_gateway
+    ).json()["decision"]
     clock.advance(61)
 
     response = bank.post(

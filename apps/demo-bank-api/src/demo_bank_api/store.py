@@ -8,6 +8,7 @@ from its seed, which returns it to exactly the seeded state.
 import hashlib
 import json
 import threading
+from collections.abc import Iterable
 from datetime import datetime
 from decimal import Decimal
 from typing import Any
@@ -136,6 +137,14 @@ class BankStore:
         with self._lock:
             return [c.model_copy() for _, c in sorted(self._customers.items())]
 
+    def owners(self, identifiers: Iterable[str]) -> dict[str, str | None]:
+        """The customer who owns each account, transaction or dispute; None if unknown.
+
+        Not a tool: the gateway asks this before it allows an action (US-01.1).
+        """
+        with self._lock:
+            return {identifier: self._owner(identifier) for identifier in identifiers}
+
     # ----------------------------------------------------------------- write tools
     def update_address(self, customer_id: str, address: str) -> str:
         with self._lock:
@@ -237,6 +246,16 @@ class BankStore:
             return account.model_copy()
 
     # --------------------------------------------------------------------- helpers
+    def _owner(self, identifier: str) -> str | None:
+        if identifier in self._accounts:
+            return self._accounts[identifier].customer_id
+        if identifier in self._transactions:
+            account_id = self._transactions[identifier].account_id
+            return self._accounts[account_id].customer_id
+        if identifier in self._disputes:
+            return self._disputes[identifier].customer_id
+        return None
+
     def _customer(self, customer_id: str) -> Customer:
         customer = self._customers.get(customer_id)
         if customer is None:

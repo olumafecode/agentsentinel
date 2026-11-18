@@ -14,9 +14,13 @@ from typing import Annotated, Any
 
 from pydantic import BaseModel, ConfigDict, Field, StringConstraints
 
-from demo_bank_api.records import DisputeId
 from demo_bank_api.store import BankStore
-from sentinel_contracts.identifiers import AccountId, CustomerId, TransactionId
+from sentinel_contracts.identifiers import (
+    AccountId,
+    CustomerId,
+    DisputeId,
+    TransactionId,
+)
 
 
 class ToolCategory(StrEnum):
