@@ -8,10 +8,25 @@ updates:
   - package-ecosystem: "pip"
     directories:
       - "/"
+      - "/apps/banking-agent"
       - "/apps/demo-bank-api"
+      - "/services/audit-service"
       - "/services/sentinel-gateway"
     schedule:
       interval: "weekly"
     ignore:
       # Ruff stays at 0.16.9, the version in .pre-commit-config.yaml and ci.yml
       - dependency-name: "ruff"
+  # Base images in the Dockerfiles, and the PostgreSQL and OPA images in docker-compose.yml
+  - package-ecosystem: "docker"
+    directories:
+      - "/apps/banking-agent"
+      - "/apps/demo-bank-api"
+      - "/services/audit-service"
+      - "/services/sentinel-gateway"
+    schedule:
+      interval: "weekly"
+  - package-ecosystem: "docker-compose"
+    directory: "/"
+    schedule:
+      interval: "weekly"

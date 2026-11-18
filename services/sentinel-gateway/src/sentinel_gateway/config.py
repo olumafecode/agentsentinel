@@ -28,6 +28,7 @@ class Settings:
     bank_url: str = DEFAULT_BANK_URL
     bank_timeout_seconds: float = DEFAULT_TIMEOUT_SECONDS
     bank_audience: str = BANK_AUDIENCE
+    audit_database_url: str | None = field(default=None, repr=False)
 
     def __post_init__(self) -> None:
         if self.execution_token_key == self.session_token_key:
@@ -38,6 +39,11 @@ class Settings:
             raise ConfigError("BANK_URL must start with http:// or https://")
         if not 0 < self.bank_timeout_seconds <= 60:
             raise ConfigError("BANK_TIMEOUT_SECONDS must be between 0 and 60")
+        if (
+            self.audit_database_url is not None
+            and not self.audit_database_url.startswith(("postgresql://", "postgres://"))
+        ):
+            raise ConfigError("AUDIT_DATABASE_URL must start with postgresql://")
 
     @classmethod
     def from_env(cls, environ: Mapping[str, str] | None = None) -> "Settings":
@@ -66,6 +72,7 @@ class Settings:
             agent_keys=keyring,
             bank_url=env.get("BANK_URL", DEFAULT_BANK_URL),
             bank_timeout_seconds=timeout,
+            audit_database_url=env.get("AUDIT_DATABASE_URL") or None,
         )
 
 

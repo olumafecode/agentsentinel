@@ -17,6 +17,7 @@ An architecture decision record (ADR) captures one significant design decision: 
 | [ADR-011](ADR-011-demo-bank-in-memory.md) | The demo bank keeps its data in memory | Accepted |
 | [ADR-012](ADR-012-gateway-decision-pipeline.md) | Gateway decision pipeline, caller identity and idempotent outcomes | Accepted |
 | [ADR-013](ADR-013-ownership-lookup.md) | The gateway checks record ownership with the bank | Accepted |
+| [ADR-014](ADR-014-hash-linked-audit-trail.md) | The hash-linked audit trail in PostgreSQL | Accepted |
 
 ## When to write a new ADR
 

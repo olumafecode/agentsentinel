@@ -5,9 +5,9 @@ The Policy Enforcement Point. Every protected action Vera proposes comes here fi
 | | |
 |---|---|
 | First built in | Sprint 1, extended in Sprints 2 and 3 |
-| Stories | US-18 (tasks US-18.2 to US-18.6), US-01 (US-01.1 to US-01.4); later US-02a, US-02b, US-03, US-04, US-05 |
+| Stories | US-18 (tasks US-18.2 to US-18.6), US-01 (US-01.1 to US-01.4), US-19 and US-20 (audit trail and readiness); later US-02a, US-02b, US-03, US-04, US-05 |
 | Requirements | FR-01, FR-02, FR-03, FR-08, FR-09, FR-13; NFR-01, NFR-02, NFR-03, NFR-06 |
-| Decision records | [ADR-001](../../docs/adr/ADR-001-independent-gateway.md), [ADR-003](../../docs/adr/ADR-003-ml-risk-advisory.md), [ADR-010](../../docs/adr/ADR-010-shared-contracts-and-execution-tokens.md), [ADR-012](../../docs/adr/ADR-012-gateway-decision-pipeline.md), [ADR-013](../../docs/adr/ADR-013-ownership-lookup.md) |
+| Decision records | [ADR-001](../../docs/adr/ADR-001-independent-gateway.md), [ADR-003](../../docs/adr/ADR-003-ml-risk-advisory.md), [ADR-010](../../docs/adr/ADR-010-shared-contracts-and-execution-tokens.md), [ADR-012](../../docs/adr/ADR-012-gateway-decision-pipeline.md), [ADR-013](../../docs/adr/ADR-013-ownership-lookup.md), [ADR-014](../../docs/adr/ADR-014-hash-linked-audit-trail.md) |
 
 ## What happens to one action
 
@@ -24,7 +24,7 @@ The Policy Enforcement Point. Every protected action Vera proposes comes here fi
 |---|---|
 | `POST /v1/actions/evaluate` | Decides on one action and, if it is allowed, runs it at the bank |
 | `GET /healthz` | Liveness: the process is up |
-| `GET /readyz` | Readiness: the agent and tool registries are loaded, and which checks run |
+| `GET /readyz` | Readiness: the registries are loaded and the audit trail can be written; HTTP 503 while it cannot |
 | `GET /docs` | Interactive API documentation |
 
 ## Calling the evaluate endpoint
@@ -125,6 +125,7 @@ A check that needs a client, as `CustomerScopeCheck` needs the ownership lookup,
 | `AGENT_KEYS` | Yes | `AGT-001:<key>`, with a comma between agents. Each key at least 32 characters, and every agent must be in `agents.json` |
 | `BANK_URL` | No | Default `http://localhost:8001` |
 | `BANK_TIMEOUT_SECONDS` | No | Default 5 |
+| `AUDIT_DATABASE_URL` | No | `postgresql://sentinel_gateway:<password>@<host>:5432/<db>`. The hash-linked audit trail (US-19). Without it, audit records go to standard output, which is for local runs only |
 
 Create any key with `py -m sentinel_gateway new-key`. Keep real values in a `.env` file, which git ignores. Never commit them, and never give `SESSION_TOKEN_KEY` or `EXECUTION_TOKEN_KEY` to Vera.
 
@@ -134,10 +135,12 @@ From the repository root, once:
 
 ```
 py -m pip install -r requirements-dev.txt
-py -m pip install --no-deps -e libs/sentinel-contracts -e apps/demo-bank-api -e services/sentinel-gateway
+py -m pip install --no-deps -e libs/sentinel-contracts -e apps/demo-bank-api -e services/audit-service -e services/sentinel-gateway
 ```
 
-Start the bank first (see `apps/demo-bank-api/README.md`), then in a second PowerShell window with the bank's `EXECUTION_TOKEN_KEY` set:
+The simplest way to run everything is Docker Compose; see the repository README. To run the gateway on its own instead:
+
+start the bank first (see `apps/demo-bank-api/README.md`), then in a second PowerShell window with the bank's `EXECUTION_TOKEN_KEY` set:
 
 ```
 $env:SESSION_TOKEN_KEY = py -m sentinel_gateway new-key
@@ -165,7 +168,7 @@ $headers = @{ Authorization = "Bearer $env:VERA_KEY"; "X-Session-Token" = $sessi
 Invoke-RestMethod -Method Post -Uri http://localhost:8000/v1/actions/evaluate -ContentType application/json -Headers $headers -Body $body | ConvertTo-Json -Depth 8
 ```
 
-Audit records are printed as one JSON line each in the gateway's window until the audit service (US-19) takes them.
+Without `AUDIT_DATABASE_URL`, audit records are printed as one JSON line each in the gateway's window.
 
 ## Run it in Docker
 
@@ -176,10 +179,10 @@ docker build -f services/sentinel-gateway/Dockerfile -t agentsentinel/sentinel-g
 docker run --rm -p 8000:8000 -e EXECUTION_TOKEN_KEY=<key> -e SESSION_TOKEN_KEY=<key> -e AGENT_KEYS=AGT-001:<key> -e BANK_URL=http://host.docker.internal:8001 agentsentinel/sentinel-gateway
 ```
 
-The image runs as a non-root user (UID 10001) and reports its health from `/healthz`.
+The image runs as a non-root user (UID 10001) and reports its health from `/healthz`. In Docker Compose the health check uses `/readyz`, so the stack counts as up only when the gateway can audit.
 
 ## Tests
 
 From the repository root: `py -m pytest services/sentinel-gateway -q`. The tests run the real demo bank in the same process, so they cover the whole path from decision to bank, including a replayed token, a token reused for another call, retries of the same refund, two identical refunds arriving at once, and a refund sent to another customer's account.
 
-The acceptance tests AT-01 and AT-02 are in `tests/acceptance` at the repository root: `py -m pytest tests/acceptance -q`.
+The acceptance tests are in `tests/acceptance` at the repository root: AT-01, AT-02, Vera's active scenarios end to end, and the Sprint 1 goal with the PostgreSQL audit trail (`py -m pytest tests/acceptance -q`).

@@ -24,6 +24,7 @@ def test_settings_are_read_from_the_environment():
             "AGENT_KEYS": f" AGT-001:{VERA} , AGT-002:{ATLAS},",
             "BANK_URL": "https://bank.internal:8443",
             "BANK_TIMEOUT_SECONDS": "2.5",
+            "AUDIT_DATABASE_URL": "postgresql://sentinel_gateway:pw@postgres:5432/db",
         }
     )
 
@@ -32,6 +33,11 @@ def test_settings_are_read_from_the_environment():
     assert settings.agent_keys.agent_ids == {"AGT-001", "AGT-002"}
     assert settings.bank_url == "https://bank.internal:8443"
     assert settings.bank_timeout_seconds == 2.5
+    assert settings.audit_database_url.endswith("@postgres:5432/db")
+
+
+def test_without_a_database_the_audit_trail_goes_to_standard_output():
+    assert Settings.from_env(ENV).audit_database_url is None
 
 
 def test_the_bank_url_has_a_local_default():
@@ -39,11 +45,14 @@ def test_the_bank_url_has_a_local_default():
 
 
 def test_keys_never_appear_in_the_settings_repr():
-    text = repr(Settings.from_env(ENV))
+    text = repr(
+        Settings.from_env({**ENV, "AUDIT_DATABASE_URL": "postgresql://u:dbsecret@h/d"})
+    )
 
     assert EXECUTION not in text
     assert SESSION not in text
     assert VERA not in text
+    assert "dbsecret" not in text
     assert "AGT-001" in text
 
 
@@ -63,6 +72,7 @@ def test_keys_never_appear_in_the_settings_repr():
         ({"BANK_TIMEOUT_SECONDS": "soon"}, "must be a number"),
         ({"BANK_TIMEOUT_SECONDS": "0"}, "between 0 and 60"),
         ({"BANK_TIMEOUT_SECONDS": "nan"}, "between 0 and 60"),
+        ({"AUDIT_DATABASE_URL": "mysql://db"}, "must start with postgresql://"),
     ],
 )
 def test_missing_or_unsafe_settings_stop_the_gateway(change, message):

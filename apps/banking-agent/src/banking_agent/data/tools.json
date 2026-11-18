@@ -1,0 +1,165 @@
+{
+  "description": "The tools Vera may propose, with their argument schemas, as the demo bank's GET /v1/tools describes them. Vera offers these to the language model in live mode (US-24). tests/test_vera_matches_bank.py fails if they drift from the bank's catalogue or from Vera's allowed_tools in the gateway.",
+  "tools": [
+    {
+      "name": "get_customer",
+      "description": "Read one customer's profile and mailing address",
+      "high_impact": false,
+      "sensitive_parameters": [],
+      "parameters": {
+        "additionalProperties": false,
+        "properties": {
+          "customer_id": {
+            "pattern": "^CUS-\\d{6}$",
+            "title": "Customer Id",
+            "type": "string"
+          }
+        },
+        "required": [
+          "customer_id"
+        ],
+        "title": "CustomerArguments",
+        "type": "object"
+      }
+    },
+    {
+      "name": "get_transactions",
+      "description": "List one customer's most recent transactions, newest first",
+      "high_impact": false,
+      "sensitive_parameters": [],
+      "parameters": {
+        "additionalProperties": false,
+        "properties": {
+          "customer_id": {
+            "pattern": "^CUS-\\d{6}$",
+            "title": "Customer Id",
+            "type": "string"
+          },
+          "limit": {
+            "default": 20,
+            "maximum": 100,
+            "minimum": 1,
+            "title": "Limit",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "customer_id"
+        ],
+        "title": "GetTransactionsArguments",
+        "type": "object"
+      }
+    },
+    {
+      "name": "update_address",
+      "description": "Change one customer's mailing address",
+      "high_impact": false,
+      "sensitive_parameters": [
+        "address"
+      ],
+      "parameters": {
+        "additionalProperties": false,
+        "properties": {
+          "customer_id": {
+            "pattern": "^CUS-\\d{6}$",
+            "title": "Customer Id",
+            "type": "string"
+          },
+          "address": {
+            "maxLength": 200,
+            "minLength": 5,
+            "title": "Address",
+            "type": "string"
+          }
+        },
+        "required": [
+          "customer_id",
+          "address"
+        ],
+        "title": "UpdateAddressArguments",
+        "type": "object"
+      }
+    },
+    {
+      "name": "issue_refund",
+      "description": "Refund a posted transaction to the customer's own account",
+      "high_impact": true,
+      "sensitive_parameters": [
+        "account_id",
+        "amount"
+      ],
+      "parameters": {
+        "additionalProperties": false,
+        "properties": {
+          "account_id": {
+            "description": "Account that receives the refund",
+            "pattern": "^ACC-\\d{8}$",
+            "title": "Account Id",
+            "type": "string"
+          },
+          "amount": {
+            "anyOf": [
+              {
+                "exclusiveMinimum": 0.0,
+                "type": "number"
+              },
+              {
+                "type": "string"
+              }
+            ],
+            "description": "Amount in USD, sent as a string such as '120.00'",
+            "title": "Amount"
+          },
+          "original_transaction_id": {
+            "description": "Purchase being refunded",
+            "pattern": "^TXN-\\d{10}$",
+            "title": "Original Transaction Id",
+            "type": "string"
+          },
+          "reason": {
+            "maxLength": 100,
+            "minLength": 3,
+            "title": "Reason",
+            "type": "string"
+          }
+        },
+        "required": [
+          "account_id",
+          "amount",
+          "original_transaction_id",
+          "reason"
+        ],
+        "title": "IssueRefundArguments",
+        "type": "object"
+      }
+    },
+    {
+      "name": "close_dispute",
+      "description": "Close an open dispute with a resolution note",
+      "high_impact": false,
+      "sensitive_parameters": [],
+      "parameters": {
+        "additionalProperties": false,
+        "properties": {
+          "dispute_id": {
+            "pattern": "^DSP-\\d{6}$",
+            "title": "Dispute Id",
+            "type": "string"
+          },
+          "resolution": {
+            "maxLength": 300,
+            "minLength": 3,
+            "title": "Resolution",
+            "type": "string"
+          }
+        },
+        "required": [
+          "dispute_id",
+          "resolution"
+        ],
+        "title": "CloseDisputeArguments",
+        "type": "object"
+      }
+    }
+  ]
+}
