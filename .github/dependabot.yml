@@ -9,3 +9,6 @@ updates:
     directory: "/"
     schedule:
       interval: "weekly"
+    ignore:
+      # Ruff stays at 0.16.9, the version in .pre-commit-config.yaml and ci.yml
+      - dependency-name: "ruff"
