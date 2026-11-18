@@ -1,0 +1,5 @@
+# Runtime dependencies of the audit trail, pinned for reproducible builds (NFR-14).
+# The Dockerfile installs exactly these; requirements-dev.txt includes this file for tests.
+psycopg[binary]==3.3.9
+psycopg-pool==3.3.3
+pydantic==2.14.3

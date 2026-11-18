@@ -1,0 +1,101 @@
+name: Images
+
+# US-20.4: build every service image tagged with the commit SHA, fail on critical
+# vulnerabilities, push to GitHub Container Registry from main, and run the whole
+# stack with Docker Compose to prove an ALLOW and a BLOCK flow end to end.
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  image:
+    name: image (${{ matrix.name }})
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - name: demo-bank-api
+            dockerfile: apps/demo-bank-api/Dockerfile
+          - name: sentinel-gateway
+            dockerfile: services/sentinel-gateway/Dockerfile
+          - name: audit-service
+            dockerfile: services/audit-service/Dockerfile
+          - name: banking-agent
+            dockerfile: apps/banking-agent/Dockerfile
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Image name
+        run: echo "IMAGE=ghcr.io/${GITHUB_REPOSITORY,,}/${{ matrix.name }}:${GITHUB_SHA}" >> "$GITHUB_ENV"
+
+      - uses: docker/setup-buildx-action@f87e5991a6d7451dcb8d9637bfbc97413f497069 # v4.4.1
+
+      - name: Build
+        uses: docker/build-push-action@c3c9e263c25d99ce0380d002d59b67737d91b0dc # v7.4.0
+        with:
+          context: .
+          file: ${{ matrix.dockerfile }}
+          tags: ${{ env.IMAGE }}
+          load: true
+          cache-from: type=gha,scope=${{ matrix.name }}
+          cache-to: type=gha,mode=max,scope=${{ matrix.name }}
+
+      # Critical findings fail the build. Findings with no fixed version yet are
+      # reported by Dependabot and the base image updates instead of blocking work.
+      - name: Scan for critical vulnerabilities
+        uses: aquasecurity/trivy-action@ed142fd0673e97e23eac54620cfb913e5ce36c25 # v0.36.0
+        with:
+          image-ref: ${{ env.IMAGE }}
+          severity: CRITICAL
+          ignore-unfixed: true
+          exit-code: "1"
+
+      - name: Log in to GitHub Container Registry
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        uses: docker/login-action@8aa5831fb8d48d8f76594c7ddde61ae58019f550 # v4.8.0
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Push
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        run: docker push "$IMAGE"
+
+  stack:
+    name: stack (Docker Compose)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Settings for this run
+        run: python3 tools/dev/make_env.py
+
+      - name: Start the stack and wait until it is healthy
+        run: docker compose up --build --detach --wait --wait-timeout 300
+
+      - name: Run Vera's scenarios through the gateway
+        run: docker compose run --rm vera
+
+      - name: Check the audit chain
+        run: docker compose run --rm audit verify-chain
+
+      - name: Check that every action is fully audited
+        run: docker compose run --rm audit completeness
+
+      - name: Show the logs
+        if: failure()
+        run: docker compose logs --no-color
+
+      - name: Stop
+        if: always()
+        run: docker compose down --volumes

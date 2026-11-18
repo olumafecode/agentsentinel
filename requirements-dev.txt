@@ -1,6 +1,8 @@
 # Tools every developer and the CI pipeline use. Versions are pinned for reproducible runs (NFR-14).
 # Each service's runtime dependencies are included from its own requirements.txt.
+-r apps/banking-agent/requirements.txt
 -r apps/demo-bank-api/requirements.txt
+-r services/audit-service/requirements.txt
 -r services/sentinel-gateway/requirements.txt
 pre-commit==4.7.0
 pytest==9.2.0

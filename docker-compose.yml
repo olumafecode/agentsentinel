@@ -1,0 +1,137 @@
+# The whole AgentSentinel stack on one machine (US-20).
+#
+#   py tools/dev/make_env.py                  once: writes .env with random keys
+#   docker compose up --build --wait          start and wait until every service is healthy
+#   docker compose run --rm vera              run Vera's active scenarios through the gateway
+#   docker compose run --rm audit verify-chain    check the audit hash chain
+#   docker compose down                       stop (add -v to delete the database too)
+#
+# Only the gateway, the bank and OPA publish ports, and only on 127.0.0.1.
+name: agentsentinel
+
+x-hardened: &hardened
+  read_only: true
+  tmpfs: [/tmp]
+  security_opt: ["no-new-privileges:true"]
+  cap_drop: [ALL]
+
+x-database-urls:
+  admin: &admin-url postgresql://agentsentinel:${POSTGRES_PASSWORD}@postgres:5432/agentsentinel
+  gateway: &gateway-url postgresql://sentinel_gateway:${AUDIT_GATEWAY_DB_PASSWORD}@postgres:5432/agentsentinel
+
+services:
+  postgres:
+    image: pgvector/pgvector:0.8.7-pg17
+    environment:
+      POSTGRES_DB: agentsentinel
+      POSTGRES_USER: agentsentinel
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD in .env; see .env.example}
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U agentsentinel -d agentsentinel"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+    restart: unless-stopped
+
+  # One-shot: creates the audit schema and the gateway's database role, then exits.
+  # Also runs the audit commands: docker compose run --rm audit verify-chain
+  audit:
+    <<: *hardened
+    build:
+      context: .
+      dockerfile: services/audit-service/Dockerfile
+    image: agentsentinel/audit-service:local
+    command: ["migrate"]
+    environment:
+      AUDIT_ADMIN_DATABASE_URL: *admin-url
+      AUDIT_GATEWAY_DB_PASSWORD: ${AUDIT_GATEWAY_DB_PASSWORD:?Set AUDIT_GATEWAY_DB_PASSWORD in .env}
+      AUDIT_DATABASE_URL: *gateway-url
+    depends_on:
+      postgres:
+        condition: service_healthy
+    restart: "no"
+
+  opa:
+    <<: *hardened
+    image: openpolicyagent/opa:1.22.4-debug
+    command: ["run", "--server", "--addr=0.0.0.0:8181", "--log-level=error", "/policies"]
+    volumes:
+      - ./policies/opa:/policies:ro
+    ports:
+      - "127.0.0.1:8181:8181"
+    healthcheck:
+      test: ["CMD", "wget", "-q", "-O", "/dev/null", "http://127.0.0.1:8181/health"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+    restart: unless-stopped
+
+  demo-bank:
+    <<: *hardened
+    build:
+      context: .
+      dockerfile: apps/demo-bank-api/Dockerfile
+    image: agentsentinel/demo-bank-api:local
+    environment:
+      EXECUTION_TOKEN_KEY: ${EXECUTION_TOKEN_KEY:?Set EXECUTION_TOKEN_KEY in .env}
+      DEMO_ADMIN_KEY: ${DEMO_ADMIN_KEY:?Set DEMO_ADMIN_KEY in .env}
+    ports:
+      - "127.0.0.1:8001:8001"
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8001/readyz', timeout=2)"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+      start_period: 10s
+    restart: unless-stopped
+
+  gateway:
+    <<: *hardened
+    build:
+      context: .
+      dockerfile: services/sentinel-gateway/Dockerfile
+    image: agentsentinel/sentinel-gateway:local
+    environment:
+      EXECUTION_TOKEN_KEY: ${EXECUTION_TOKEN_KEY}
+      SESSION_TOKEN_KEY: ${SESSION_TOKEN_KEY:?Set SESSION_TOKEN_KEY in .env}
+      AGENT_KEYS: AGT-001:${VERA_AGENT_KEY:?Set VERA_AGENT_KEY in .env}
+      BANK_URL: http://demo-bank:8001
+      AUDIT_DATABASE_URL: *gateway-url
+    depends_on:
+      audit:
+        condition: service_completed_successfully
+      demo-bank:
+        condition: service_healthy
+    ports:
+      - "127.0.0.1:8000:8000"
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/readyz', timeout=2)"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+      start_period: 10s
+    restart: unless-stopped
+
+  # Vera holds the gateway address and her own key, never the bank's. The runner also
+  # plays the customer's sign-in, so it gets SESSION_TOKEN_KEY (ADR-012).
+  vera:
+    <<: *hardened
+    build:
+      context: .
+      dockerfile: apps/banking-agent/Dockerfile
+    image: agentsentinel/banking-agent:local
+    profiles: [demo]
+    command: ["run"]
+    environment:
+      GATEWAY_URL: http://gateway:8000
+      VERA_AGENT_KEY: ${VERA_AGENT_KEY}
+      SESSION_TOKEN_KEY: ${SESSION_TOKEN_KEY}
+    depends_on:
+      gateway:
+        condition: service_healthy
+    restart: "no"
+
+volumes:
+  postgres-data:

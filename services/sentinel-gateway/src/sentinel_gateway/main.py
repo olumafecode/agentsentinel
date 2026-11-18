@@ -20,9 +20,16 @@ from fastapi import FastAPI, Request
 from fastapi.responses import JSONResponse
 from starlette.concurrency import run_in_threadpool
 
+from sentinel_audit.store import AuditStore
 from sentinel_contracts import SESSION_HEADER, ActionOutcome, ProtectedActionRequest
 from sentinel_gateway import __version__
-from sentinel_gateway.audit import AuditSink, AuditUnavailable, JsonLinesAuditSink
+from sentinel_gateway.audit import (
+    AuditSink,
+    AuditUnavailable,
+    JsonLinesAuditSink,
+    close_sink,
+    sink_ready,
+)
 from sentinel_gateway.auth import AgentKeyring, bearer_credentials
 from sentinel_gateway.bank import BankClient, BankOwnershipLookup
 from sentinel_gateway.checks import Check
@@ -96,6 +103,13 @@ def create_app(
         )
         checks = default_checks(ownership=ownership)
     orchestrator = Orchestrator(checks)
+    owns_audit = audit is None
+    if audit is None:
+        audit = (
+            AuditStore.connect(settings.audit_database_url)
+            if settings.audit_database_url
+            else JsonLinesAuditSink()
+        )
     gateway = Gateway(
         settings=settings,
         agents=agents,
@@ -103,7 +117,7 @@ def create_app(
         orchestrator=orchestrator,
         decisions=DecisionStore(clock=clock),
         bank=bank,
-        audit=JsonLinesAuditSink() if audit is None else audit,
+        audit=audit,
         approvals=approvals,
         clock=clock,
     )
@@ -112,6 +126,8 @@ def create_app(
     async def lifespan(_: FastAPI) -> AsyncIterator[None]:
         yield
         bank.close()
+        if owns_audit:
+            close_sink(audit)
 
     app = FastAPI(
         title="AgentSentinel Sentinel Gateway",
@@ -150,14 +166,23 @@ def create_app(
         return {"status": "ok"}
 
     @app.get("/readyz", tags=["health"])
-    def readyz() -> dict[str, Any]:
-        """Readiness: the registries are loaded and the gateway can take actions."""
-        return {
-            "status": "ready",
-            "agents": len(agents),
-            "tools": len(tools),
-            "checks": [check.name for check in orchestrator.checks],
-        }
+    def readyz() -> JSONResponse:
+        """Readiness: the registries are loaded and the audit trail can be written.
+
+        Answers HTTP 503 while the audit trail is unavailable, because every action
+        would be refused until it is back.
+        """
+        ready = sink_ready(audit)
+        return JSONResponse(
+            status_code=200 if ready else 503,
+            content={
+                "status": "ready" if ready else "not_ready",
+                "audit": "ready" if ready else "unavailable",
+                "agents": len(agents),
+                "tools": len(tools),
+                "checks": [check.name for check in orchestrator.checks],
+            },
+        )
 
     @app.post(
         "/v1/actions/evaluate",

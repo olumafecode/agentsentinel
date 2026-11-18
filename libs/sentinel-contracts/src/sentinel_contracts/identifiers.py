@@ -22,5 +22,7 @@ CorrelationId = Annotated[
     ),
 ]
 SemVer = Annotated[str, StringConstraints(pattern=r"^\d+\.\d+\.\d+$")]
+EventId = Annotated[str, StringConstraints(pattern=r"^EVT-\d{6}$")]
+Sha256 = Annotated[str, StringConstraints(pattern=r"^[0-9a-f]{64}$")]
 ToolName = Annotated[str, StringConstraints(pattern=r"^[a-z][a-z0-9_]{2,40}$")]
 ArgumentName = Annotated[str, StringConstraints(pattern=r"^[a-z][a-z0-9_]{0,63}$")]

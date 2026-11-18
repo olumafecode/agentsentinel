@@ -41,6 +41,8 @@ def test_enumerations_have_the_same_values(contract_enum, schema_enum):
         "CorrelationId",
         "SemVer",
         "ToolName",
+        "EventId",
+        "Sha256",
     ],
 )
 def test_identifier_formats_are_the_same(name):

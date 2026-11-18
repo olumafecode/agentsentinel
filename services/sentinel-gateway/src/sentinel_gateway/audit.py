@@ -1,17 +1,23 @@
 """Where the gateway sends its audit records (FR-13, NFR-06).
 
-Every evaluated action produces action_received, decision_made and then either
-action_executed or action_stopped. The audit service in US-19 will store them in a
-hash chain; until it exists, JsonLinesAuditSink writes each record as one line of
-JSON to standard output, where Docker and Kubernetes collect it.
+Every evaluated action produces action_received, decision_made and then one of
+action_executed, approval_requested or action_stopped.
+
+- With AUDIT_DATABASE_URL set, the records go to the hash-linked audit trail in
+  PostgreSQL (``sentinel_audit.store.AuditStore``, US-19), written with the gateway's
+  own database role, which can add rows but never change or delete them.
+- Without it, JsonLinesAuditSink writes each record as one line of JSON to standard
+  output. That is for local runs only; nothing is chained.
 
 If either of the first two records cannot be written, the gateway refuses the action
 rather than run it unaudited.
+
+A sink may also offer ``ready()`` for the readiness probe and ``close()`` for shutdown.
 """
 
 import sys
 import threading
-from typing import Protocol, TextIO
+from typing import Any, Protocol, TextIO
 
 from sentinel_contracts import AuditRecord
 
@@ -61,3 +67,16 @@ class InMemoryAuditSink:
         return [
             event for event in self.events if event.correlation_id == correlation_id
         ]
+
+
+def sink_ready(sink: Any) -> bool:
+    """Ask a sink whether it can write now. A sink without ``ready()`` always can."""
+    ready = getattr(sink, "ready", None)
+    return bool(ready()) if callable(ready) else True
+
+
+def close_sink(sink: Any) -> None:
+    """Release a sink's connections, if it has any."""
+    close = getattr(sink, "close", None)
+    if callable(close):
+        close()

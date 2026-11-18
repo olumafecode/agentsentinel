@@ -14,8 +14,9 @@ COPY services/sentinel-gateway/requirements.txt ./requirements.txt
 RUN pip install -r requirements.txt
 
 COPY libs/sentinel-contracts ./libs/sentinel-contracts
+COPY services/audit-service ./services/audit-service
 COPY services/sentinel-gateway ./services/sentinel-gateway
-RUN pip install --no-deps ./libs/sentinel-contracts ./services/sentinel-gateway \
+RUN pip install --no-deps ./libs/sentinel-contracts ./services/audit-service ./services/sentinel-gateway \
     && rm -rf ./libs ./services \
     && useradd --uid 10001 --no-create-home --shell /usr/sbin/nologin gateway
 

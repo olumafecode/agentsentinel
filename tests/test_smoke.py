@@ -1,4 +1,5 @@
 """Smoke tests: the product backlog loads and every requirement is delivered by a Must-have story."""
+
 import json
 from pathlib import Path
 

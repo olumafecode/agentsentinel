@@ -1,6 +1,9 @@
 """Health, documentation, start-up checks and held actions."""
 
+from dataclasses import replace
+
 import pytest
+from fastapi.testclient import TestClient
 
 from sentinel_contracts import Decision, ReasonCode
 from sentinel_gateway.checks import Check, Stage, objection
@@ -40,6 +43,7 @@ def test_liveness_and_readiness(gateway):
     assert gateway.get("/healthz").json() == {"status": "ok"}
     assert gateway.get("/readyz").json() == {
         "status": "ready",
+        "audit": "ready",
         "agents": 2,
         "tools": 9,
         "checks": [
@@ -51,6 +55,54 @@ def test_liveness_and_readiness(gateway):
             "customer_scope",
         ],
     }
+
+
+def test_the_gateway_is_not_ready_while_the_audit_trail_is_down(make_gateway):
+    class DownAudit:
+        def record(self, event):
+            raise ConnectionError("database down")
+
+        def ready(self):
+            return False
+
+    gateway = make_gateway(audit=DownAudit())
+
+    response = gateway.get("/readyz")
+
+    assert response.status_code == 503
+    assert response.json()["status"] == "not_ready"
+    assert response.json()["audit"] == "unavailable"
+    assert gateway.get("/healthz").status_code == 200
+
+
+def test_a_sink_the_gateway_opened_is_closed_on_shutdown(
+    settings, agents, bank, monkeypatch
+):
+    url = "postgresql://sentinel_gateway:secret@postgres:5432/agentsentinel"
+    closed = []
+
+    class FakeStore:
+        @classmethod
+        def connect(cls, database_url):
+            assert database_url == url
+            return cls()
+
+        def record(self, event):
+            pass
+
+        def close(self):
+            closed.append(True)
+
+    monkeypatch.setattr("sentinel_gateway.main.AuditStore", FakeStore)
+
+    with TestClient(
+        create_app(
+            replace(settings, audit_database_url=url), agents=agents, bank_client=bank
+        )
+    ):
+        assert closed == []
+
+    assert closed == [True]
 
 
 def test_the_api_documentation_describes_the_request_and_every_reference_resolves(

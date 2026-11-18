@@ -12,6 +12,8 @@ pythonpath = [
     ".",
     "libs/sentinel-contracts/src",
     "apps/demo-bank-api/src",
+    "apps/banking-agent/src",
+    "services/audit-service/src",
     "services/sentinel-gateway/src",
 ]
 addopts = ["--import-mode=importlib"]

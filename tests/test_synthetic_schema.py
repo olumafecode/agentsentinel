@@ -1,4 +1,5 @@
 """Tests for the synthetic data schema (US-15): examples are valid and the synthetic-data rules are enforced."""
+
 import hashlib
 import json
 from pathlib import Path
@@ -9,7 +10,9 @@ from pydantic import ValidationError
 from data.synthetic import models
 
 ROOT = Path(__file__).resolve().parents[1]
-EXAMPLES = json.loads((ROOT / "data" / "synthetic" / "examples.json").read_text(encoding="utf-8"))
+EXAMPLES = json.loads(
+    (ROOT / "data" / "synthetic" / "examples.json").read_text(encoding="utf-8")
+)
 README = (ROOT / "data" / "synthetic" / "README.md").read_text(encoding="utf-8")
 
 
@@ -30,16 +33,27 @@ def test_example_is_valid(name):
 def test_readme_documents_every_field(name):
     assert f"### {name}" in README, f"{name} is missing from data/synthetic/README.md"
     for field in models.ENTITIES[name].model_fields:
-        assert f"`{field}`" in README, f"{name}.{field} is missing from data/synthetic/README.md"
+        assert f"`{field}`" in README, (
+            f"{name}.{field} is missing from data/synthetic/README.md"
+        )
 
 
 @pytest.mark.parametrize(
     ("name", "changes"),
     [
-        ("Customer", {"email": "avery.stone@realbank.com"}),  # only reserved example domains are allowed
-        ("Customer", {"phone": "+1-312-555-7788"}),  # only the fictional 555-01xx range is allowed
+        (
+            "Customer",
+            {"email": "avery.stone@realbank.com"},
+        ),  # only reserved example domains are allowed
+        (
+            "Customer",
+            {"phone": "+1-312-555-7788"},
+        ),  # only the fictional 555-01xx range is allowed
         ("Customer", {"customer_id": "123"}),  # identifiers carry their prefix
-        ("Customer", {"national_id": "000-00-0000"}),  # unknown fields, such as government IDs, are rejected
+        (
+            "Customer",
+            {"national_id": "000-00-0000"},
+        ),  # unknown fields, such as government IDs, are rejected
         ("Account", {"currency": "EUR"}),
         ("Account", {"balance": "-1.00"}),
         ("Transaction", {"amount": "0.00"}),
@@ -47,12 +61,18 @@ def test_readme_documents_every_field(name):
         ("Transaction", {"transaction_type": "refund", "related_transaction_id": None}),
         ("Agent", {"review_threshold": 0.9, "block_threshold": 0.5}),
         ("UserSession", {"expires_at": "2026-03-14T14:00:00Z"}),
-        ("UserSession", {"started_at": "2026-03-14T15:00:00"}),  # timestamps must carry a time zone
+        (
+            "UserSession",
+            {"started_at": "2026-03-14T15:00:00"},
+        ),  # timestamps must carry a time zone
         ("ToolCall", {"provenance_labels": {"iban": "untrusted_content"}}),
         ("ToolCall", {"correlation_id": "not-a-uuid"}),
         ("RiskAssessment", {"risk_score": 1.2}),
         ("ApprovalRequest", {"status": "approved", "approver_id": None}),
-        ("ApprovalRequest", {"status": "pending"}),  # pending cannot already have an approver
+        (
+            "ApprovalRequest",
+            {"status": "pending"},
+        ),  # pending cannot already have an approver
         ("AuditEvent", {"event_hash": "abc"}),
         ("Incident", {"correlation_ids": []}),
         ("ExplanationEvidence", {"evidence_ids": []}),
