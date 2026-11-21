@@ -55,7 +55,7 @@ Date:  19 November 2026
 - Burn-up chart screenshot:
 ![Sprint 1 burn-up](sprint-1-burn-up.png)
 - Points-by-status chart screenshot:
-[Sprint 1 story points by status](Sprint-1-points-by-status.png)
+![Sprint 1 story points by status](Sprint-1-points-by-status.png)
 - Sprint 1 board at sprint end:
 ![Sprint 1 board](Sprint-1-board-done.png)
 - Milestone M2 closed:

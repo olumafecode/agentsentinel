@@ -7,8 +7,8 @@ Sprints start on Monday and end on Sunday. Sprint 0 and Sprint 5 are one week; S
 | Sprint | Dates | Length | Goal | Milestones due |
 |---|---|---|---|---|
 | Sprint 0: Foundation | 9 Nov to 15 Nov 2026 | 7 days | Board, repository rules, CI and the requirements baseline are in place, and milestone M1 is signed off. | M1 |
-| Sprint 1: First protected call | 16 Nov to 29 Nov 2026 | 14 days | One ALLOW and one BLOCK flow run end to end through the gateway and are fully audited (M2). | M2 |
-| Sprint 2: Hybrid decision layer | 30 Nov to 13 Dec 2026 | 14 days | OPA policy, data-origin checks, machine learning risk scoring and policy-cited explanations work together (M3). | M3 |
+| Sprint 1: First protected call | 16 Nov to 22 Nov 2026 | 7 days | One ALLOW and one BLOCK flow run end to end through the gateway and are fully audited (M2). | M2 |
+| Sprint 2: Hybrid decision layer | 23 Nov to 13 Dec 2026 | 20 days | OPA policy, data-origin checks, machine learning risk scoring and policy-cited explanations work together (M3). | M3 |
 | Sprint 3: Governance and platform | 14 Dec to 3 Jan 2027 | 21 days | Approvals, quarantine, incident timeline, dashboard, Kubernetes profile and public deployment are working (M4). | M4 |
 | Sprint 4: Evaluation and hardening | 4 Jan to 17 Jan 2027 | 14 days | Security, utility, latency and resilience are measured against the targets; feature freeze at sprint end (M5, M6). | M5, M6 |
 | Sprint 5: Release | 18 Jan to 24 Jan 2027 | 7 days | Submission package complete and submitted by Sunday 24 January (M7). | M7 |

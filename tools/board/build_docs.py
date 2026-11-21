@@ -152,7 +152,8 @@ c("")
 c(f"Start: {day(SPRINTS[0]['start'])}. Submission target: **{day(D['project']['submission_due'])}**. "
   f"Final cut-off: {day(D['project']['final_cutoff'])} (contingency only, no planned work). Times are US Central (America/Chicago).")
 c("")
-c("Sprints start on Monday and end on Sunday. Sprint 0 and Sprint 5 are one week; Sprint 3 runs three calendar weeks because it spans "
+c("Sprints start on Monday and end on Sunday. Sprint 0, Sprint 1 and Sprint 5 are one week. Sprint 1 was planned for two weeks but "
+  "finished early, so Sprint 2 started a week sooner and runs three weeks. Sprint 3 also runs three calendar weeks, because it spans "
   "Christmas and New Year. The handbook asks for at least three sprints; this plan has four delivery sprints and a one-week release sprint "
   "after Sprint 0, each ending in a recorded demo for the Product Owner.")
 c("")

@@ -9,8 +9,8 @@ IDs match the approved proposal: use cases UC-01 to UC-12, functional requiremen
 | Sprint | Dates | Sprint goal | Stories | Points |
 |---|---|---|---|---|
 | Sprint 0: Foundation | 9 Nov to 15 Nov 2026 | Board, repository rules, CI and the requirements baseline are in place, and milestone M1 is signed off. | US-12, US-13, US-14, US-10, US-15 | 15 |
-| Sprint 1: First protected call | 16 Nov to 29 Nov 2026 | One ALLOW and one BLOCK flow run end to end through the gateway and are fully audited (M2). | US-16, US-17, US-18, US-01, US-19, US-20 | 29 |
-| Sprint 2: Hybrid decision layer | 30 Nov to 13 Dec 2026 | OPA policy, data-origin checks, machine learning risk scoring and policy-cited explanations work together (M3). | US-02a, US-02b, US-21, US-04, US-06a | 34 |
+| Sprint 1: First protected call | 16 Nov to 22 Nov 2026 | One ALLOW and one BLOCK flow run end to end through the gateway and are fully audited (M2). | US-16, US-17, US-18, US-01, US-19, US-20 | 29 |
+| Sprint 2: Hybrid decision layer | 23 Nov to 13 Dec 2026 | OPA policy, data-origin checks, machine learning risk scoring and policy-cited explanations work together (M3). | US-02a, US-02b, US-21, US-04, US-06a | 34 |
 | Sprint 3: Governance and platform | 14 Dec to 3 Jan 2027 | Approvals, quarantine, incident timeline, dashboard, Kubernetes profile and public deployment are working (M4). | US-03, US-05, US-06b, US-22, US-23, US-11a | 36 |
 | Sprint 4: Evaluation and hardening | 4 Jan to 17 Jan 2027 | Security, utility, latency and resilience are measured against the targets; feature freeze at sprint end (M5, M6). | US-24, US-09, US-25, US-26, US-27, US-29 | 29 |
 | Sprint 5: Release | 18 Jan to 24 Jan 2027 | Submission package complete and submitted by Sunday 24 January (M7). | US-11b | 5 |
