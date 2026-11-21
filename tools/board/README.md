@@ -40,6 +40,20 @@ python tools/board/setup_board.py --repo OWNER/agentsentinel plan-sprint "Sprint
 
 This marks that sprint's stories Ready and creates their suggested tasks as sub-issues. To plan a different set of stories, list them: `--stories US-07,US-16`. Then edit, split and assign the tasks on the board.
 
+The sprint's `planning.md` lists the tasks in a table, with `#___` where each issue number goes and the task's owner in the third column:
+
+```
+| US-02a | #___ US-02a.1 Rego policies: task-to-tool permissions, bulk export deny, value ranges, refund threshold | Olusanya Mafe | 1 |
+```
+
+After `plan-sprint` has run, fill in the numbers and assign the tasks:
+
+```
+python tools/board/link_tasks.py --repo OWNER/agentsentinel docs/agile/sprints/sprint-2/planning.md --assign
+```
+
+It takes each number from the state file, so nothing is typed by hand. It changes nothing, and assigns nothing, unless every row checks out: the task exists, its title matches `backlog.json`, it sits under its own story, every task of each story is listed once, and the owner is in `docs/agile/working-agreement.md`. Add `--check` to report without changing anything. Commit the updated state file with `planning.md`.
+
 ## Re-running and fixing problems
 
 - Every command can be re-run safely. Anything already created is skipped.

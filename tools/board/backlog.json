@@ -26,33 +26,33 @@
       "title": "Sprint 1",
       "name": "First protected call",
       "start": "2026-11-16",
-      "end": "2026-11-29",
-      "days": 14,
+      "end": "2026-11-22",
+      "days": 7,
       "goal": "One ALLOW and one BLOCK flow run end to end through the gateway and are fully audited (M2).",
       "planning": "2026-11-16",
       "scrums": [
-        "2026-11-18",
-        "2026-11-25"
+        "2026-11-18"
       ],
       "refinement": "2026-11-19",
-      "review": "2026-11-29",
-      "note": "Thanksgiving (26 and 27 November) reduces capacity."
+      "review": "2026-11-19",
+      "note": "Finished early: every story was accepted at the review on 19 November."
     },
     {
       "title": "Sprint 2",
       "name": "Hybrid decision layer",
-      "start": "2026-11-30",
+      "start": "2026-11-23",
       "end": "2026-12-13",
-      "days": 14,
+      "days": 21,
       "goal": "OPA policy, data-origin checks, machine learning risk scoring and policy-cited explanations work together (M3).",
-      "planning": "2026-11-30",
+      "planning": "2026-11-23",
       "scrums": [
+        "2026-11-25",
         "2026-12-02",
         "2026-12-09"
       ],
       "refinement": "2026-12-03",
       "review": "2026-12-13",
-      "note": ""
+      "note": "Starts a week early because Sprint 1 finished on 19 November. Thanksgiving (26 and 27 November) reduces capacity."
     },
     {
       "title": "Sprint 3",
@@ -126,7 +126,7 @@
     {
       "id": "M2",
       "title": "M2 First protected tool call",
-      "due": "2026-11-29",
+      "due": "2026-11-22",
       "description": "One allow and one block flow fully audited, running in Docker Compose."
     },
     {
