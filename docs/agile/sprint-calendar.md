@@ -2,13 +2,13 @@
 
 Start: Mon 9 Nov 2026. Submission target: **Sun 24 Jan 2027**. Final cut-off: Sat 30 Jan 2027 (contingency only, no planned work). Times are US Central (America/Chicago).
 
-Sprints start on Monday and end on Sunday. Sprint 0 and Sprint 5 are one week; Sprint 3 runs three calendar weeks because it spans Christmas and New Year. The handbook asks for at least three sprints; this plan has four delivery sprints and a one-week release sprint after Sprint 0, each ending in a recorded demo for the Product Owner.
+Sprints start on Monday and end on Sunday. Sprint 0, Sprint 1 and Sprint 5 are one week. Sprint 1 was planned for two weeks but finished early, so Sprint 2 started a week sooner and runs three weeks. Sprint 3 also runs three calendar weeks, because it spans Christmas and New Year. The handbook asks for at least three sprints; this plan has four delivery sprints and a one-week release sprint after Sprint 0, each ending in a recorded demo for the Product Owner.
 
 | Sprint | Dates | Length | Goal | Milestones due |
 |---|---|---|---|---|
 | Sprint 0: Foundation | 9 Nov to 15 Nov 2026 | 7 days | Board, repository rules, CI and the requirements baseline are in place, and milestone M1 is signed off. | M1 |
 | Sprint 1: First protected call | 16 Nov to 22 Nov 2026 | 7 days | One ALLOW and one BLOCK flow run end to end through the gateway and are fully audited (M2). | M2 |
-| Sprint 2: Hybrid decision layer | 23 Nov to 13 Dec 2026 | 20 days | OPA policy, data-origin checks, machine learning risk scoring and policy-cited explanations work together (M3). | M3 |
+| Sprint 2: Hybrid decision layer | 23 Nov to 13 Dec 2026 | 21 days | OPA policy, data-origin checks, machine learning risk scoring and policy-cited explanations work together (M3). | M3 |
 | Sprint 3: Governance and platform | 14 Dec to 3 Jan 2027 | 21 days | Approvals, quarantine, incident timeline, dashboard, Kubernetes profile and public deployment are working (M4). | M4 |
 | Sprint 4: Evaluation and hardening | 4 Jan to 17 Jan 2027 | 14 days | Security, utility, latency and resilience are measured against the targets; feature freeze at sprint end (M5, M6). | M5, M6 |
 | Sprint 5: Release | 18 Jan to 24 Jan 2027 | 7 days | Submission package complete and submitted by Sunday 24 January (M7). | M7 |
@@ -19,7 +19,7 @@ Sprints start on Monday and end on Sunday. Sprint 0 and Sprint 5 are one week; S
 | Milestone | Due | What it means |
 |---|---|---|
 | M1 Requirements baseline accepted | Sun 15 Nov 2026 | Use cases, FR, NFR, threat model and architecture aligned; board, repository and CI ready. |
-| M2 First protected tool call | Sun 29 Nov 2026 | One allow and one block flow fully audited, running in Docker Compose. |
+| M2 First protected tool call | Sun 22 Nov 2026 | One allow and one block flow fully audited, running in Docker Compose. |
 | M3 Hybrid decision layer | Sun 13 Dec 2026 | OPA, data provenance, machine learning risk and RAG explanation integrated. |
 | M4 Human governance and incident operations | Sun 3 Jan 2027 | Approval, quarantine, dashboard and audit reconstruction working. |
 | M5 Cloud-native evidence | Sun 17 Jan 2027 | CI/CD, public deployment, Kubernetes profile and observability demonstrated. |
@@ -45,10 +45,10 @@ Default rhythm (the team can move times, but keep the days so the board's ceremo
 | Mon 16 Nov 2026 | Sprint 1 planning |
 | Wed 18 Nov 2026 | Sprint 1 weekly scrum |
 | Thu 19 Nov 2026 | Sprint 1 backlog refinement |
-| Wed 25 Nov 2026 | Sprint 1 weekly scrum |
+| Thu 19 Nov 2026 | Sprint 1 review with recorded demo, then retrospective |
+| Mon 23 Nov 2026 | Sprint 2 planning |
+| Wed 25 Nov 2026 | Sprint 2 weekly scrum |
 | Thu 26 Nov 2026 | Thanksgiving (reduced capacity 26 and 27 Nov) |
-| Sun 29 Nov 2026 | Sprint 1 review with recorded demo, then retrospective |
-| Mon 30 Nov 2026 | Sprint 2 planning |
 | Wed 2 Dec 2026 | Sprint 2 weekly scrum |
 | Thu 3 Dec 2026 | Sprint 2 backlog refinement |
 | Wed 9 Dec 2026 | Sprint 2 weekly scrum |
@@ -96,8 +96,8 @@ The setup script creates these iterations. If GitHub refuses (older API), create
 | Title | Start date | Duration |
 |---|---|---|
 | Sprint 0 | 2026-11-09 | 7 days |
-| Sprint 1 | 2026-11-16 | 14 days |
-| Sprint 2 | 2026-11-30 | 14 days |
+| Sprint 1 | 2026-11-16 | 7 days |
+| Sprint 2 | 2026-11-23 | 21 days |
 | Sprint 3 | 2026-12-14 | 21 days |
 | Sprint 4 | 2027-01-04 | 14 days |
 | Sprint 5 | 2027-01-18 | 7 days |

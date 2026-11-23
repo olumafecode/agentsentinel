@@ -52,30 +52,30 @@ The issue links in this table are filled in by `tools/board/link_tasks.py`, whic
 
 | Story | Task | Owner | Week |
 |---|---|---|---|
-| US-02a | #___ US-02a.1 Rego policies: task-to-tool permissions, bulk export deny, value ranges, refund threshold | Olusanya Mafe | 1 |
-| US-02a | #___ US-02a.2 OPA container and gateway client with timeout and fail-closed handling | Olusanya Mafe | 1 |
-| US-02a | #___ US-02a.3 Policy unit tests with opa test, including boundary values | Olusanya Mafe | 1 |
-| US-02a | #___ US-02a.4 Versioned policy bundles; record policy_version in decisions and audit | Olusanya Mafe | 1 |
-| US-02a | #___ US-02a.5 Integration test AT-03 | Olusanya Mafe | 1 |
-| US-21 | #___ US-21.1 Event and sequence generator for normal behavior and the five failure modes | Olusanya Mafe | 1 |
-| US-21 | #___ US-21.2 Apply the labelling rules in code and review a 50-event sample by hand | Siyabonga Jali | 1 |
-| US-21 | #___ US-21.3 70/15/15 split with a frozen test set and checksums | Olusanya Mafe | 1 |
-| US-21 | #___ US-21.4 Dataset card: version, size, class balance, known limitations | Olusanya Mafe | 1 |
-| US-06a | #___ US-06a.1 Write the four synthetic bank policy documents with section IDs | Siyabonga Jali | 1 |
-| US-02b | #___ US-02b.4 Poisoned email and document fixtures | Olusanya Mafe | 1 |
-| US-02b | #___ US-02b.1 Data-origin labels on Vera's context: trusted user input versus retrieved content | Olusanya Mafe | 2 |
-| US-02b | #___ US-02b.2 Value-matching tracker for configured sensitive parameters | Olusanya Mafe | 2 |
-| US-02b | #___ US-02b.3 Rego rule for untrusted sensitive parameters | Olusanya Mafe | 2 |
-| US-02b | #___ US-02b.5 Scenario test AT-06 with a bank API call counter | Olusanya Mafe | 2 |
-| US-04 | #___ US-04.1 Feature pipeline for the six feature families in proposal Section 8.1 | Olusanya Mafe | 2 |
-| US-04 | #___ US-04.2 Train a Logistic Regression baseline and a Random Forest or gradient boosting comparator; check Isolation Forest | Olusanya Mafe | 2 |
-| US-04 | #___ US-04.3 Risk engine service POST /score returning score, band and model_version | Olusanya Mafe | 2 |
-| US-06a | #___ US-06a.2 Chunk and embed the policies into pgvector | Olusanya Mafe | 2 |
-| US-04 | #___ US-04.4 Gateway integration with precedence rules and velocity limits (FR-18) | Olusanya Mafe | 3 |
-| US-04 | #___ US-04.5 Evaluation notebook on the validation set | Olusanya Mafe | 3 |
-| US-06a | #___ US-06a.3 RAG service POST /explain with a provider-neutral LLM adapter and mock fallback | Olusanya Mafe | 3 |
-| US-06a | #___ US-06a.4 Validate citations against the retrieved set | Olusanya Mafe | 3 |
-| US-06a | #___ US-06a.5 Call the explanation service after the decision and store ExplanationEvidence | Olusanya Mafe | 3 |
+| US-02a | [#143](https://github.com/olumafecode/agentsentinel/issues/143) US-02a.1 Rego policies: task-to-tool permissions, bulk export deny, value ranges, refund threshold | Olusanya Mafe | 1 |
+| US-02a | [#144](https://github.com/olumafecode/agentsentinel/issues/144) US-02a.2 OPA container and gateway client with timeout and fail-closed handling | Olusanya Mafe | 1 |
+| US-02a | [#145](https://github.com/olumafecode/agentsentinel/issues/145) US-02a.3 Policy unit tests with opa test, including boundary values | Olusanya Mafe | 1 |
+| US-02a | [#146](https://github.com/olumafecode/agentsentinel/issues/146) US-02a.4 Versioned policy bundles; record policy_version in decisions and audit | Olusanya Mafe | 1 |
+| US-02a | [#147](https://github.com/olumafecode/agentsentinel/issues/147) US-02a.5 Integration test AT-03 | Olusanya Mafe | 1 |
+| US-21 | [#153](https://github.com/olumafecode/agentsentinel/issues/153) US-21.1 Event and sequence generator for normal behavior and the five failure modes | Olusanya Mafe | 1 |
+| US-21 | [#154](https://github.com/olumafecode/agentsentinel/issues/154) US-21.2 Apply the labelling rules in code and review a 50-event sample by hand | Siyabonga Jali | 1 |
+| US-21 | [#155](https://github.com/olumafecode/agentsentinel/issues/155) US-21.3 70/15/15 split with a frozen test set and checksums | Olusanya Mafe | 1 |
+| US-21 | [#156](https://github.com/olumafecode/agentsentinel/issues/156) US-21.4 Dataset card: version, size, class balance, known limitations | Olusanya Mafe | 1 |
+| US-06a | [#162](https://github.com/olumafecode/agentsentinel/issues/162) US-06a.1 Write the four synthetic bank policy documents with section IDs | Siyabonga Jali | 1 |
+| US-02b | [#151](https://github.com/olumafecode/agentsentinel/issues/151) US-02b.4 Poisoned email and document fixtures | Olusanya Mafe | 1 |
+| US-02b | [#148](https://github.com/olumafecode/agentsentinel/issues/148) US-02b.1 Data-origin labels on Vera's context: trusted user input versus retrieved content | Olusanya Mafe | 2 |
+| US-02b | [#149](https://github.com/olumafecode/agentsentinel/issues/149) US-02b.2 Value-matching tracker for configured sensitive parameters | Olusanya Mafe | 2 |
+| US-02b | [#150](https://github.com/olumafecode/agentsentinel/issues/150) US-02b.3 Rego rule for untrusted sensitive parameters | Olusanya Mafe | 2 |
+| US-02b | [#152](https://github.com/olumafecode/agentsentinel/issues/152) US-02b.5 Scenario test AT-06 with a bank API call counter | Olusanya Mafe | 2 |
+| US-04 | [#157](https://github.com/olumafecode/agentsentinel/issues/157) US-04.1 Feature pipeline for the six feature families in proposal Section 8.1 | Olusanya Mafe | 2 |
+| US-04 | [#158](https://github.com/olumafecode/agentsentinel/issues/158) US-04.2 Train a Logistic Regression baseline and a Random Forest or gradient boosting comparator; check Isolation Forest | Olusanya Mafe | 2 |
+| US-04 | [#159](https://github.com/olumafecode/agentsentinel/issues/159) US-04.3 Risk engine service POST /score returning score, band and model_version | Olusanya Mafe | 2 |
+| US-06a | [#163](https://github.com/olumafecode/agentsentinel/issues/163) US-06a.2 Chunk and embed the policies into pgvector | Olusanya Mafe | 2 |
+| US-04 | [#160](https://github.com/olumafecode/agentsentinel/issues/160) US-04.4 Gateway integration with precedence rules and velocity limits (FR-18) | Olusanya Mafe | 3 |
+| US-04 | [#161](https://github.com/olumafecode/agentsentinel/issues/161) US-04.5 Evaluation notebook on the validation set | Olusanya Mafe | 3 |
+| US-06a | [#164](https://github.com/olumafecode/agentsentinel/issues/164) US-06a.3 RAG service POST /explain with a provider-neutral LLM adapter and mock fallback | Olusanya Mafe | 3 |
+| US-06a | [#165](https://github.com/olumafecode/agentsentinel/issues/165) US-06a.4 Validate citations against the retrieved set | Olusanya Mafe | 3 |
+| US-06a | [#166](https://github.com/olumafecode/agentsentinel/issues/166) US-06a.5 Call the explanation service after the decision and store ExplanationEvidence | Olusanya Mafe | 3 |
 
 Changes from the suggested tasks:
 
