@@ -67,7 +67,7 @@ def test_the_lookup_leaves_a_complete_audit_trail(stack, tool_name, arguments):
         "agent_status": None,
         "request_freshness": None,
         "known_tool": None,
-        "tool_allowlist": None,
+        "bank_policy": None,
         "customer_scope": None,
     }
     assert executed.payload["status"] == "succeeded"

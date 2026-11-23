@@ -37,6 +37,7 @@ from sentinel_gateway.config import ConfigError, Settings
 from sentinel_gateway.decisions import CorrelationConflict, DecisionStore
 from sentinel_gateway.orchestrator import Orchestrator
 from sentinel_gateway.pipeline import default_checks
+from sentinel_gateway.policy import OpaClient, PolicyEngine
 from sentinel_gateway.registry import AgentRegistry, ToolRegistry
 from sentinel_gateway.service import ApprovalRequester, Gateway
 
@@ -72,12 +73,14 @@ def create_app(
     checks: Iterable[Check] | None = None,
     bank_client: httpx2.Client | None = None,
     audit: AuditSink | None = None,
+    policy: PolicyEngine | None = None,
     approvals: ApprovalRequester | None = None,
     clock: Callable[[], float] = time.time,
 ) -> FastAPI:
     """Build the gateway. Reads settings from the environment when none are given.
 
-    ``checks`` replaces the standard checks from pipeline.default_checks, for tests.
+    ``checks`` replaces the standard checks from pipeline.default_checks, and
+    ``policy`` replaces the OPA client at OPA_URL, for tests.
     """
     settings = settings or Settings.from_env()
     agents = AgentRegistry.load() if agents is None else agents
@@ -94,6 +97,11 @@ def create_app(
         client=bank_client,
         clock=clock,
     )
+    owns_policy = policy is None
+    if policy is None:
+        policy = OpaClient(
+            settings.opa_url, timeout_seconds=settings.opa_timeout_seconds
+        )
     if checks is None:
         ownership = BankOwnershipLookup(
             bank,
@@ -101,7 +109,7 @@ def create_app(
             audience=settings.bank_audience,
             clock=clock,
         )
-        checks = default_checks(ownership=ownership)
+        checks = default_checks(ownership=ownership, policy=policy)
     orchestrator = Orchestrator(checks)
     owns_audit = audit is None
     if audit is None:
@@ -126,6 +134,8 @@ def create_app(
     async def lifespan(_: FastAPI) -> AsyncIterator[None]:
         yield
         bank.close()
+        if owns_policy and isinstance(policy, OpaClient):
+            policy.close()
         if owns_audit:
             close_sink(audit)
 
@@ -167,17 +177,20 @@ def create_app(
 
     @app.get("/readyz", tags=["health"])
     def readyz() -> JSONResponse:
-        """Readiness: the registries are loaded and the audit trail can be written.
+        """Readiness: the audit trail can be written and the bank policy answers.
 
-        Answers HTTP 503 while the audit trail is unavailable, because every action
-        would be refused until it is back.
+        Answers HTTP 503 while either is unavailable, because every action would be
+        refused or blocked until it is back.
         """
-        ready = sink_ready(audit)
+        audit_ready = sink_ready(audit)
+        policy_ready = _policy_ready(policy)
+        ready = audit_ready and policy_ready
         return JSONResponse(
             status_code=200 if ready else 503,
             content={
                 "status": "ready" if ready else "not_ready",
-                "audit": "ready" if ready else "unavailable",
+                "audit": "ready" if audit_ready else "unavailable",
+                "policy": "ready" if policy_ready else "unavailable",
                 "agents": len(agents),
                 "tools": len(tools),
                 "checks": [check.name for check in orchestrator.checks],
@@ -275,6 +288,14 @@ def _document_request(app: FastAPI) -> None:
         return app.openapi_schema
 
     app.openapi = openapi  # type: ignore[method-assign]
+
+
+def _policy_ready(policy: PolicyEngine) -> bool:
+    try:
+        return bool(policy.ready())
+    except Exception:
+        log.exception("the bank policy readiness check failed")
+        return False
 
 
 def _authenticate(authorization: str | None, keyring: AgentKeyring) -> str:

@@ -1,77 +1,68 @@
 {
-  "description": "Every bank tool the gateway knows. A tool missing from this list is blocked (deny by default). Name, category, description, impact and sensitive parameters must match the demo bank's catalogue; tests/test_gateway_matches_bank.py checks this. allowed_task_types is used by the per-task allowlist (US-01.2).",
+  "description": "Every bank tool the gateway knows. A tool missing from this list is blocked (deny by default). Name, category, description, impact and sensitive parameters must match the demo bank's catalogue; tests/test_gateway_matches_bank.py checks this. Which tasks may use each tool is bank policy, in policies/opa/agentsentinel/data.json (US-02a).",
   "tools": [
     {
       "tool_name": "get_customer",
       "category": "read",
       "description": "Read one customer's profile and mailing address",
       "high_impact": false,
-      "sensitive_parameters": [],
-      "allowed_task_types": ["account_inquiry", "refund_request", "profile_update", "dispute"]
+      "sensitive_parameters": []
     },
     {
       "tool_name": "get_accounts",
       "category": "read",
       "description": "List one customer's accounts and balances",
       "high_impact": false,
-      "sensitive_parameters": [],
-      "allowed_task_types": ["account_inquiry", "refund_request", "dispute"]
+      "sensitive_parameters": []
     },
     {
       "tool_name": "get_transactions",
       "category": "read",
       "description": "List one customer's most recent transactions, newest first",
       "high_impact": false,
-      "sensitive_parameters": [],
-      "allowed_task_types": ["account_inquiry", "refund_request", "dispute"]
+      "sensitive_parameters": []
     },
     {
       "tool_name": "update_address",
       "category": "write",
       "description": "Change one customer's mailing address",
       "high_impact": false,
-      "sensitive_parameters": ["address"],
-      "allowed_task_types": ["profile_update"]
+      "sensitive_parameters": ["address"]
     },
     {
       "tool_name": "issue_refund",
       "category": "financial",
       "description": "Refund a posted transaction to the customer's own account",
       "high_impact": true,
-      "sensitive_parameters": ["account_id", "amount"],
-      "allowed_task_types": ["refund_request", "dispute"]
+      "sensitive_parameters": ["account_id", "amount"]
     },
     {
       "tool_name": "close_dispute",
       "category": "write",
       "description": "Close an open dispute with a resolution note",
       "high_impact": false,
-      "sensitive_parameters": [],
-      "allowed_task_types": ["dispute"]
+      "sensitive_parameters": []
     },
     {
       "tool_name": "export_customers",
       "category": "export",
       "description": "Export every customer record in the bank",
       "high_impact": true,
-      "sensitive_parameters": [],
-      "allowed_task_types": ["admin_maintenance"]
+      "sensitive_parameters": []
     },
     {
       "tool_name": "reset_credentials",
       "category": "admin",
       "description": "Reset a customer's sign-in credentials (administrators only)",
       "high_impact": true,
-      "sensitive_parameters": ["customer_id"],
-      "allowed_task_types": ["admin_maintenance"]
+      "sensitive_parameters": ["customer_id"]
     },
     {
       "tool_name": "freeze_account",
       "category": "admin",
       "description": "Freeze an account so no money can move in or out (administrators only)",
       "high_impact": true,
-      "sensitive_parameters": ["account_id"],
-      "allowed_task_types": ["admin_maintenance"]
+      "sensitive_parameters": ["account_id"]
     }
   ]
 }

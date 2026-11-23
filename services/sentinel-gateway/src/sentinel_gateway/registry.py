@@ -23,7 +23,6 @@ from pydantic import (
     model_validator,
 )
 
-from sentinel_contracts import TaskType
 from sentinel_contracts.identifiers import AgentId, ArgumentName, ToolName
 
 
@@ -65,14 +64,17 @@ class AgentProfile(_Entry):
 
 
 class ToolProfile(_Entry):
-    """One bank tool, in the shape of the ToolDefinition entity in the schema."""
+    """One bank tool, in the shape of the ToolDefinition entity in the schema.
+
+    The entity's allowed_task_types are not here: which tasks may use a tool is bank
+    policy, kept in policies/opa/agentsentinel/data.json (US-02a).
+    """
 
     tool_name: ToolName
     category: ToolCategory
     description: Annotated[str, StringConstraints(min_length=3, max_length=200)]
     high_impact: bool
     sensitive_parameters: tuple[ArgumentName, ...]
-    allowed_task_types: tuple[TaskType, ...]
 
 
 class AgentRegistry:

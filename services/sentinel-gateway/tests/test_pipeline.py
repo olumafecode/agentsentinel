@@ -10,14 +10,24 @@ class NoLookups:
         raise AssertionError("not expected in this test")
 
 
-def test_the_gateway_runs_context_checks_then_least_privilege_rules():
-    checks = Orchestrator(default_checks(ownership=NoLookups())).checks
+class NoPolicy:
+    def evaluate(self, document):
+        raise AssertionError("not expected in this test")
+
+    def ready(self):
+        return True
+
+
+def test_the_gateway_runs_context_checks_then_bank_policy_then_customer_scope():
+    checks = Orchestrator(
+        default_checks(ownership=NoLookups(), policy=NoPolicy())
+    ).checks
 
     assert [(check.name, check.stage) for check in checks] == [
         ("context_binding", Stage.CONTEXT),
         ("agent_status", Stage.CONTEXT),
         ("request_freshness", Stage.CONTEXT),
         ("known_tool", Stage.CONTEXT),
-        ("tool_allowlist", Stage.HARD_RULE),
+        ("bank_policy", Stage.HARD_RULE),
         ("customer_scope", Stage.HARD_RULE),
     ]

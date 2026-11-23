@@ -54,7 +54,9 @@ services:
     restart: "no"
 
   # Built from policies/opa/Dockerfile, which adds the wget the health check needs.
-  # The folder is also mounted, so edited policies take effect after a restart.
+  # It serves policies/opa as a bundle, so every answer carries the bundle's revision
+  # (the policy_version in the audit trail). The folder is also mounted, so edited
+  # policies take effect after a restart.
   opa:
     <<: *hardened
     build:
@@ -66,7 +68,7 @@ services:
     ports:
       - "127.0.0.1:8181:8181"
     healthcheck:
-      test: ["CMD", "wget", "-q", "-O", "/dev/null", "http://127.0.0.1:8181/health"]
+      test: ["CMD", "wget", "-q", "-O", "/dev/null", "http://127.0.0.1:8181/health?bundles=true"]
       interval: 5s
       timeout: 3s
       retries: 20
@@ -102,11 +104,14 @@ services:
       SESSION_TOKEN_KEY: ${SESSION_TOKEN_KEY:?Set SESSION_TOKEN_KEY in .env}
       AGENT_KEYS: AGT-001:${VERA_AGENT_KEY:?Set VERA_AGENT_KEY in .env}
       BANK_URL: http://demo-bank:8001
+      OPA_URL: http://opa:8181
       AUDIT_DATABASE_URL: *gateway-url
     depends_on:
       audit:
         condition: service_completed_successfully
       demo-bank:
+        condition: service_healthy
+      opa:
         condition: service_healthy
     ports:
       - "127.0.0.1:8000:8000"

@@ -60,4 +60,9 @@ def _success(tool_name: str, result: Any) -> str:
             return f"Your refund of {data['amount']} USD has been issued to {data['account_id']}."
         case "close_dispute" if "dispute_id" in data:
             return f"Dispute {data['dispute_id']} is now closed."
+        case "freeze_account" if "account_id" in data:
+            return (
+                f"Account {data['account_id']} is now frozen, "
+                "so no more payments can leave it."
+            )
     return "Done."

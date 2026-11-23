@@ -31,10 +31,12 @@
     "role": "customer_service",
     "allowed_tools": [
       "get_customer",
+      "get_accounts",
       "get_transactions",
       "update_address",
       "issue_refund",
-      "close_dispute"
+      "close_dispute",
+      "freeze_account"
     ],
     "status": "active",
     "review_threshold": 0.6,
@@ -51,8 +53,7 @@
       "amount"
     ],
     "allowed_task_types": [
-      "refund_request",
-      "dispute"
+      "refund_request"
     ]
   },
   "UserSession": {

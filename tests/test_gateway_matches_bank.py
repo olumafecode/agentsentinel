@@ -1,4 +1,8 @@
-"""The gateway's registries agree with the demo bank's catalogue and the synthetic schema."""
+"""The gateway's registries agree with the demo bank's catalogue and the synthetic schema.
+
+A ToolDefinition in the schema also lists the tasks that may use the tool. Since
+US-02a that table is bank policy, so the tests take it from the policy data.
+"""
 
 import json
 import re
@@ -16,13 +20,29 @@ from sentinel_gateway.registry import (
 )
 from sentinel_gateway.scope import RECORD_PATTERNS
 
+ROOT = Path(__file__).resolve().parents[1]
 GATEWAY_TOOLS = ToolRegistry.load()
 GATEWAY_AGENTS = AgentRegistry.load()
 EXAMPLES = json.loads(
-    (
-        Path(__file__).resolve().parents[1] / "data" / "synthetic" / "examples.json"
-    ).read_text(encoding="utf-8")
+    (ROOT / "data" / "synthetic" / "examples.json").read_text(encoding="utf-8")
 )
+TASK_TOOLS = json.loads(
+    (ROOT / "policies" / "opa" / "agentsentinel" / "data.json").read_text(
+        encoding="utf-8"
+    )
+)["task_tools"]
+
+
+def tool_definition(tool_name):
+    """The registry entry plus the tasks the bank policy allows it for."""
+    return models.ToolDefinition.model_validate(
+        {
+            **GATEWAY_TOOLS[tool_name].model_dump(mode="json"),
+            "allowed_task_types": [
+                task for task, tools in TASK_TOOLS.items() if tool_name in tools
+            ],
+        }
+    )
 
 
 def test_the_gateway_knows_exactly_the_tools_the_bank_offers():
@@ -40,15 +60,12 @@ def test_each_tool_is_described_the_same_way_in_both_places(tool_name):
 
 @pytest.mark.parametrize("tool_name", sorted(TOOLS))
 def test_each_tool_entry_is_a_valid_tool_definition(tool_name):
-    models.ToolDefinition.model_validate(
-        GATEWAY_TOOLS[tool_name].model_dump(mode="json")
-    )
+    tool_definition(tool_name)
 
 
-def test_the_example_tool_definition_matches_the_registry():
+def test_the_example_tool_definition_matches_the_registry_and_the_policy():
     example = models.ToolDefinition.model_validate(EXAMPLES["ToolDefinition"])
-    entry = GATEWAY_TOOLS[example.tool_name].model_dump(mode="json")
-    assert models.ToolDefinition.model_validate(entry) == example
+    assert tool_definition(example.tool_name) == example
 
 
 def test_every_registered_agent_is_a_valid_agent_using_known_tools():

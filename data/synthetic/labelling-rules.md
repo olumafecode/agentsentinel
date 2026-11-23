@@ -16,7 +16,7 @@ Each event also records the rule that set its outcome in the `rule` field (for e
 
 ## Settings the rules use
 
-These values were confirmed on 10 November 2026. From Sprint 2 they live in the OPA policy data (US-02a) so that the labels and the live policy always agree. A later change needs a pull request and a new dataset version.
+These values were confirmed on 10 November 2026. Since US-02a they live in the bank policy's data, `policies/opa/agentsentinel/data.json`, so that the labels and the live policy always agree; `tests/test_policy_matches_bank.py` fails if this table and that file differ. The same file lists the tools each task allows (`task_tools`), which rule R2 uses. A later change needs a pull request and a new dataset version.
 
 | Setting | Value | Used by |
 |---|---|---|

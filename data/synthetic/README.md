@@ -101,7 +101,7 @@ An AI agent registered with AgentSentinel, with the tools it may propose and its
 | `agent_id` | `AGT-` and 3 digits | Agent identifier in the registry | `AGT-001` |
 | `name` | text, up to 40 characters | Display name, for example Vera | `Vera` |
 | `role` | text, up to 40 characters | Role that policy uses, for example customer_service | `customer_service` |
-| `allowed_tools` | list of tool name in snake_case | Tools this agent may ever propose | `["get_customer", "get_transactions", "update_address", "issue_refun...` |
+| `allowed_tools` | list of tool name in snake_case | Tools this agent may ever propose | `["get_customer", "get_accounts", "get_transactions", "update_add...` |
 | `status` | one of `active`, `disabled`, `quarantined` | active, disabled or quarantined | `active` |
 | `review_threshold` | number from 0 to 1 | Risk score at or above this goes to human review | `0.6` |
 | `block_threshold` | number from 0 to 1 | Risk score at or above this is blocked | `0.85` |
@@ -118,7 +118,7 @@ A bank tool the agent can ask for, and what makes it sensitive.
 | `description` | text, up to 200 characters | What the tool does | `Refund a posted transaction to the customer's own account` |
 | `high_impact` | true or false | True when a wrong call could move money or expose data | `true` |
 | `sensitive_parameters` | list of text | Arguments whose origin must be tracked | `["account_id", "amount"]` |
-| `allowed_task_types` | list of one of `account_inquiry`, `refund_request`, `profile_update`, `dispute`, `admin_maintenance` | Tasks for which the tool may be used | `["refund_request", "dispute"]` |
+| `allowed_task_types` | list of one of `account_inquiry`, `refund_request`, `profile_update`, `dispute`, `admin_maintenance` | Tasks for which the tool may be used | `["refund_request"]` |
 
 ### UserSession
 

@@ -1,4 +1,9 @@
-"""Shared fixtures: a gateway wired to an in-process demo bank, both on one fixed clock."""
+"""Shared fixtures: a gateway wired to an in-process demo bank, both on one fixed clock.
+
+The gateway's bank policy is a stand-in that never objects, so these tests are about
+the gateway itself. The policy's own rules are tested with ``opa test`` in
+policies/opa, and with a real OPA server in test_policy.py and tests/acceptance.
+"""
 
 import uuid
 from datetime import UTC, datetime
@@ -16,6 +21,7 @@ from sentinel_gateway.auth import AgentKeyring
 from sentinel_gateway.bank import BankClient, BankOwnershipLookup
 from sentinel_gateway.config import Settings
 from sentinel_gateway.main import create_app
+from sentinel_gateway.policy import PolicyAnswer
 from sentinel_gateway.registry import AgentProfile, AgentRegistry, AgentStatus
 
 EXECUTION_KEY = load_key("execution-key-for-gateway-tests-0123456789")
@@ -32,6 +38,22 @@ SESSION = {
     "agent_id": "AGT-001",
     "task_type": "account_inquiry",
 }
+
+
+class NoObjectionPolicy:
+    """Stands in for OPA: no rule ever objects. Remembers each input it was given."""
+
+    version = "1.0.0"
+
+    def __init__(self) -> None:
+        self.inputs = []
+
+    def evaluate(self, document):
+        self.inputs.append(document)
+        return PolicyAnswer(version=self.version, violations=())
+
+    def ready(self):
+        return True
 
 
 class Clock:
@@ -142,7 +164,12 @@ def audit():
 
 
 @pytest.fixture
-def make_gateway(settings, agents, bank, audit, clock):
+def policy():
+    return NoObjectionPolicy()
+
+
+@pytest.fixture
+def make_gateway(settings, agents, bank, audit, policy, clock):
     """Build a gateway client; keyword arguments go to create_app."""
 
     def build(**overrides):
@@ -150,6 +177,7 @@ def make_gateway(settings, agents, bank, audit, clock):
             "agents": agents,
             "bank_client": bank,
             "audit": audit,
+            "policy": policy,
             "clock": clock,
         }
         return TestClient(create_app(settings, **{**params, **overrides}))

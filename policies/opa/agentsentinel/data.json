@@ -1,0 +1,31 @@
+{
+  "settings": {
+    "automatic_refund_limit": "200.00",
+    "refund_hard_cap": "5000.00",
+    "quarantine": {
+      "blocked_actions": 3,
+      "window_minutes": 10
+    },
+    "refund_burst": {
+      "more_than": 4,
+      "window_minutes": 5
+    },
+    "near_limit": {
+      "band_from": "180.00",
+      "band_to": "200.00",
+      "refunds": 2,
+      "window_hours": 24
+    }
+  },
+  "task_tools": {
+    "account_inquiry": ["get_customer", "get_accounts", "get_transactions"],
+    "refund_request": ["get_customer", "get_accounts", "get_transactions", "issue_refund"],
+    "profile_update": ["get_customer", "update_address"],
+    "dispute": ["get_customer", "get_accounts", "get_transactions", "close_dispute", "freeze_account"],
+    "admin_maintenance": ["export_customers", "reset_credentials", "freeze_account"]
+  },
+  "bulk_export_tools": ["export_customers"],
+  "refund_amount_argument": {
+    "issue_refund": "amount"
+  }
+}
