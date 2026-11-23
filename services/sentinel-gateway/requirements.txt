@@ -1,7 +1,7 @@
 # Runtime dependencies of the Sentinel Gateway, pinned for reproducible builds (NFR-14).
 # The Dockerfile installs exactly these; requirements-dev.txt includes this file for tests.
 # psycopg is for the audit trail (services/audit-service), which the gateway writes to.
-fastapi==0.163.2
+fastapi==0.165.0
 httpx2==2.16.2
 psycopg[binary]==3.3.9
 psycopg-pool==3.3.3
