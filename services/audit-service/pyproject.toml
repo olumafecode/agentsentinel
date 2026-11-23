@@ -9,7 +9,7 @@ description = "Append-only, hash-linked audit trail in PostgreSQL, with verify-c
 requires-python = ">=3.12"
 # Exact versions are pinned in requirements.txt. sentinel-contracts comes from
 # libs/sentinel-contracts in this repository and is installed alongside, never from PyPI.
-dependencies = ["psycopg[binary]>=3.2", "psycopg-pool>=3.2", "pydantic>=2.10,<3"]
+dependencies = ["psycopg[binary]>=3.2", "psycopg-pool>=3.2", "pydantic>=2.14.4,<3"]
 
 [project.scripts]
 sentinel-audit = "sentinel_audit.cli:main"
