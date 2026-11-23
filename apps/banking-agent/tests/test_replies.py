@@ -55,6 +55,11 @@ def allowed(tool_name, *, result=None, status="succeeded", error=None):
             {"dispute_id": "DSP-000001"},
             "Dispute DSP-000001 is now closed.",
         ),
+        (
+            "freeze_account",
+            {"account_id": "ACC-00000123", "status": "frozen"},
+            "Account ACC-00000123 is now frozen, so no more payments can leave it.",
+        ),
         ("get_customer", {"unexpected": True}, "Done."),
     ],
 )

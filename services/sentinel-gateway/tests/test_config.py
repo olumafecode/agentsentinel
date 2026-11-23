@@ -3,7 +3,12 @@
 import pytest
 
 from sentinel_gateway.auth import AgentKeyring, bearer_credentials
-from sentinel_gateway.config import DEFAULT_BANK_URL, ConfigError, Settings
+from sentinel_gateway.config import (
+    DEFAULT_BANK_URL,
+    DEFAULT_OPA_URL,
+    ConfigError,
+    Settings,
+)
 
 EXECUTION = "execution-key-from-the-environment-0123456789"
 SESSION = "session-key-from-the-environment-0123456789ab"
@@ -25,6 +30,8 @@ def test_settings_are_read_from_the_environment():
             "BANK_URL": "https://bank.internal:8443",
             "BANK_TIMEOUT_SECONDS": "2.5",
             "AUDIT_DATABASE_URL": "postgresql://sentinel_gateway:pw@postgres:5432/db",
+            "OPA_URL": "http://opa:8181",
+            "OPA_TIMEOUT_SECONDS": "0.5",
         }
     )
 
@@ -34,14 +41,20 @@ def test_settings_are_read_from_the_environment():
     assert settings.bank_url == "https://bank.internal:8443"
     assert settings.bank_timeout_seconds == 2.5
     assert settings.audit_database_url.endswith("@postgres:5432/db")
+    assert settings.opa_url == "http://opa:8181"
+    assert settings.opa_timeout_seconds == 0.5
 
 
 def test_without_a_database_the_audit_trail_goes_to_standard_output():
     assert Settings.from_env(ENV).audit_database_url is None
 
 
-def test_the_bank_url_has_a_local_default():
-    assert Settings.from_env(ENV).bank_url == DEFAULT_BANK_URL
+def test_the_bank_and_opa_have_local_defaults():
+    settings = Settings.from_env(ENV)
+
+    assert settings.bank_url == DEFAULT_BANK_URL
+    assert settings.opa_url == DEFAULT_OPA_URL
+    assert settings.opa_timeout_seconds == 2.0
 
 
 def test_keys_never_appear_in_the_settings_repr():
@@ -72,6 +85,11 @@ def test_keys_never_appear_in_the_settings_repr():
         ({"BANK_TIMEOUT_SECONDS": "soon"}, "must be a number"),
         ({"BANK_TIMEOUT_SECONDS": "0"}, "between 0 and 60"),
         ({"BANK_TIMEOUT_SECONDS": "nan"}, "between 0 and 60"),
+        ({"OPA_URL": "opa:8181"}, "OPA_URL must start"),
+        ({"OPA_TIMEOUT_SECONDS": "fast"}, "OPA_TIMEOUT_SECONDS must be a number"),
+        ({"OPA_TIMEOUT_SECONDS": "0"}, "between 0 and 10"),
+        ({"OPA_TIMEOUT_SECONDS": "11"}, "between 0 and 10"),
+        ({"OPA_TIMEOUT_SECONDS": "inf"}, "between 0 and 10"),
         ({"AUDIT_DATABASE_URL": "mysql://db"}, "must start with postgresql://"),
     ],
 )

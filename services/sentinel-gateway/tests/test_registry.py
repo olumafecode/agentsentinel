@@ -69,6 +69,18 @@ def test_an_agents_thresholds_must_be_in_order():
         )
 
 
+def test_the_task_table_is_bank_policy_not_part_of_a_tool_entry():
+    with pytest.raises(ValidationError, match="allowed_task_types"):
+        ToolProfile(
+            tool_name="get_customer",
+            category="read",
+            description="Read a customer",
+            high_impact=False,
+            sensitive_parameters=(),
+            allowed_task_types=("account_inquiry",),
+        )
+
+
 def test_a_tool_entry_rejects_unknown_fields():
     with pytest.raises(ValidationError):
         ToolProfile(
@@ -77,6 +89,5 @@ def test_a_tool_entry_rejects_unknown_fields():
             description="Read a customer",
             high_impact=False,
             sensitive_parameters=(),
-            allowed_task_types=("account_inquiry",),
             owner="ops",
         )

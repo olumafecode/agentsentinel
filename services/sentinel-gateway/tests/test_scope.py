@@ -1,4 +1,8 @@
-"""Least privilege: the tool allowlist and the customer scope check (US-01.1, US-01.2)."""
+"""Least privilege over data: the customer scope check (US-01.1).
+
+Which tools Vera may use, and for which task, is bank policy since US-02a: see
+policies/opa and test_policy.py.
+"""
 
 import uuid
 from datetime import UTC, datetime
@@ -24,7 +28,6 @@ from sentinel_gateway.registry import AgentRegistry, ToolRegistry
 from sentinel_gateway.scope import (
     CustomerScopeCheck,
     RecordKind,
-    ToolAllowlistCheck,
     referenced_records,
 )
 
@@ -89,83 +92,6 @@ def refund_arguments(account="ACC-00000123", transaction="TXN-0000004568"):
         "original_transaction_id": transaction,
         "reason": "Duplicate charge",
     }
-
-
-class TestToolAllowlist:
-    check = ToolAllowlistCheck()
-
-    @pytest.mark.parametrize(
-        ("tool_name", "task"),
-        [
-            ("get_transactions", "account_inquiry"),
-            ("get_customer", "profile_update"),
-            ("update_address", "profile_update"),
-            ("issue_refund", "refund_request"),
-            ("issue_refund", "dispute"),
-            ("close_dispute", "dispute"),
-        ],
-    )
-    def test_vera_may_use_her_tools_for_the_right_tasks(self, tool_name, task):
-        finding = self.check.evaluate(context(tool_name=tool_name, task=task), [])
-
-        assert not finding.objects
-
-    @pytest.mark.parametrize(
-        ("tool_name", "task", "for_agent", "for_task", "summary"),
-        [
-            (
-                "export_customers",
-                "admin_maintenance",
-                False,
-                True,
-                "Vera is not allowed to use export_customers.",
-            ),
-            (
-                "issue_refund",
-                "account_inquiry",
-                True,
-                False,
-                "issue_refund is not allowed for account_inquiry tasks.",
-            ),
-            (
-                "freeze_account",
-                "account_inquiry",
-                False,
-                False,
-                (
-                    "Vera is not allowed to use freeze_account, and freeze_account "
-                    "is not allowed for account_inquiry tasks."
-                ),
-            ),
-            (
-                "get_accounts",
-                "account_inquiry",
-                False,
-                True,
-                "Vera is not allowed to use get_accounts.",
-            ),
-        ],
-    )
-    def test_any_other_tool_or_task_is_blocked(
-        self, tool_name, task, for_agent, for_task, summary
-    ):
-        finding = self.check.evaluate(context(tool_name=tool_name, task=task), [])
-
-        assert finding.decision is Decision.BLOCK
-        assert finding.reasons == (ReasonCode.TOOL_NOT_ALLOWED,)
-        assert finding.summary == summary
-        assert finding.details == {
-            "allowed_for_agent": for_agent,
-            "allowed_for_task": for_task,
-        }
-
-    def test_without_an_agent_or_tool_entry_nothing_is_allowed(self):
-        finding = self.check.evaluate(
-            context(tool_name="wire_transfer", agent=None), []
-        )
-
-        assert finding.decision is Decision.BLOCK
-        assert finding.summary.startswith("This agent is not allowed")
 
 
 class TestCustomerScope:
@@ -295,7 +221,7 @@ class TestCustomerScope:
     def test_the_bank_is_not_asked_once_the_action_is_already_blocked(self):
         ownership = FakeOwnership()
         blocked = CheckRecord(
-            "tool_allowlist",
+            "bank_policy",
             Stage.HARD_RULE,
             objection(Decision.BLOCK, ReasonCode.TOOL_NOT_ALLOWED, summary="No."),
         )
@@ -398,32 +324,6 @@ class TestThroughTheGateway:
         assert refunds_for("TXN-0000004568") == []
         checks = audit.for_correlation(body["correlation_id"])[1].payload["checks"]
         assert checks[-1]["details"]["outside_scope"] == {"ACC-99000017": "CUS-990001"}
-
-    def test_a_tool_vera_may_not_use_is_blocked_before_any_lookup(
-        self, evaluate, action, session_token, bank
-    ):
-        body = action(
-            task_type="admin_maintenance",
-            tool_name="freeze_account",
-            arguments={"account_id": "ACC-99000017", "reason": "Suspicious activity"},
-            provenance_labels={},
-        )
-
-        decision = evaluate(
-            body, session=session_token(task_type="admin_maintenance")
-        ).json()["decision"]
-
-        assert decision["decision"] == "BLOCK"
-        assert decision["reason_codes"] == ["TOOL_NOT_ALLOWED"]
-        assert bank.calls == []
-        assert bank.lookups == []
-
-    def test_a_tool_outside_the_task_is_blocked(self, evaluate, refund, bank):
-        decision = evaluate(refund(task_type="account_inquiry")).json()["decision"]
-
-        assert decision["reason_codes"] == ["TOOL_NOT_ALLOWED"]
-        assert bank.calls == []
-        assert bank.lookups == []
 
     def test_an_unreachable_ownership_lookup_blocks_the_action(
         self, make_gateway, evaluate, refund, refund_session

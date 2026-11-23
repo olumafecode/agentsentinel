@@ -6,15 +6,15 @@ action; an action is allowed only when no check objects. Each check belongs to a
 stage, and the orchestrator runs the stages in order:
 
 CONTEXT           Who is asking, for which customer session, with which tool.
-HARD_RULE         Deterministic bank rules (US-01 scope and allowlist, US-02 OPA).
+HARD_RULE         Deterministic bank rules (US-02 policy in OPA, US-01 scope).
 CONTAINMENT       Whether the agent must be contained (US-05 quarantine).
 MANDATORY_REVIEW  Actions that always need a person (US-03 large refunds).
 RISK              The machine learning risk signal (US-04), advisory only (ADR-003).
 
 This module holds the building blocks and the CONTEXT checks. Each later story adds
-its rules in a module of its own (scope.py for US-01), and pipeline.py lists the
-checks the gateway runs. To add a rule, subclass Check, set its name and stage, and
-add it to default_checks in pipeline.py.
+its rules in a module of its own (policy.py for US-02a, scope.py for US-01), and
+pipeline.py lists the checks the gateway runs. To add a rule, subclass Check, set its
+name and stage, and add it to default_checks in pipeline.py.
 """
 
 from abc import ABC, abstractmethod

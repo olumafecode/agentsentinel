@@ -45,6 +45,20 @@ jobs:
       - name: Lint
         run: ruff check .
 
+      # The same OPA version as policies/opa/Dockerfile. The gateway and acceptance tests
+      # start it with the bank's policies, and fail rather than skip without it in CI.
+      - name: Set up OPA
+        uses: open-policy-agent/setup-opa@b2b258e089860efaadaaf71bf6e3aecb4a3eeff1 # v2.4.0
+        with:
+          version: 1.22.4
+
+      - name: Policy checks
+        run: |
+          opa fmt --list --fail policies/opa
+          opa check --strict policies/opa
+          opa test policies/opa -v
+          opa test policies/opa --coverage --threshold 100 > /dev/null
+
       - name: Unit tests
         run: |
           code=0
@@ -58,13 +72,3 @@ jobs:
             echo "Auditing $f"
             pip-audit -r "$f"
           done
-
-      - name: Set up OPA
-        if: hashFiles('policies/opa/**/*.rego') != ''
-        uses: open-policy-agent/setup-opa@v2
-        with:
-          version: latest
-
-      - name: Policy tests
-        if: hashFiles('policies/opa/**/*.rego') != ''
-        run: opa test policies/opa -v

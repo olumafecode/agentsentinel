@@ -1,12 +1,9 @@
-"""Least privilege: which tools an agent may use, and whose data (US-01, FR-03).
+"""Least privilege over data: whose records an action may touch (US-01.1, FR-03).
 
-Both checks are hard rules. They run only after the context checks have passed, so
-the session, the agent and the tool are all known and trusted here.
-
-ToolAllowlistCheck   The tool must be one the agent may use, for the task the
-                     customer asked for (US-01.2). Moves into OPA in US-02a.
-CustomerScopeCheck   Every customer, account, transaction or dispute the action
-                     names must belong to the signed-in customer (US-01.1).
+CustomerScopeCheck is a hard rule. It runs only after the context checks have passed,
+so the session, the agent and the tool are all known and trusted here. Which tools
+an agent may use, and for which task, is bank policy in OPA (policy.py, US-02a);
+it was ToolAllowlistCheck here in Sprint 1 (US-01.2).
 """
 
 import re
@@ -62,37 +59,6 @@ class OwnershipLookup(Protocol):
     ) -> Mapping[str, str | None]:
         """Return the owning customer ID of each record, or None for an unknown one."""
         ...
-
-
-class ToolAllowlistCheck(Check):
-    """The agent may use the tool, and the tool fits the customer's task (US-01.2)."""
-
-    name = "tool_allowlist"
-    stage = Stage.HARD_RULE
-
-    def evaluate(
-        self, context: ActionContext, earlier: Sequence[CheckRecord]
-    ) -> Finding:
-        agent, tool, task = context.agent, context.tool, context.request.task_type
-        tool_name = context.request.tool_name
-        for_agent = agent is not None and tool_name in agent.allowed_tools
-        for_task = tool is not None and task in tool.allowed_task_types
-        if for_agent and for_task:
-            return NO_OBJECTION
-
-        problems = []
-        if not for_agent:
-            agent_name = agent.name if agent is not None else "This agent"
-            problems.append(f"{agent_name} is not allowed to use {tool_name}")
-        if not for_task:
-            problems.append(f"{tool_name} is not allowed for {task.value} tasks")
-        return objection(
-            Decision.BLOCK,
-            ReasonCode.TOOL_NOT_ALLOWED,
-            summary=f"{', and '.join(problems)}.",
-            allowed_for_agent=for_agent,
-            allowed_for_task=for_task,
-        )
 
 
 class CustomerScopeCheck(Check):

@@ -76,4 +76,4 @@ py -m pip install -r requirements-dev.txt
 py -m pytest -q
 ```
 
-The PostgreSQL tests are skipped unless `AUDIT_TEST_DATABASE_URL` is set; see `services/audit-service/README.md`. CI runs them, builds and scans every image, and runs the Compose stack end to end on every pull request.
+The PostgreSQL tests are skipped unless `AUDIT_TEST_DATABASE_URL` is set; see `services/audit-service/README.md`. The bank policy tests and the acceptance tests need the `opa` command and are skipped without it; see `policies/opa/README.md`. CI runs all of them, builds and scans every image, and runs the Compose stack end to end on every pull request.

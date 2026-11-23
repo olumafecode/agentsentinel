@@ -23,6 +23,27 @@
       }
     },
     {
+      "name": "get_accounts",
+      "description": "List one customer's accounts and balances",
+      "high_impact": false,
+      "sensitive_parameters": [],
+      "parameters": {
+        "additionalProperties": false,
+        "properties": {
+          "customer_id": {
+            "pattern": "^CUS-\\d{6}$",
+            "title": "Customer Id",
+            "type": "string"
+          }
+        },
+        "required": [
+          "customer_id"
+        ],
+        "title": "CustomerArguments",
+        "type": "object"
+      }
+    },
+    {
       "name": "get_transactions",
       "description": "List one customer's most recent transactions, newest first",
       "high_impact": false,
@@ -158,6 +179,36 @@
           "resolution"
         ],
         "title": "CloseDisputeArguments",
+        "type": "object"
+      }
+    },
+    {
+      "name": "freeze_account",
+      "description": "Freeze an account so no money can move in or out (administrators only)",
+      "high_impact": true,
+      "sensitive_parameters": [
+        "account_id"
+      ],
+      "parameters": {
+        "additionalProperties": false,
+        "properties": {
+          "account_id": {
+            "pattern": "^ACC-\\d{8}$",
+            "title": "Account Id",
+            "type": "string"
+          },
+          "reason": {
+            "maxLength": 300,
+            "minLength": 3,
+            "title": "Reason",
+            "type": "string"
+          }
+        },
+        "required": [
+          "account_id",
+          "reason"
+        ],
+        "title": "FreezeAccountArguments",
         "type": "object"
       }
     }

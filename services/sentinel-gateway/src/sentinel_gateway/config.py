@@ -11,8 +11,10 @@ from dataclasses import dataclass, field
 from sentinel_contracts import TokenError, load_key
 from sentinel_gateway.auth import AgentKeyring
 from sentinel_gateway.bank import DEFAULT_TIMEOUT_SECONDS
+from sentinel_gateway.policy import DEFAULT_TIMEOUT_SECONDS as DEFAULT_OPA_TIMEOUT
 
 DEFAULT_BANK_URL = "http://localhost:8001"
+DEFAULT_OPA_URL = "http://localhost:8181"
 BANK_AUDIENCE = "demo-bank-api"
 
 
@@ -29,6 +31,8 @@ class Settings:
     bank_timeout_seconds: float = DEFAULT_TIMEOUT_SECONDS
     bank_audience: str = BANK_AUDIENCE
     audit_database_url: str | None = field(default=None, repr=False)
+    opa_url: str = DEFAULT_OPA_URL
+    opa_timeout_seconds: float = DEFAULT_OPA_TIMEOUT
 
     def __post_init__(self) -> None:
         if self.execution_token_key == self.session_token_key:
@@ -39,6 +43,10 @@ class Settings:
             raise ConfigError("BANK_URL must start with http:// or https://")
         if not 0 < self.bank_timeout_seconds <= 60:
             raise ConfigError("BANK_TIMEOUT_SECONDS must be between 0 and 60")
+        if not self.opa_url.startswith(("http://", "https://")):
+            raise ConfigError("OPA_URL must start with http:// or https://")
+        if not 0 < self.opa_timeout_seconds <= 10:
+            raise ConfigError("OPA_TIMEOUT_SECONDS must be between 0 and 10")
         if (
             self.audit_database_url is not None
             and not self.audit_database_url.startswith(("postgresql://", "postgres://"))
@@ -61,19 +69,27 @@ class Settings:
         except ValueError as exc:
             raise ConfigError(f"AGENT_KEYS is invalid: {exc}") from exc
 
-        try:
-            timeout = float(env.get("BANK_TIMEOUT_SECONDS", DEFAULT_TIMEOUT_SECONDS))
-        except ValueError as exc:
-            raise ConfigError("BANK_TIMEOUT_SECONDS must be a number") from exc
-
         return cls(
             execution_token_key=execution_key,
             session_token_key=session_key,
             agent_keys=keyring,
             bank_url=env.get("BANK_URL", DEFAULT_BANK_URL),
-            bank_timeout_seconds=timeout,
+            bank_timeout_seconds=_seconds(
+                env, "BANK_TIMEOUT_SECONDS", DEFAULT_TIMEOUT_SECONDS
+            ),
             audit_database_url=env.get("AUDIT_DATABASE_URL") or None,
+            opa_url=env.get("OPA_URL", DEFAULT_OPA_URL),
+            opa_timeout_seconds=_seconds(
+                env, "OPA_TIMEOUT_SECONDS", DEFAULT_OPA_TIMEOUT
+            ),
         )
+
+
+def _seconds(env: Mapping[str, str], name: str, default: float) -> float:
+    try:
+        return float(env.get(name, default))
+    except ValueError as exc:
+        raise ConfigError(f"{name} must be a number") from exc
 
 
 def _signing_key(env: Mapping[str, str], name: str) -> bytes:

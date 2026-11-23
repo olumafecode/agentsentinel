@@ -1,9 +1,11 @@
 """The demo bank, the Sentinel Gateway and Vera running together, for the acceptance tests.
 
 Both services are built from environment settings, the way they start in Docker, and
-the tests reach them only over HTTP. The bank records every request it receives, so
-a test can prove that a blocked action never reached it. Audit records are kept in
-memory, or in a fresh PostgreSQL database when a test asks for ``audit_database``.
+the tests reach them only over HTTP. The gateway asks a real OPA server with the
+bank's policies (``opa_url`` in the repository's conftest.py), so these tests need
+the opa command. The bank records every request it receives, so a test can prove
+that a blocked action never reached it. Audit records are kept in memory, or in a
+fresh PostgreSQL database when a test asks for ``audit_database``.
 """
 
 import os
@@ -89,10 +91,14 @@ class Stack:
 
 
 @pytest.fixture
-def make_stack():
-    """Build a stack. Pass ``audit`` to use another sink, such as the PostgreSQL store."""
+def make_stack(request):
+    """Build a stack. Pass ``audit`` to use another sink, such as the PostgreSQL store,
+    and ``opa_url`` to point the gateway at another OPA, such as one that is down.
+    """
 
-    def build(audit=None):
+    def build(audit=None, opa_url=None):
+        if opa_url is None:
+            opa_url = request.getfixturevalue("opa_url")
         execution_key = secrets.token_urlsafe(48)
         session_key = secrets.token_urlsafe(48)
         agent_key = secrets.token_urlsafe(48)
@@ -110,6 +116,8 @@ def make_stack():
                 "SESSION_TOKEN_KEY": session_key,
                 "AGENT_KEYS": f"AGT-001:{agent_key}",
                 "BANK_URL": "http://demo-bank:8001",
+                "OPA_URL": opa_url,
+                "OPA_TIMEOUT_SECONDS": "1",
             }
         )
         gateway = TestClient(

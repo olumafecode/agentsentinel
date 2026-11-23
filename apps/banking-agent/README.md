@@ -44,7 +44,7 @@ One scripted scenario per use case, in `src/banking_agent/scenarios`:
 | UC-02 Block prompt-injected refund | BLOCK, and no retry | Active (blocked by customer scope; US-02b adds the untrusted-origin rule) |
 | UC-03 Hold high-value refund | HUMAN_REVIEW | Pending on US-03 |
 | UC-04 Deny cross-customer access | BLOCK, then ALLOW for her own data | Active |
-| UC-05 Block bulk export | BLOCK | Active (tool allowlist; US-02a moves it to OPA) |
+| UC-05 Block bulk export | BLOCK | Active (bank policy in OPA, US-02a) |
 | UC-06 Detect behavioral anomaly | BLOCK on the fifth quick refund | Pending on US-04 |
 | UC-07 Quarantine repeated violations | QUARANTINE on the third violation | Pending on US-05 |
 
@@ -74,7 +74,7 @@ The runner also plays the customer's sign-in, so it needs `SESSION_TOKEN_KEY`. V
 
 ## Tool schemas
 
-`src/banking_agent/data/tools.json` describes the five tools Vera may propose, copied from the bank's `GET /v1/tools`. The language model sees these in live mode. `tests/test_vera_matches_bank.py` at the repository root fails if they drift from the bank or from Vera's `allowed_tools` in the gateway.
+`src/banking_agent/data/tools.json` describes the seven tools Vera may propose, copied from the bank's `GET /v1/tools`. The language model sees these in live mode. `tests/test_vera_matches_bank.py` at the repository root fails if they drift from the bank or from Vera's `allowed_tools` in the gateway.
 
 ## Tests
 

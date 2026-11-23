@@ -5,15 +5,15 @@ The Policy Enforcement Point. Every protected action Vera proposes comes here fi
 | | |
 |---|---|
 | First built in | Sprint 1, extended in Sprints 2 and 3 |
-| Stories | US-18 (tasks US-18.2 to US-18.6), US-01 (US-01.1 to US-01.4), US-19 and US-20 (audit trail and readiness); later US-02a, US-02b, US-03, US-04, US-05 |
-| Requirements | FR-01, FR-02, FR-03, FR-08, FR-09, FR-13; NFR-01, NFR-02, NFR-03, NFR-06 |
-| Decision records | [ADR-001](../../docs/adr/ADR-001-independent-gateway.md), [ADR-003](../../docs/adr/ADR-003-ml-risk-advisory.md), [ADR-010](../../docs/adr/ADR-010-shared-contracts-and-execution-tokens.md), [ADR-012](../../docs/adr/ADR-012-gateway-decision-pipeline.md), [ADR-013](../../docs/adr/ADR-013-ownership-lookup.md), [ADR-014](../../docs/adr/ADR-014-hash-linked-audit-trail.md) |
+| Stories | US-18 (tasks US-18.2 to US-18.6), US-01 (US-01.1 to US-01.4), US-19 and US-20 (audit trail and readiness), US-02a (bank policy in OPA); later US-02b, US-03, US-04, US-05 |
+| Requirements | FR-01, FR-02, FR-03, FR-04, FR-06, FR-08, FR-09, FR-13, FR-17; NFR-01, NFR-02, NFR-03, NFR-06 |
+| Decision records | [ADR-001](../../docs/adr/ADR-001-independent-gateway.md), [ADR-002](../../docs/adr/ADR-002-opa-rego-policy.md), [ADR-003](../../docs/adr/ADR-003-ml-risk-advisory.md), [ADR-010](../../docs/adr/ADR-010-shared-contracts-and-execution-tokens.md), [ADR-012](../../docs/adr/ADR-012-gateway-decision-pipeline.md), [ADR-013](../../docs/adr/ADR-013-ownership-lookup.md), [ADR-014](../../docs/adr/ADR-014-hash-linked-audit-trail.md), [ADR-015](../../docs/adr/ADR-015-bank-policy-in-opa.md) |
 
 ## What happens to one action
 
 1. The agent's API key identifies the agent. A missing or wrong key gets HTTP 401.
 2. The session token is verified. The agent ID, session, customer and task in the request must match it and the key.
-3. The checks run in stage order and the orchestrator combines their findings. If the action names an account, transaction or dispute, the customer scope check asks the bank who owns it.
+3. The checks run in stage order and the orchestrator combines their findings. The bank policy in OPA judges the tool, the task and any refund amount. If the action names an account, transaction or dispute, the customer scope check asks the bank who owns it.
 4. `action_received` and `decision_made` are written to the audit trail. If that fails, nothing runs (HTTP 503).
 5. For ALLOW, the gateway signs an execution token for exactly this call and calls the bank.
 6. `action_executed`, `approval_requested` or `action_stopped` is written, and the outcome is kept under the correlation ID.
@@ -24,7 +24,7 @@ The Policy Enforcement Point. Every protected action Vera proposes comes here fi
 |---|---|
 | `POST /v1/actions/evaluate` | Decides on one action and, if it is allowed, runs it at the bank |
 | `GET /healthz` | Liveness: the process is up |
-| `GET /readyz` | Readiness: the registries are loaded and the audit trail can be written; HTTP 503 while it cannot |
+| `GET /readyz` | Readiness: the audit trail can be written and OPA answers; HTTP 503 while either cannot |
 | `GET /docs` | Interactive API documentation |
 
 ## Calling the evaluate endpoint
@@ -76,10 +76,19 @@ Send the identical request again, for example after a timeout, and you get the s
 | `agent_status` | CONTEXT | QUARANTINE `AGENT_QUARANTINED`; BLOCK `AGENT_DISABLED`; BLOCK `IDENTITY_MISMATCH` for an unregistered agent |
 | `request_freshness` | CONTEXT | BLOCK `STALE_REQUEST` when `requested_at` is over 5 minutes old or over 30 seconds ahead |
 | `known_tool` | CONTEXT | BLOCK `UNKNOWN_TOOL` for a tool missing from `data/tools.json` |
-| `tool_allowlist` | HARD_RULE | BLOCK `TOOL_NOT_ALLOWED` when the tool is not in the agent's `allowed_tools`, or the session's task is not in the tool's `allowed_task_types` |
+| `bank_policy` | HARD_RULE | What the bank policy in OPA asks for: BLOCK `POLICY_DENY` for a bulk export; BLOCK `TOOL_NOT_ALLOWED` for a tool outside the agent's `allowed_tools` or the task's tools; BLOCK `INVALID_ARGUMENTS` or `REFUND_OVER_LIMIT` for a refund amount that is malformed, not positive or above the hard cap; HUMAN_REVIEW `REFUND_OVER_LIMIT` above the automatic limit. BLOCK `DEPENDENCY_UNAVAILABLE` when OPA cannot answer |
 | `customer_scope` | HARD_RULE | BLOCK `OUTSIDE_CUSTOMER_SCOPE` when any customer, account, transaction or dispute ID in the arguments belongs to another customer or does not exist |
 
 A request that fails validation is blocked with `MISSING_CONTEXT`, `UNKNOWN_TOOL` or `INVALID_ARGUMENTS`. A check that raises an error blocks with `DEPENDENCY_UNAVAILABLE`. When checks disagree, QUARANTINE beats BLOCK, which beats HUMAN_REVIEW (ADR-012).
+
+## Bank policy
+
+The rules themselves are Rego in `policies/opa`; its README lists them, the input the gateway sends and the answer OPA gives (ADR-015). The `bank_policy` check asks OPA once per action, after the context checks and before the customer scope check, so a tool the policy refuses never makes the gateway ask the bank anything.
+
+- The decision takes the strongest of the rules that matched and keeps every reason code. The summary is the leading rule's message.
+- The decision and the `decision_made` audit event carry `policy_version`, the policy bundle's revision, even for ALLOW. The rule names are in the event's check details under `matched_rules`.
+- If OPA cannot be reached, answers late, or answers without a bundle revision, the action is blocked with `DEPENDENCY_UNAVAILABLE` and the fault is logged (AT-12).
+- Until the approval service arrives (US-03), HUMAN_REVIEW becomes BLOCK with `DEPENDENCY_UNAVAILABLE`, so a refund above 200.00 USD does not run.
 
 ## Customer scope
 
@@ -93,28 +102,32 @@ Every argument value that is a customer, account, transaction or dispute ID is c
 
 ## Adding a check
 
-Subclass `Check` in a module for its story (`scope.py` holds the US-01 rules), give it a name and a stage, and add it to `default_checks()` in `pipeline.py`:
+A bank rule that needs only the action, the agent and the tool belongs in the Rego in `policies/opa`, not here. A Python check is for a rule that needs something OPA cannot see, as the customer scope check needs the bank's ownership lookup.
+
+Subclass `Check` in a module for its story (`policy.py` holds the US-02a check, `scope.py` the US-01 one), give it a name and a stage, and add it to `default_checks()` in `pipeline.py`. A check that needs a client takes it in its constructor, and `default_checks()` passes it in:
 
 ```python
-class BulkExportCheck(Check):
-    name = "bulk_export"
+class CustomerScopeCheck(Check):
+    name = "customer_scope"
     stage = Stage.HARD_RULE
 
+    def __init__(self, ownership: OwnershipLookup) -> None:
+        self._ownership = ownership
+
     def evaluate(self, context, earlier):
-        if context.request.tool_name == "export_customers":
-            return objection(
-                Decision.BLOCK,
-                ReasonCode.POLICY_DENY,
-                summary="Bulk export is not allowed.",
-            )
-        return NO_OBJECTION
+        ...
+        return objection(
+            Decision.BLOCK,
+            ReasonCode.OUTSIDE_CUSTOMER_SCOPE,
+            summary="The action refers to data that does not belong to the signed-in customer.",
+        )
 ```
 
-A check that needs a client, as `CustomerScopeCheck` needs the ownership lookup, takes it in its constructor, and `default_checks()` passes it in. Nothing else changes: the orchestrator places the check by stage, applies the precedence order and records its result in the audit trail.
+Nothing else changes: the orchestrator places the check by stage, applies the precedence order and records its result in the audit trail.
 
 ## Agents and tools
 
-`src/sentinel_gateway/data/agents.json` lists the agents and `data/tools.json` the bank tools, in the shape of the Agent and ToolDefinition entities in `data/synthetic/models.py`. `tests/test_gateway_matches_bank.py` at the repository root fails if the tool list drifts from the demo bank's catalogue.
+`src/sentinel_gateway/data/agents.json` lists the agents, with the tools each may use, and `data/tools.json` the bank tools, in the shape of the Agent and ToolDefinition entities in `data/synthetic/models.py`. Which tasks may use each tool is bank policy, in `policies/opa/agentsentinel/data.json`. `tests/test_gateway_matches_bank.py` at the repository root fails if the tool list drifts from the demo bank's catalogue.
 
 ## Settings
 
@@ -125,6 +138,8 @@ A check that needs a client, as `CustomerScopeCheck` needs the ownership lookup,
 | `AGENT_KEYS` | Yes | `AGT-001:<key>`, with a comma between agents. Each key at least 32 characters, and every agent must be in `agents.json` |
 | `BANK_URL` | No | Default `http://localhost:8001` |
 | `BANK_TIMEOUT_SECONDS` | No | Default 5 |
+| `OPA_URL` | No | Default `http://localhost:8181`. OPA must serve `policies/opa` as a bundle |
+| `OPA_TIMEOUT_SECONDS` | No | Default 2, at most 10. A slower answer blocks the action |
 | `AUDIT_DATABASE_URL` | No | `postgresql://sentinel_gateway:<password>@<host>:5432/<db>`. The hash-linked audit trail (US-19). Without it, audit records go to standard output, which is for local runs only |
 
 Create any key with `py -m sentinel_gateway new-key`. Keep real values in a `.env` file, which git ignores. Never commit them, and never give `SESSION_TOKEN_KEY` or `EXECUTION_TOKEN_KEY` to Vera.
@@ -140,7 +155,7 @@ py -m pip install --no-deps -e libs/sentinel-contracts -e apps/demo-bank-api -e 
 
 The simplest way to run everything is Docker Compose; see the repository README. To run the gateway on its own instead:
 
-start the bank first (see `apps/demo-bank-api/README.md`), then in a second PowerShell window with the bank's `EXECUTION_TOKEN_KEY` set:
+start the bank first (see `apps/demo-bank-api/README.md`) and OPA (`opa run --server --addr=127.0.0.1:8181 --bundle --ignore=*_test.rego policies/opa`, see `policies/opa/README.md`), then in another PowerShell window with the bank's `EXECUTION_TOKEN_KEY` set:
 
 ```
 $env:SESSION_TOKEN_KEY = py -m sentinel_gateway new-key
@@ -176,13 +191,13 @@ From the repository root:
 
 ```
 docker build -f services/sentinel-gateway/Dockerfile -t agentsentinel/sentinel-gateway .
-docker run --rm -p 8000:8000 -e EXECUTION_TOKEN_KEY=<key> -e SESSION_TOKEN_KEY=<key> -e AGENT_KEYS=AGT-001:<key> -e BANK_URL=http://host.docker.internal:8001 agentsentinel/sentinel-gateway
+docker run --rm -p 8000:8000 -e EXECUTION_TOKEN_KEY=<key> -e SESSION_TOKEN_KEY=<key> -e AGENT_KEYS=AGT-001:<key> -e BANK_URL=http://host.docker.internal:8001 -e OPA_URL=http://host.docker.internal:8181 agentsentinel/sentinel-gateway
 ```
 
-The image runs as a non-root user (UID 10001) and reports its health from `/healthz`. In Docker Compose the health check uses `/readyz`, so the stack counts as up only when the gateway can audit.
+The image runs as a non-root user (UID 10001) and reports its health from `/healthz`. In Docker Compose the health check uses `/readyz`, so the stack counts as up only when the gateway can audit and reach OPA.
 
 ## Tests
 
-From the repository root: `py -m pytest services/sentinel-gateway -q`. The tests run the real demo bank in the same process, so they cover the whole path from decision to bank, including a replayed token, a token reused for another call, retries of the same refund, two identical refunds arriving at once, and a refund sent to another customer's account.
+From the repository root: `py -m pytest services/sentinel-gateway -q`. The tests run the real demo bank in the same process, so they cover the whole path from decision to bank, including a replayed token, a token reused for another call, retries of the same refund, two identical refunds arriving at once, and a refund sent to another customer's account. Most tests use a stand-in for OPA that never objects; `test_policy.py` also runs the real policy in a real OPA server, which needs the `opa` command (see `policies/opa/README.md`).
 
-The acceptance tests are in `tests/acceptance` at the repository root: AT-01, AT-02, Vera's active scenarios end to end, and the Sprint 1 goal with the PostgreSQL audit trail (`py -m pytest tests/acceptance -q`).
+The acceptance tests are in `tests/acceptance` at the repository root: AT-01, AT-02, AT-03, AT-12 for the bank policy, Vera's active scenarios end to end, and the Sprint 1 goal with the PostgreSQL audit trail (`py -m pytest tests/acceptance -q`). They run the gateway against a real OPA server.
