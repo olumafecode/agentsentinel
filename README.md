@@ -36,7 +36,7 @@ apps/              dashboard, banking agent (Vera), demo bank API
 libs/              shared code used by more than one service (sentinel-contracts)
 services/          sentinel gateway, risk engine, RAG service, approval service, audit service
 policies/opa/      bank rules as code, with tests
-data/              synthetic data and policy documents
+data/              synthetic data, the labelled dataset for the risk model, policy documents
 ml/                training and evaluation
 k8s/               Kubernetes profile
 tests/             cross-service, end-to-end and scenario tests
