@@ -2,7 +2,7 @@
 
 | | |
 |---|---|
-| Status | Accepted |
+| Status | Accepted; the HARD_RULE order and the refund limit rule are amended by [ADR-015](ADR-015-bank-policy-in-opa.md) |
 | Date | 2026-11-18 |
 | Deciders | Product Owner, Scrum Master, Code Owners |
 | Requirements | FR-01, FR-02, FR-08, FR-09, FR-13; NFR-01, NFR-02, NFR-03, NFR-06 |

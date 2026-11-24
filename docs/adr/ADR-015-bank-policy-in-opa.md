@@ -2,7 +2,7 @@
 
 | | |
 |---|---|
-| Status | Proposed |
+| Status | Accepted |
 | Date | 2026-11-23 |
 | Deciders | Product Owner, Scrum Master, Code Owners |
 | Requirements | FR-03, FR-04, FR-06, FR-08, FR-13, FR-17; NFR-01, NFR-03 |
@@ -21,6 +21,7 @@ On 23 November 2026 the Product Owner confirmed the tools each task allows, with
 - **Where the policy data lives.** The task-to-tool table, the bulk export list and the refund settings are in `policies/opa/agentsentinel/data.json`, the one place both the live policy and the dataset generator (US-21) read them. The agent's own allowlist stays in the gateway's agent registry, because it belongs to the agent and can change with its status; the gateway sends it with each action.
 - **The version.** OPA serves `policies/opa` as a bundle. The gateway asks with `?provenance=true` and takes the bundle's `revision` from `.manifest` as the `policy_version`. A rule change raises the revision. The version is recorded on every decision the policy took part in, ALLOW included, and the matched rules go into the `decision_made` event's check details.
 - **Failing closed.** An answer the gateway cannot trust counts as no answer: OPA unreachable or slow (2-second timeout by default), any status but 200, a policy that is not loaded, no bundle revision, or a violation with an unknown decision or reason code. The check then raises `PolicyUnavailable`, which the orchestrator turns into BLOCK with `DEPENDENCY_UNAVAILABLE` and logs. This holds for every action, not only high-impact ones, because without the policy no action has been judged. The gateway's readiness probe reports not ready while OPA is down.
+- **Changes to ADR-012.** Two rows of ADR-012's stage table change. In the HARD_RULE stage the bank policy now runs before the customer scope check, so a tool the policy refuses never causes an ownership lookup at the bank. And the rule for refunds above the automatic limit is part of the policy, so it asks for HUMAN_REVIEW from the HARD_RULE stage; US-03 adds the approval workflow, not a separate MANDATORY_REVIEW check for the limit.
 - **Testing.** The Rego rules have unit tests with 100% coverage, run with `opa test` in CI. The gateway's own unit tests use a stand-in policy that never objects. Tests of the real policy through the gateway, and the acceptance tests, start a real OPA server with the bundle; CI installs the same OPA version as the image and fails if it is missing.
 
 ## Alternatives considered

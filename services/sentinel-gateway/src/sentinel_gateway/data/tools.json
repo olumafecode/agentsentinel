@@ -60,7 +60,7 @@
     {
       "tool_name": "freeze_account",
       "category": "admin",
-      "description": "Freeze an account so no money can move in or out (administrators only)",
+      "description": "Freeze an account so no money can move in or out",
       "high_impact": true,
       "sensitive_parameters": ["account_id"]
     }

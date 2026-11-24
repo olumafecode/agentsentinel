@@ -426,7 +426,7 @@ Suggested tasks (confirmed at sprint planning):
 As a security analyst, I want repeated violations to quarantine an agent, so that compromised behavior is contained quickly.
 
 Acceptance criteria:
-- Given three or more prohibited calls inside the configured window, when the next call arrives, then the agent is QUARANTINED and every later call is denied (AT-08).
+- Given two prohibited calls by an agent inside the configured window, when a third prohibited call arrives, then that call is stopped, the agent is QUARANTINED and every later call is denied (AT-08).
 - Given a quarantine, when the dashboard is open, then a critical incident and a notification appear.
 - Given an administrator, when they use the kill switch or release the agent, then the change is audited.
 

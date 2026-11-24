@@ -246,7 +246,7 @@ TOOLS: dict[str, ToolSpec] = {
         ToolSpec(
             name="freeze_account",
             category=ToolCategory.ADMIN,
-            description="Freeze an account so no money can move in or out (administrators only)",
+            description="Freeze an account so no money can move in or out",
             high_impact=True,
             sensitive_parameters=("account_id",),
             arguments_model=FreezeAccountArguments,
