@@ -1,0 +1,104 @@
+{
+  "name": "agentsentinel-labelled-actions",
+  "generator_version": "1.0.0",
+  "schema_version": "1.0.0",
+  "policy_version": "1.0.0",
+  "seed": 20261109,
+  "rows": 3556,
+  "sequences": 1130,
+  "splits": {
+    "train": {
+      "file": "train.jsonl",
+      "rows": 2492,
+      "sequences": 790,
+      "sha256": "be8d927bff75323a12c5b61e06b8ecd25c869915ed7188055f196bf0fdb1d750",
+      "expected_outcome": {
+        "ALLOW": 1521,
+        "HUMAN_REVIEW": 288,
+        "BLOCK": 538,
+        "QUARANTINE": 145
+      },
+      "failure_mode": {
+        "none": 1499,
+        "prompt_injection": 84,
+        "misunderstood_instruction": 53,
+        "wrong_tool_or_invalid_details": 92,
+        "outside_authority": 100,
+        "unintended_sequence": 664
+      },
+      "rule": {
+        "R1": 234,
+        "R2": 124,
+        "R3": 67,
+        "R4": 37,
+        "R5": 145,
+        "R6": 184,
+        "R7": 76,
+        "R8": 104,
+        "R9": 1521
+      }
+    },
+    "validation": {
+      "file": "validation.jsonl",
+      "rows": 526,
+      "sequences": 170,
+      "sha256": "335dc5367049abe85803a82034e5a852e6e806f9b4dedb1a7d6ee8964c9eff8b",
+      "expected_outcome": {
+        "ALLOW": 317,
+        "HUMAN_REVIEW": 58,
+        "BLOCK": 118,
+        "QUARANTINE": 33
+      },
+      "failure_mode": {
+        "none": 309,
+        "prompt_injection": 19,
+        "misunderstood_instruction": 11,
+        "wrong_tool_or_invalid_details": 19,
+        "outside_authority": 25,
+        "unintended_sequence": 143
+      },
+      "rule": {
+        "R1": 55,
+        "R2": 29,
+        "R3": 14,
+        "R4": 6,
+        "R5": 33,
+        "R6": 39,
+        "R7": 14,
+        "R8": 19,
+        "R9": 317
+      }
+    },
+    "test": {
+      "file": "test.jsonl",
+      "rows": 538,
+      "sequences": 170,
+      "sha256": "b4aa55084c9fcbfff798b8995e4ca3aa9ffd964e8cd978a8c5db9ffd44259845",
+      "expected_outcome": {
+        "ALLOW": 326,
+        "HUMAN_REVIEW": 60,
+        "BLOCK": 118,
+        "QUARANTINE": 34
+      },
+      "failure_mode": {
+        "none": 319,
+        "prompt_injection": 17,
+        "misunderstood_instruction": 11,
+        "wrong_tool_or_invalid_details": 19,
+        "outside_authority": 24,
+        "unintended_sequence": 148
+      },
+      "rule": {
+        "R1": 53,
+        "R2": 27,
+        "R3": 14,
+        "R4": 6,
+        "R5": 34,
+        "R6": 40,
+        "R7": 18,
+        "R8": 20,
+        "R9": 326
+      }
+    }
+  }
+}

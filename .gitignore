@@ -27,3 +27,6 @@ k8s/**/secret*.yaml
 .idea/
 .DS_Store
 Thumbs.db
+
+# Generated dataset files (US-21): rebuilt from the seed, checked against manifest.json
+data/synthetic/dataset/output/

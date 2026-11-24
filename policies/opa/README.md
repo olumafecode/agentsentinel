@@ -85,7 +85,7 @@ A refund is only issued in a refund request. `freeze_account` is allowed in a di
 
 1. Change the Rego or `data.json`, and add or change a test for it, including the boundary values.
 2. Raise `revision` in `.manifest`: the patch number for a wording change, the minor number for a new or changed rule or setting, the major number when the input or output shape changes.
-3. If a setting also appears in `data/synthetic/labelling-rules.md`, change it there too; that also needs a new dataset version (US-21).
+3. If a setting also appears in `data/synthetic/labelling-rules.md`, change it there too. If the change alters any label in the risk model's dataset, `tests/test_dataset.py` fails until a new dataset version is frozen: see "Freezing and changing the dataset" in `data/synthetic/dataset/README.md` (US-21).
 4. Open a pull request. The Product Owner approves any change to what is allowed.
 
 ## Running the tests

@@ -7,6 +7,7 @@ Everything AgentSentinel stores or tests with is invented. This folder defines t
 | `models.py` | The schema as Pydantic models. Services and generators import these. |
 | `examples.json` | One valid example of every entity. The tests check each one against its model. |
 | `labelling-rules.md` | How every action event gets its expected outcome and failure mode. |
+| `dataset/` | The labelled action dataset for the risk model (US-21): the generator, the labeller, the frozen manifest and the dataset card. |
 | `README.md` | This document: the rules, the entities and every field. |
 
 Schema version: **1.0.0** (`SCHEMA_VERSION` in `models.py`). A change to any entity goes through a pull request, bumps the version and updates this document. A test fails if a model field is missing from this page.
