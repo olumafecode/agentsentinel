@@ -101,7 +101,7 @@ Changes from the suggested tasks:
 
 ## Checklist
 
-- [ ] Every selected story meets the Definition of Ready (checked at the refinement on 19 November)
-- [ ] Every task has an owner
-- [ ] Ceremony checklist for this sprint moved to In progress
-- [ ] Siyabonga has confirmed the task-to-tool table before US-02a.1 starts
+- [x] Every selected story meets the Definition of Ready (checked at the refinement on 19 November)
+- [x] Every task has an owner
+- [x] Ceremony checklist for this sprint moved to In progress
+- [x] Siyabonga has confirmed the task-to-tool table before US-02a.1 starts (23 November; recorded in ADR-015)

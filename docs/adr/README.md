@@ -18,7 +18,7 @@ An architecture decision record (ADR) captures one significant design decision: 
 | [ADR-012](ADR-012-gateway-decision-pipeline.md) | Gateway decision pipeline, caller identity and idempotent outcomes | Accepted |
 | [ADR-013](ADR-013-ownership-lookup.md) | The gateway checks record ownership with the bank | Accepted |
 | [ADR-014](ADR-014-hash-linked-audit-trail.md) | The hash-linked audit trail in PostgreSQL | Accepted |
-| [ADR-015](ADR-015-bank-policy-in-opa.md) | How the gateway asks OPA, and what it records | Proposed |
+| [ADR-015](ADR-015-bank-policy-in-opa.md) | How the gateway asks OPA, and what it records | Accepted |
 
 ## When to write a new ADR
 
